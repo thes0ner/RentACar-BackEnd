@@ -1,7 +1,7 @@
 ﻿using RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstract;
 using RentACar.DataAccess.Abstract;
 using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext;
-using RentACar.Entities.Concrete;
+using RentACar.Core.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;

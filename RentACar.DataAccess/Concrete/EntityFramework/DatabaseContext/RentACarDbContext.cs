@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using RentACar.Core.Entities.Abstract;
 using RentACar.Core.Entities.Concrete;
-using RentACar.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +22,6 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
         {
 
         }
-
-        // Configures the database connection to use SQL server.
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Server=DESKTOP-1Q8O3E1;Database=RentACarDb;Trusted_Connection=True;");
-        //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -92,6 +86,11 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                       .WithOne(ci => ci.Car)
                       .HasForeignKey(ci => ci.CarId)
                       .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Location) // One-to-many relationship with Location
+                        .WithMany(l => l.Cars)
+                        .HasForeignKey(e => e.LocationId)
+                        .OnDelete(DeleteBehavior.Restrict);
 
                 // Index on Model for faster searches
                 entity.HasIndex(e => e.Model);
@@ -168,15 +167,15 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 // Primary key
                 entity.HasKey(e => e.Id);
-                
+
                 // Properties
 
                 entity.Property(e => e.FullName).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.CardNumber).IsRequired().HasMaxLength(16);
                 entity.Property(e => e.Months).IsRequired().HasMaxLength(2);
                 entity.Property(e => e.Year).IsRequired().HasMaxLength(4);
-                entity.Property(e => e.CVV).IsRequired().HasMaxLength(3); 
-                
+                entity.Property(e => e.CVV).IsRequired().HasMaxLength(3);
+
                 // Relationships
                 entity.HasOne(e => e.Customer) // One-to-many relationship with Customer
                       .WithMany(c => c.CreditCards)
@@ -205,11 +204,10 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasIndex(e => e.Email).IsUnique();
 
                 //Relationships
-
-                //entity.HasOne(e => e.User) // One-to-one relationship with User
-                //      .WithOne(u => u.Customer)
-                //      .HasForeignKey<Customer>(e => e.UserId)
-                //      .OnDelete(DeleteBehavior.Cascade); // Cascade delete User when Customer is deleted
+                entity.HasOne(e => e.User) // One-to-one relationship with User
+                      .WithOne(u => u.Customer)
+                      .HasForeignKey<Customer>(e => e.UserId)
+                      .OnDelete(DeleteBehavior.Cascade); // Cascade delete User when Customer is deleted
 
                 entity.HasMany(e => e.Reservations)
                       .WithOne(r => r.Customer)
@@ -225,6 +223,29 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                         .WithOne(cc => cc.Customer)
                         .HasForeignKey(cc => cc.CustomerId)
                         .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                //Table name
+                entity.ToTable("Users");
+
+                // Primary key
+                entity.HasKey(e => e.Id);
+
+                // Properties
+                entity.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.LastName).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.PasswordHash).IsRequired();
+                entity.Property(e => e.PasswordSalt).IsRequired();
+                entity.Property(e => e.Status).IsRequired();
+
+                //Relationships
+                entity.HasOne(e => e.Customer) // One-to-one relationship with Customer
+                      .WithOne(c => c.User)
+                      .HasForeignKey<User>(e => e.Id)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
 
@@ -301,6 +322,12 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.Property(e => e.Address).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.City).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Country).IsRequired().HasMaxLength(50);
+
+                //Relationships
+                entity.HasMany(e => e.Cars) // One-to-many relationship with Car
+                      .WithOne(c => c.Location)
+                      .HasForeignKey(c => c.LocationId)
+                      .OnDelete(DeleteBehavior.Restrict);
 
             });
 
@@ -383,6 +410,23 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                       .OnDelete(DeleteBehavior.Cascade);
 
             });
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var datas = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var data in datas)
+            {
+                _ = data.State switch
+                {
+                    EntityState.Added => data.Entity.CreatedDate = DateTime.Now,
+                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.Now
+                };
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+
         }
 
 

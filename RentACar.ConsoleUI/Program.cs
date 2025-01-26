@@ -1,7 +1,7 @@
 ﻿using RentACar.Business.Concrete;
 using RentACar.DataAccess.Concrete.EntityFramework;
 using RentACar.DataAccess.Concrete.InMemory;
-using RentACar.Entities.Concrete;
+using RentACar.Core.Entities.Concrete;
 
 namespace RentACar.ConsoleUI
 {
@@ -13,14 +13,17 @@ namespace RentACar.ConsoleUI
             //CarManager carManager = new CarManager(new InMemoryCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
 
-            Brand brand1 = new Brand
-            {
-                Name = "Cherry",
-                CreatedDate = System.DateTime.Now,
-                UpdatedDate = System.DateTime.Now,
-            };
+            Brand jaguar = new Brand();
 
-            brandManager.Add(brand1);
+            jaguar.Name = "Renault";
+
+
+
+
+
+            brandManager.Add(jaguar).Wait();
+            Console.WriteLine("Added.");
+
 
             foreach (var brand in brandManager.GetAll().Result)
             {

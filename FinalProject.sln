@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.DataAccess", "RentACar.DataAccess\RentACar.DataAccess.csproj", "{D6C3EAD8-39F9-48B3-8722-1AB7810BCFD9}"
 EndProject
@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Business", "RentAC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Core", "RentACar.Core\RentACar.Core.csproj", "{5ABC8F7A-E938-460C-8168-BC2538007BB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Entities", "RentACar.Entities\RentACar.Entities.csproj", "{979546F0-3F39-486C-AA96-2A576C4624F5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.ConsoleUI", "RentACar.ConsoleUI\RentACar.ConsoleUI.csproj", "{AC1EE382-80F7-42F0-B2E5-FDF950D4A149}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.API", "RentACar.API\RentACar.API.csproj", "{E188A86C-CCB6-481F-865E-B99EBD5FA7CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{5ABC8F7A-E938-460C-8168-BC2538007BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ABC8F7A-E938-460C-8168-BC2538007BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ABC8F7A-E938-460C-8168-BC2538007BB6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{979546F0-3F39-486C-AA96-2A576C4624F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{979546F0-3F39-486C-AA96-2A576C4624F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{979546F0-3F39-486C-AA96-2A576C4624F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{979546F0-3F39-486C-AA96-2A576C4624F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC1EE382-80F7-42F0-B2E5-FDF950D4A149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC1EE382-80F7-42F0-B2E5-FDF950D4A149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC1EE382-80F7-42F0-B2E5-FDF950D4A149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC1EE382-80F7-42F0-B2E5-FDF950D4A149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E188A86C-CCB6-481F-865E-B99EBD5FA7CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E188A86C-CCB6-481F-865E-B99EBD5FA7CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E188A86C-CCB6-481F-865E-B99EBD5FA7CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E188A86C-CCB6-481F-865E-B99EBD5FA7CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

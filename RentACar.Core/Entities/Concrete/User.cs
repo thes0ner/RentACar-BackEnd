@@ -16,7 +16,7 @@ namespace RentACar.Core.Entities.Concrete
         public byte[]? PasswordSalt { get; set; }
         public bool Status { get; set; }
 
-        // Navigation property to Customer
-        //public Customer Customer { get; set; }
+        //Navigation property to Customer
+        public Customer Customer { get; set; }
     }
 }
