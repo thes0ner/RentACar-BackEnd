@@ -34,7 +34,7 @@ namespace RentACar.Business.Concrete
             await _colorDal.UpdateAsync(color);
         }
 
-        public async Task<IEnumerable<Color>> GetAll()
+        public async Task<IEnumerable<Color>> GetColorsAsync()
         {
             return await _colorDal.GetAllAsync();
         }

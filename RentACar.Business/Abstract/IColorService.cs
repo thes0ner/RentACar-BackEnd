@@ -9,7 +9,7 @@ namespace RentACar.Business.Abstract
 {
     public interface IColorService
     {
-        Task<IEnumerable<Color>> GetAll();
+        Task<IEnumerable<Color>> GetColorsAsync();
         Task<Color> GetSingleAsync(int id);
         Task AddAsync(Color color);
         Task UpdateAsync(Color color);

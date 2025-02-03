@@ -11,7 +11,13 @@ namespace RentACar.ConsoleUI
         static void Main(string[] args)
         {
 
-            //Test area
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+
+
+            foreach (var item in colorManager.GetAll().Result)
+            {
+
+            }
         }
     }
 }
