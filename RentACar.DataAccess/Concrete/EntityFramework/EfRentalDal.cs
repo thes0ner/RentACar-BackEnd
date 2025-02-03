@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACar.DataAccess.Concrete
+namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, RentACarDbContext>, IRentalDal
     {

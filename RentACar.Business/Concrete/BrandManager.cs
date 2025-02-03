@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.Core.Utilities.Results.Abstract;
+using RentACar.Core.Utilities.Results.Concrete;
+using RentACar.Business.Constants;
 
 namespace RentACar.Business.Concrete
 {
@@ -19,30 +22,42 @@ namespace RentACar.Business.Concrete
             _brandDal = brandDal;
         }
 
-        public async Task<IEnumerable<Brand>> GetBrandsAsync()
+        public async Task<IResult> AddAsync(Brand brand)
         {
-            return await _brandDal.GetAllAsync();
-        }
 
-        public async Task<Brand> GetSingleAsync(int id)
-        {
-            return await _brandDal.GetSingleAsync(b => b.Id == id);
-        }
+            if (brand.Name.Length < 5)
+            {
+                return new ErrorResult(Messages.BrandNameInvalid);
+            }
 
-        public async Task AddAsync(Brand brand)
-        {
             await _brandDal.AddAsync(brand);
+
+            return new SuccessResult(Messages.BrandAdded);
         }
 
-        public async Task UpdateAsync(Brand brand)
+        public async Task<IResult> UpdateAsync(Brand brand)
         {
             await _brandDal.UpdateAsync(brand);
+
+            return new SuccessResult(Messages.BrandUpdated);
         }
 
-        public async Task DeleteAsync(Brand brand)
+        public async Task<IResult> DeleteAsync(Brand brand)
         {
-            var brandToDelete = await _brandDal.GetSingleAsync(c=> c.Id == brand.Id);
             await _brandDal.DeleteAsync(brand);
+            return new SuccessResult(Messages.BrandDeleted);
+        }
+
+
+        //Must be async -- Ned to be fixed
+        public async Task<IDataResult<List<Brand>>> GetBrandsAsync()
+        {
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAllAsync(), Messages.BrandListed);
+        }
+
+        public Task<IDataResult<Brand>> GetSingleAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
