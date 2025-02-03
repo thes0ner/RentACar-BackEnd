@@ -23,6 +23,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
         }
 
+
+        // OnConfiguring method is used to configure the database provider and connection string.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -412,8 +414,12 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
             });
         }
 
+
+        // This method is called when the model for a derived context has been initialized, but before the model has been locked down and used to initialize the context.
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+
+            // Set the CreatedDate and UpdatedDate properties of the entities
             var datas = ChangeTracker.Entries<BaseEntity>();
 
             foreach (var data in datas)

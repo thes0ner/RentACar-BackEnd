@@ -1,0 +1,30 @@
+﻿using RentACar.Core.Entities.Abstract;
+using RentACar.Core.Entities.Concrete;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RentACar.Core.Entities.DTO_s
+{
+    public class CarDetailDto : BaseEntity
+    {
+
+        public string BrandName { get; set; }
+        public string ColorName { get; set; }
+        public string FuelType { get; set; }
+        public string TransmissionType { get; set; }
+        public string VehicleType { get; set; }
+        public string LocationCountry { get; set; }
+        public string LocationCity { get; set; }
+        public string LocationAddress { get; set; }
+        public decimal DailyPrice { get; set; }
+        public string Model { get; set; }
+        public int Year { get; set; }
+        public int Mileage { get; set; }
+        public string Description { get; set; }
+        public CarStatus Status { get; set; }
+
+    }
+}

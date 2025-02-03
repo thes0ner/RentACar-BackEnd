@@ -9,8 +9,8 @@ namespace RentACar.Core.Entities.Concrete
 {
     public class Color : BaseEntity
     {
-        public required string Name { get; set; }
-       
+        public string Name { get; set; }
+
         // Navigation properties
         public ICollection<Car> Cars { get; set; }
     }

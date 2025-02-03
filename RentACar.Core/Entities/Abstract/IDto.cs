@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.Core.Entities.Abstract
 {
-    internal interface IDto
+    public interface IDto
     {
     }
 }

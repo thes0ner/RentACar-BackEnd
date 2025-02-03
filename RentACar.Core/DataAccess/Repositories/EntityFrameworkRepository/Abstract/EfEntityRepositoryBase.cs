@@ -21,7 +21,6 @@ namespace RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstra
                 return filter == null
                     ? await context.Set<TEntity>().ToListAsync()
                     : await context.Set<TEntity>().Where(filter).ToListAsync();
-
             }
         }
 

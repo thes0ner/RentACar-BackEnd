@@ -9,8 +9,11 @@ namespace RentACar.Business.Abstract
 {
     public interface IBrandService
     {
-        Task<IEnumerable<Brand>> GetAll();
-        Task Add(Brand brand);
+        Task<IEnumerable<Brand>> GetBrandsAsync();
+        Task<Brand> GetSingleAsync(int id);
+        Task AddAsync(Brand brand);
+        Task UpdateAsync(Brand brand);
+        Task DeleteAsync(Brand brand);
 
     }
 }

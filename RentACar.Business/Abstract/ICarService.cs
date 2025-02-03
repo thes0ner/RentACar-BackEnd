@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Entities.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,24 @@ namespace RentACar.Business.Abstract
 {
     public interface ICarService
     {
-        Task<IEnumerable<Car>> GetAll();
-        Task AddCar(Car car);
+
+        // DTO's methods
+        Task<CarDetailDto> GetCarDetailsByIdAsync(int id);
+        Task<List<CarDetailDto>> GetCarsDetailsAsync();
+        Task<List<CarDetailDto>> GetCarsByBrandAsync(string brandName);
+        Task<List<CarDetailDto>> GetCarsByColorAsync(string colorName);
+        Task<List<CarDetailDto>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
+        Task<List<CarDetailDto>> GetCarsByAvailabilityAsync(CarStatus status);
+        Task<List<CarDetailDto>> GetCarsByModelYearAsync(int year);
+        Task<List<CarDetailDto>> GetCarsByFuelTypeAsync(string fuelType);
+        Task<List<CarDetailDto>> GetCarsByTransmissionTypeAsync(string transmissionType);
+        Task<List<CarDetailDto>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
+        Task<List<CarDetailDto>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
+        Task<IEnumerable<Car>> GetCarsAsync();
+        Task<Car> GetSingleAsync(int id);
+        Task AddAsync(Car car);
+        Task UpdateAsync(Car car);
+        Task DeleteAsync(Car car);
+
     }
 }

@@ -19,14 +19,30 @@ namespace RentACar.Business.Concrete
             _brandDal = brandDal;
         }
 
-        public async Task Add(Brand brand)
+        public async Task<IEnumerable<Brand>> GetBrandsAsync()
+        {
+            return await _brandDal.GetAllAsync();
+        }
+
+        public async Task<Brand> GetSingleAsync(int id)
+        {
+            return await _brandDal.GetSingleAsync(b => b.Id == id);
+        }
+
+        public async Task AddAsync(Brand brand)
         {
             await _brandDal.AddAsync(brand);
         }
 
-        public Task<IEnumerable<Brand>> GetAll()
+        public async Task UpdateAsync(Brand brand)
         {
-            return _brandDal.GetAllAsync();
+            await _brandDal.UpdateAsync(brand);
+        }
+
+        public async Task DeleteAsync(Brand brand)
+        {
+            var brandToDelete = await _brandDal.GetSingleAsync(c=> c.Id == brand.Id);
+            await _brandDal.DeleteAsync(brand);
         }
     }
 }
