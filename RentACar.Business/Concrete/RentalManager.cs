@@ -1,5 +1,8 @@
 ﻿using RentACar.Business.Abstract;
+using RentACar.Business.Constants;
 using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
+using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
@@ -18,30 +21,48 @@ namespace RentACar.Business.Concrete
             _rentalDal = rentalDal;
         }
 
-        public async Task AddAsync(Rental rental)
+        public async Task<IResult> AddAsync(Rental rental)
         {
             await _rentalDal.AddAsync(rental);
+            return new SuccessResult(Messages.RentalAdded);
         }
 
-        public async Task DeleteAsync(Rental rental)
+        public async Task<IResult> DeleteAsync(Rental rental)
         {
             await _rentalDal.DeleteAsync(rental);
+            return new SuccessResult(Messages.RentalDeleted);
         }
 
-        public async Task UpdateAsync(Rental rental)
+        public async Task<IResult> UpdateAsync(Rental rental)
         {
             await _rentalDal.UpdateAsync(rental);
+            return new SuccessResult(Messages.RentalUpdated);
         }
 
-        public async Task<IEnumerable<Rental>> GetRentalsAsync()
+        public async Task<IDataResult<IEnumerable<Rental>>> GetRentalsAsync()
         {
-            return await _rentalDal.GetAllAsync();
+            var result = await _rentalDal.GetAllAsync();
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<Rental>>(Messages.RentalNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<Rental>>(result, Messages.RentalsListed);
         }
 
-        public async Task<Rental> GetSingleAsync(int id)
+        public async Task<IDataResult<Rental>> GetSingleAsync(int id)
         {
-            return await _rentalDal.GetSingleAsync(r => r.Id == id);
+            var result = await _rentalDal.GetSingleAsync(p => p.Id == id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<Rental>(Messages.RentalNotFound);
+            }
+
+            return new SuccessDataResult<Rental>(result, Messages.RentalsListed);
         }
+
 
     }
 }

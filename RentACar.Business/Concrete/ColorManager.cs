@@ -1,5 +1,8 @@
 ﻿using RentACar.Business.Abstract;
+using RentACar.Business.Constants;
 using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
+using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.DataAccess.Abstract;
 using RentACar.DataAccess.Concrete.EntityFramework;
 using System;
@@ -19,29 +22,51 @@ namespace RentACar.Business.Concrete
             _colorDal = colorDal;
         }
 
-        public async Task AddAsync(Color color)
+        public async Task<IResult> AddAsync(Color color)
         {
             await _colorDal.AddAsync(color);
+
+            return new SuccessResult(Messages.ColorAdded);
         }
 
-        public async Task DeleteAsync(Color color)
+        public async Task<IResult> DeleteAsync(Color color)
         {
             await _colorDal.DeleteAsync(color);
+
+            return new SuccessResult(Messages.ColorDeleted);
         }
 
-        public async Task UpdateAsync(Color color)
+        public async Task<IResult> UpdateAsync(Color color)
         {
             await _colorDal.UpdateAsync(color);
+
+            return new SuccessResult(Messages.ColorUpdated);
         }
 
-        public async Task<IEnumerable<Color>> GetColorsAsync()
+        public async Task<IDataResult<IEnumerable<Color>>> GetColorsAsync()
         {
-            return await _colorDal.GetAllAsync();
+            var result = await _colorDal.GetAllAsync();
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<Color>>(Messages.ColorNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<Color>>(result, Messages.ColorsListed);
         }
 
-        public async Task<Color> GetSingleAsync(int id)
+        public async Task<IDataResult<Color>> GetSingleAsync(int id)
         {
-            return await _colorDal.GetSingleAsync(c => c.Id == id);
+            var result = await _colorDal.GetSingleAsync(p => p.Id == id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<Color>(Messages.ColorNotFound);
+            }
+
+            return new SuccessDataResult<Color>(result, Messages.ColorsListed);
         }
+
+
     }
 }

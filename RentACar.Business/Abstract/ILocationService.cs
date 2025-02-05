@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace RentACar.Business.Abstract
 {
     public interface ILocationService
     {
-        Task<IEnumerable<Location>> GetLocationsAsync();
-        Task<Location> GetSingleAsync(int id);
-        Task AddAsync(Location location);
-        Task UpdateAsync(Location location);
-        Task DeleteAsync(Location location);
+        Task<IDataResult<IEnumerable<Location>>> GetLocationsAsync();
+        Task<IDataResult<Location>> GetSingleAsync(int id);
+        Task<IResult> AddAsync(Location location);
+        Task<IResult> UpdateAsync(Location location);
+        Task<IResult> DeleteAsync(Location location);
     }
 }

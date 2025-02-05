@@ -1,5 +1,6 @@
 ﻿using RentACar.Core.Entities.Concrete;
 using RentACar.Core.Entities.DTO_s;
+using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,13 @@ namespace RentACar.Business.Abstract
         Task<List<CarDetailDto>> GetCarsByTransmissionTypeAsync(string transmissionType);
         Task<List<CarDetailDto>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
         Task<List<CarDetailDto>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
-        Task<IEnumerable<Car>> GetCarsAsync();
-        Task<Car> GetSingleAsync(int id);
-        Task AddAsync(Car car);
-        Task UpdateAsync(Car car);
-        Task DeleteAsync(Car car);
+
+
+        Task<IDataResult<IEnumerable<Car>>> GetCarsAsync();
+        Task<IDataResult<Car>> GetSingleAsync(int id);
+        Task<IResult> AddAsync(Car car);
+        Task<IResult> UpdateAsync(Car car);
+        Task<IResult> DeleteAsync(Car car);
 
     }
 }

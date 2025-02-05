@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RentACar.Core.Entities.DTO_s;
+using RentACar.Core.Utilities.Results.Abstract;
+using RentACar.Core.Utilities.Results.Concrete;
+using RentACar.Business.Constants;
 
 namespace RentACar.Business.Concrete
 {
@@ -17,6 +20,48 @@ namespace RentACar.Business.Concrete
         public CarManager(ICarDal carDal)
         {
             _carDal = carDal;
+        }
+
+        public async Task<IDataResult<IEnumerable<Car>>> GetCarsAsync()
+        {
+            var result = await _carDal.GetAllAsync();
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<Car>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<Car>>(result, Messages.CarsListed);
+        }
+
+        public async Task<IDataResult<Car>> GetSingleAsync(int id)
+        {
+            var result = await _carDal.GetSingleAsync(p => p.Id == id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<Car>(Messages.CarNotFound);
+            }
+
+            return new ErrorDataResult<Car>(result, Messages.CarsListed);
+        }
+
+        public async Task<IResult> AddAsync(Car car)
+        {
+            await _carDal.AddAsync(car);
+            return new SuccessResult(Messages.CarAdded);
+        }
+
+        public async Task<IResult> UpdateAsync(Car car)
+        {
+            await _carDal.UpdateAsync(car);
+            return new SuccessResult(Messages.CarUpdated);
+        }
+
+        public async Task<IResult> DeleteAsync(Car car)
+        {
+            await _carDal.DeleteAsync(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
 
@@ -75,44 +120,6 @@ namespace RentACar.Business.Concrete
             return await _carDal.GetCarsByMileageRangeAsync(minMileage, maxMileage);
         }
 
-        public async Task<IEnumerable<Car>> GetCarsAsync()
-        {
-            return await _carDal.GetAllAsync();
-        }
 
-        public async Task<Car> GetSingleAsync(int id)
-        {
-            return await _carDal.GetSingleAsync(c => c.Id == id);
-        }
-
-        public async Task AddAsync(Car car)
-        {
-            await _carDal.AddAsync(car);
-        }
-
-        public async Task UpdateAsync(Car car)
-        {
-            var updatedCar = _carDal.GetSingleAsync(c => c.Id == car.Id);
-
-            if (updatedCar != null)
-            {
-                updatedCar.Result.BrandId = car.BrandId;
-                updatedCar.Result.ColorId = car.ColorId;
-                updatedCar.Result.Model = car.Model;
-                updatedCar.Result.Year = car.Year;
-                updatedCar.Result.DailyPrice = car.DailyPrice;
-                updatedCar.Result.Description = car.Description;
-                updatedCar.Result.FuelType = car.FuelType;
-                updatedCar.Result.TransmissionType = car.TransmissionType;
-                updatedCar.Result.Mileage = car.Mileage;
-                updatedCar.Result.Status = car.Status;
-                await _carDal.UpdateAsync(updatedCar.Result);
-            }
-        }
-
-        public async Task DeleteAsync(Car car)
-        {
-           await _carDal.DeleteAsync(car);
-        }
     }
 }

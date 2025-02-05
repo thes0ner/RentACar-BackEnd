@@ -1,5 +1,8 @@
 ﻿using RentACar.Business.Abstract;
+using RentACar.Business.Constants;
 using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
+using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
@@ -18,30 +21,49 @@ namespace RentACar.Business.Concrete
             _vehicleTypeDal = vehicleTypeDal;
         }
 
-        public async Task AddAsync(VehicleType vehicleType)
+        public async Task<IResult> AddAsync(VehicleType vehicleType)
         {
             await _vehicleTypeDal.AddAsync(vehicleType);
+            return new SuccessResult(Messages.VehicleTypeAdded);
         }
 
-        public async Task DeleteAsync(VehicleType vehicleType)
+        public async Task<IResult> DeleteAsync(VehicleType vehicleType)
         {
             await _vehicleTypeDal.DeleteAsync(vehicleType);
+            return new SuccessResult(Messages.VehicleTypeAdded);
+
         }
 
-        public async Task UpdateAsync(VehicleType vehicleType)
+        public async Task<IResult> UpdateAsync(VehicleType vehicleType)
         {
             await _vehicleTypeDal.UpdateAsync(vehicleType);
+            return new SuccessResult(Messages.TransmissionTypeUpdated);
         }
 
-        public async Task<VehicleType> GetSingleAsync(int id)
+        public async Task<IDataResult<VehicleType>> GetSingleAsync(int id)
         {
-            return await _vehicleTypeDal.GetSingleAsync(v => v.Id == id);
+            var result = await _vehicleTypeDal.GetSingleAsync(p => p.Id == id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<VehicleType>(Messages.VehicleTypeNotFound);
+            }
+
+            return new SuccessDataResult<VehicleType>(result, Messages.VehicleTypesListed);
         }
 
-        public async Task<IEnumerable<VehicleType>> GetVehicleTypesAsync()
+        public async Task<IDataResult<IEnumerable<VehicleType>>> GetVehicleTypesAsync()
         {
-            return await _vehicleTypeDal.GetAllAsync();
+            var result = await _vehicleTypeDal.GetAllAsync();
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<VehicleType>>(Messages.VehicleTypeNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<VehicleType>>(result, Messages.VehicleTypesListed);
         }
+
 
     }
 }

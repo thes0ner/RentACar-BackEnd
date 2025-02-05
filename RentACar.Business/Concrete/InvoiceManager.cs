@@ -1,5 +1,8 @@
 ﻿using RentACar.Business.Abstract;
+using RentACar.Business.Constants;
 using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
+using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
@@ -18,29 +21,46 @@ namespace RentACar.Business.Concrete
             _invoiceDal = invoiceDal;
         }
 
-        public async Task AddAsync(Invoice invoice)
+        public async Task<IResult> AddAsync(Invoice invoice)
         {
             await _invoiceDal.AddAsync(invoice);
+            return new SuccessResult(Messages.InvoiceAdded);
         }
 
-        public async Task DeleteAsync(Invoice invoice)
+        public async Task<IResult> DeleteAsync(Invoice invoice)
         {
             await _invoiceDal.DeleteAsync(invoice);
+            return new SuccessResult(Messages.InvoiceDeleted);
         }
 
-        public async Task UpdateAsync(Invoice invoice)
+        public async Task<IResult> UpdateAsync(Invoice invoice)
         {
             await _invoiceDal.UpdateAsync(invoice);
+            return new SuccessResult(Messages.InvoiceUpdated);
         }
 
-        public async Task<IEnumerable<Invoice>> GetInvoicesAsync()
+        public async Task<IDataResult<IEnumerable<Invoice>>> GetInvoicesAsync()
         {
-           return await _invoiceDal.GetAllAsync();
+            var result = await _invoiceDal.GetAllAsync();
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<Invoice>>(Messages.InvoiceNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<Invoice>>(result, Messages.InvoicesListed);
         }
 
-        public async Task<Invoice> GetSingleAsync(int id)
+        public async Task<IDataResult<Invoice>> GetSingleAsync(int id)
         {
-            return await _invoiceDal.GetSingleAsync(i => i.Id == id);
+            var result = await _invoiceDal.GetSingleAsync(p => p.Id == id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<Invoice>(Messages.InvoiceNotFound);
+            }
+
+            return new SuccessDataResult<Invoice>(result, Messages.InvoicesListed);
         }
 
 

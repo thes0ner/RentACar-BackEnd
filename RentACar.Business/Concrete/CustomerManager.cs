@@ -1,5 +1,8 @@
 ﻿using RentACar.Business.Abstract;
+using RentACar.Business.Constants;
 using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
+using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
@@ -18,29 +21,49 @@ namespace RentACar.Business.Concrete
             _customerDal = customerDal;
         }
 
-        public async Task AddAsync(Customer customer)
+        public async Task<IResult> AddAsync(Customer customer)
         {
             await _customerDal.AddAsync(customer);
+
+            return new SuccessResult(Messages.CustomerAdded);
         }
 
-        public async Task DeleteAsync(Customer customer)
+        public async Task<IResult> DeleteAsync(Customer customer)
         {
             await _customerDal.DeleteAsync(customer);
+
+            return new SuccessResult(Messages.CustomerDeleted);
         }
 
-        public async Task UpdateAsync(Customer customer)
+        public async Task<IResult> UpdateAsync(Customer customer)
         {
             await _customerDal.UpdateAsync(customer);
+
+            return new SuccessResult(Messages.CustomerUpdated);
         }
 
-        public async Task<IEnumerable<Customer>> GetCustomersAsync()
+        public async Task<IDataResult<IEnumerable<Customer>>> GetCustomersAsync()
         {
-            return await _customerDal.GetAllAsync();
+            var result = await _customerDal.GetAllAsync();
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<Customer>>(Messages.CustomerNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<Customer>>(result, Messages.CustomersListed);
         }
 
-        public async Task<Customer> GetSingleAsync(int id)
+        public async Task<IDataResult<Customer>> GetSingleAsync(int id)
         {
-            return await _customerDal.GetSingleAsync(c => c.Id == id);
+            var result = await _customerDal.GetSingleAsync(p => p.Id == id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<Customer>(Messages.CustomerNotFound);
+            }
+
+            return new SuccessDataResult<Customer>(result, Messages.CustomersListed);
         }
 
 

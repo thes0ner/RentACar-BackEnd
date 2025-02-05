@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace RentACar.Business.Abstract
 {
     public interface IColorService
     {
-        Task<IEnumerable<Color>> GetColorsAsync();
-        Task<Color> GetSingleAsync(int id);
-        Task AddAsync(Color color);
-        Task UpdateAsync(Color color);
-        Task DeleteAsync(Color color);
+        Task<IDataResult<IEnumerable<Color>>> GetColorsAsync();
+        Task<IDataResult<Color>> GetSingleAsync(int id);
+        Task<IResult> AddAsync(Color color);
+        Task<IResult> UpdateAsync(Color color);
+        Task<IResult> DeleteAsync(Color color);
 
     }
 }

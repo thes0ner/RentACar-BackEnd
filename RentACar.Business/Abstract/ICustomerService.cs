@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace RentACar.Business.Abstract
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<Customer>> GetCustomersAsync();
-        Task<Customer> GetSingleAsync(int id);
-        Task AddAsync(Customer customer);
-        Task UpdateAsync(Customer customer);
-        Task DeleteAsync(Customer customer);
+        Task<IDataResult<IEnumerable<Customer>>> GetCustomersAsync();
+        Task<IDataResult<Customer>> GetSingleAsync(int id);
+        Task<IResult> AddAsync(Customer customer);
+        Task<IResult> UpdateAsync(Customer customer);
+        Task<IResult> DeleteAsync(Customer customer);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace RentACar.Business.Abstract
 {
     public interface ITransmissionService
     {
-        Task<IEnumerable<TransmissionType>> GetTransmissionsAsync();
-        Task<TransmissionType> GetSingleAsync(int id);
-        Task AddAsync(TransmissionType transmissionType);
-        Task UpdateAsync(TransmissionType transmissionType);
-        Task DeleteAsync(TransmissionType transmissionType);
+        Task<IDataResult<IEnumerable<TransmissionType>>> GetTransmissionsAsync();
+        Task<IDataResult<TransmissionType>> GetSingleAsync(int id);
+        Task<IResult> AddAsync(TransmissionType transmissionType);
+        Task<IResult> UpdateAsync(TransmissionType transmissionType);
+        Task<IResult> DeleteAsync(TransmissionType transmissionType);
     }
 }

@@ -11,7 +11,7 @@ namespace RentACar.Business.Abstract
     public interface IBrandService
     {
 
-        Task<IDataResult<List<Brand>>> GetBrandsAsync();
+        Task<IDataResult<IEnumerable<Brand>>> GetBrandsAsync();
         Task<IDataResult<Brand>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Brand brand);
         Task<IResult> UpdateAsync(Brand brand);

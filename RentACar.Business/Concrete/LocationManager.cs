@@ -1,5 +1,8 @@
 ﻿using RentACar.Business.Abstract;
+using RentACar.Business.Constants;
 using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
+using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
@@ -18,29 +21,46 @@ namespace RentACar.Business.Concrete
             _locationDal = locationDal;
         }
 
-        public async Task AddAsync(Location location)
+        public async Task<IResult> AddAsync(Location location)
         {
             await _locationDal.AddAsync(location);
+            return new SuccessResult(Messages.LocationAdded);
         }
 
-        public async Task DeleteAsync(Location location)
+        public async Task<IResult> DeleteAsync(Location location)
         {
             await _locationDal.DeleteAsync(location);
+            return new SuccessResult(Messages.LocationDeleted);
         }
 
-        public async Task UpdateAsync(Location location)
+        public async Task<IResult> UpdateAsync(Location location)
         {
             await _locationDal.UpdateAsync(location);
+            return new SuccessResult(Messages.LocationUpdated);
         }
 
-        public async Task<IEnumerable<Location>> GetLocationsAsync()
+        public async Task<IDataResult<IEnumerable<Location>>> GetLocationsAsync()
         {
-            return await _locationDal.GetAllAsync();
+            var result = await _locationDal.GetAllAsync();
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<Location>>(Messages.LocationNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<Location>>(result, Messages.LocationsListed);
         }
 
-        public async Task<Location> GetSingleAsync(int id)
+        public async Task<IDataResult<Location>> GetSingleAsync(int id)
         {
-            return await _locationDal.GetSingleAsync(c => c.Id == id);
+            var result = await _locationDal.GetSingleAsync(p => p.Id == id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<Location>(Messages.LocationNotFound);
+            }
+
+            return new SuccessDataResult<Location>(result, Messages.LocationsListed);
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace RentACar.Business.Abstract
 {
     public interface IVehicleTypeService
     {
-        Task<IEnumerable<VehicleType>> GetVehicleTypesAsync();
-        Task<VehicleType> GetSingleAsync(int id);
-        Task AddAsync(VehicleType vehicleType);
-        Task UpdateAsync(VehicleType vehicleType);
-        Task DeleteAsync(VehicleType vehicleType);
+        Task<IDataResult<IEnumerable<VehicleType>>> GetVehicleTypesAsync();
+        Task<IDataResult<VehicleType>> GetSingleAsync(int id);
+        Task<IResult> AddAsync(VehicleType vehicleType);
+        Task<IResult> UpdateAsync(VehicleType vehicleType);
+        Task<IResult> DeleteAsync(VehicleType vehicleType);
     }
 }

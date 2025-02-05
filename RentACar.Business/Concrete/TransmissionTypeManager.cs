@@ -1,5 +1,8 @@
 ﻿using RentACar.Business.Abstract;
+using RentACar.Business.Constants;
 using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
+using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
@@ -18,32 +21,49 @@ namespace RentACar.Business.Concrete
             _transmissionTypeDal = transmissionTypeDal;
         }
 
-        public async Task AddAsync(TransmissionType transmissionType)
+        public async Task<IResult> AddAsync(TransmissionType transmissionType)
         {
             await _transmissionTypeDal.AddAsync(transmissionType);
+            return new SuccessResult(Messages.TransmissionTypeAdded);
+
         }
 
-        public async Task DeleteAsync(TransmissionType transmissionType)
+        public async Task<IResult> DeleteAsync(TransmissionType transmissionType)
         {
             await _transmissionTypeDal.DeleteAsync(transmissionType);
+            return new SuccessResult(Messages.TransmissionTypeDeleted);
         }
 
-        public async Task UpdateAsync(TransmissionType transmissionType)
+        public async Task<IResult> UpdateAsync(TransmissionType transmissionType)
         {
             await _transmissionTypeDal.UpdateAsync(transmissionType);
+            return new SuccessResult(Messages.TransmissionTypeUpdated);
+
         }
 
-        public async Task<IEnumerable<TransmissionType>> GetTransmissionsAsync()
+        public async Task<IDataResult<TransmissionType>> GetSingleAsync(int id)
         {
-            return await _transmissionTypeDal.GetAllAsync();
+            var result = await _transmissionTypeDal.GetSingleAsync(p => p.Id == id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<TransmissionType>(Messages.TransmissionTypeNotFound);
+            }
+
+            return new SuccessDataResult<TransmissionType>(result, Messages.TransmissionTypesListed);
         }
 
-        public async Task<TransmissionType> GetSingleAsync(int id)
+        public async Task<IDataResult<IEnumerable<TransmissionType>>> GetTransmissionsAsync()
         {
-            return await _transmissionTypeDal.GetSingleAsync(c => c.Id == id);
+            var result = await _transmissionTypeDal.GetAllAsync();
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<TransmissionType>>(Messages.TransmissionTypeNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<TransmissionType>>(result, Messages.TransmissionTypesListed);
         }
-
-
 
 
     }

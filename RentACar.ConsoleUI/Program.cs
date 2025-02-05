@@ -10,29 +10,77 @@ namespace RentACar.ConsoleUI
     {
         static void Main(string[] args)
         {
-
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-            CreditCardManager creditCardManager = new CreditCardManager(new EfCreditCardDal());
-            FuelTypeManager fuelTypeManager = new FuelTypeManager(new EfFuelTypeDal());
-            InvoiceManager invoiceManager = new InvoiceManager(new EfInvoiceDal());
-            LocationManager locationManager = new LocationManager(new EfLocationDal());
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            TransmissionTypeManager transmissionTypeManager = new TransmissionTypeManager(new EfTransmissionTypeDal());
-            VehicleTypeManager vehicleTypeManager = new VehicleTypeManager(new EfVehicleTypeDal());
+            CarManagerTest();
+            //BrandManagerTest();
+            //ColorManagerTest();
+            //CreditCardManagerTest();
+        }
 
 
 
-            //GetAll()
 
-            foreach (var item in vehicleTypeManager.GetVehicleTypesAsync().Result)
+        public static void CarManagerTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+
+            var result = carManager.GetCarsAsync();
+            //var result = carManager.GetSingleAsync(1);
+
+            //Console.WriteLine($"{result.Result.Data.DailyPrice}");
+
+
+            foreach (var res in result.Result.Data)
             {
-                Console.WriteLine($"ID: {item.Id} Name: {item.Type} ");
+                Console.WriteLine($"Id:{res.Id} {res.Description}");
             }
+        }
 
-            //GetSingle()
 
-            var result = vehicleTypeManager.GetSingleAsync(1).Result;
-            Console.WriteLine($"Id : {result.Id} Name: {result.Type}");
+
+        public static void BrandManagerTest()
+        {
+            BrandManager brandManager = new(new EfBrandDal());
+
+            //var result = brandManager.GetSingleAsync(0);
+            var result = brandManager.GetBrandsAsync();
+
+            foreach (var res in result.Result.Data)
+            {
+                Console.WriteLine($"{res.Name}");
+            }
+        }
+
+        public static void ColorManagerTest()
+        {
+            ColorManager colorManager = new(new EfColorDal());
+
+            //var result = colorManager.GetColorsAsync();
+            var result = colorManager.GetSingleAsync(1);
+
+            Console.WriteLine($"{result.Result.Data.Name}");
+
+
+            //foreach (var res in result.Result.Data)
+            //{
+            //    Console.WriteLine($"{res.Name}");
+            //}
+        }
+
+
+        public static void CreditCardManagerTest()
+        {
+            CreditCardManager creditCardManager = new(new EfCreditCardDal());
+
+            //var result = colorManager.GetColorsAsync();
+            var result = creditCardManager.GetSingleAsync(1);
+
+            Console.WriteLine($"{result.Result.Data.FullName}");
+
+
+            //foreach (var res in result.Result.Data)
+            //{
+            //    Console.WriteLine($"{res.FullName}");
+            //}
         }
     }
 }

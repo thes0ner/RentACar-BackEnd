@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace RentACar.Business.Abstract
 {
     public interface ICreditCardService
     {
-        Task<IEnumerable<CreditCard>> GetCreditCardsAsync();
-        Task<CreditCard> GetSingleAsync(int id);
-        Task AddAsync(CreditCard creditCard);
-        Task UpdateAsync(CreditCard creditCard);
-        Task DeleteAsync(CreditCard creditCard);
+        Task<IDataResult<IEnumerable<CreditCard>>> GetCreditCardsAsync();
+        Task<IDataResult<CreditCard>> GetSingleAsync(int id);
+        Task<IResult> AddAsync(CreditCard creditCard);
+        Task<IResult> UpdateAsync(CreditCard creditCard);
+        Task<IResult> DeleteAsync(CreditCard creditCard);
     }
 }

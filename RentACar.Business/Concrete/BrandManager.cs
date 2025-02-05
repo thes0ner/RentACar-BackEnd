@@ -48,16 +48,28 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.BrandDeleted);
         }
 
-
-        //Must be async -- Ned to be fixed
-        public async Task<IDataResult<List<Brand>>> GetBrandsAsync()
+        public async Task<IDataResult<IEnumerable<Brand>>> GetBrandsAsync()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAllAsync(), Messages.BrandListed);
+            var result = await _brandDal.GetAllAsync();
+
+            if (result is null)
+            {
+                return new ErrorDataResult<IEnumerable<Brand>>(Messages.BrandNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<Brand>>(result, Messages.BrandsListed);
         }
 
-        public Task<IDataResult<Brand>> GetSingleAsync(int id)
+        public async Task<IDataResult<Brand>> GetSingleAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _brandDal.GetSingleAsync(p => p.Id == id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<Brand>(Messages.BrandNotFound);
+            }
+
+            return new SuccessDataResult<Brand>(result, Messages.BrandsListed);
         }
     }
 }
