@@ -12,6 +12,12 @@ namespace RentACar.Business.Abstract
     public interface ICarService
     {
 
+        // Group filtering
+
+        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByBrandAsync(string brandName);
+        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByColorAsync(string colorName);
+
+
         // DTO's methods
         Task<IDataResult<CarDetailDto>> GetCarDetailsByIdAsync(int id);
         Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsDetailsAsync();
@@ -24,12 +30,7 @@ namespace RentACar.Business.Abstract
         Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByTransmissionTypeAsync(string transmissionType);
         Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
         Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
-
-
         Task<IDataResult<IEnumerable<Car>>> GetCarsAsync();
-
-        //Task<IDataResult<IEnumerable<Car>>> GetCarsBrandsAsync();
-
         Task<IDataResult<Car>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Car car);
         Task<IResult> UpdateAsync(Car car);

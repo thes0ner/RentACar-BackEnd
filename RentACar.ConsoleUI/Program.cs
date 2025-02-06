@@ -22,37 +22,64 @@ namespace RentACar.ConsoleUI
 
         public static void CarManagerTest()
         {
-            CarManager carManager = new CarManager(new EfCarDal());
+            var carManager = new CarManager(new EfCarDal());
 
-            var result = carManager.GetCarsAsync();
+            var result =  carManager.GetCarsGroupByBrandAsync("BMW");
+
+            if (result.Result.Success)
+            {
+                Console.WriteLine("\n----- Car List -----");
+                foreach (var group in result.Result.Data)
+                {
+                    Console.WriteLine($"\nBrand: {group.Key}\n");
+
+                    foreach (var car in group.Value)
+                    {
+                        Console.WriteLine($"Model: {car.Model}");
+                        Console.WriteLine($"Year: {car.Year}");
+                        Console.WriteLine($"Color : {car.ColorName}");
+                        Console.WriteLine($"Daily Price: {car.DailyPrice} $");
+                        Console.WriteLine($"Fuel Type: {car.FuelType}");
+                        Console.WriteLine($"Vites Türü: {car.TransmissionType}");
+                        Console.WriteLine($"Mielage: {car.Mileage}");
+
+                        Console.WriteLine("-------------------------");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Result.Message); // Hata mesajını göster
+            }
+
+            Console.ReadLine();
+
+
+
+            //var result = carManager.GetCarsAsync();
             //var result = carManager.GetSingleAsync(1);
             //var result = carManager.GetCarDetailsByIdAsync(1);
             //var result = carManager.GetCarsDetailsAsync();
-
-
             //var result = carManager.GetCarsByBrandAsync("Yugo");
-
-
             //var result = carManager.GetCarsByColorAsync("Black");
-            //var result = carManager.GetCarsByPriceRangeAsync();
-            //var result = carManager.GetCarsByAvailabilityAsync();
-            //var result = carManager.GetCarsByModelYearAsync();
-            //var result = carManager.GetCarsByFuelTypeAsync();
-            //var result = carManager.GetCarsByTransmissionTypeAsync();
-            //var result = carManager.GetCarsByModelYearRangeAsync();
-            //var result = carManager.GetCarsByMileageRangeAsync();
-
+            //var result = carManager.GetCarsByPriceRangeAsync(5, 300);
+            //var result = carManager.GetCarsByAvailabilityAsync(0);
+            //var result = carManager.GetCarsByModelYearAsync(2020);
+            //var result = carManager.GetCarsByFuelTypeAsync("Hybrid");
+            //var result = carManager.GetCarsByTransmissionTypeAsync("Automatic");
+            //var result = carManager.GetCarsByModelYearRangeAsync(2018,2023);
+            //var result = carManager.GetCarsByMileageRangeAsync(1000,10000);
 
 
             //Console.WriteLine($"{result.Result.Data.BrandName}");
 
 
-            foreach (var res in result.Result.Data)
-            {
-                Console.WriteLine($"{res.Id}");
+            //foreach (var res in result.Result.Data)
+            //{
+            //    //Console.WriteLine($"{res.Id} {res.BrandName}");
 
-                //Console.WriteLine($"Id: {res.Id} {res.BrandName} {res.ColorName} {res.Year} {res.DailyPrice} {res.Description} {res.Mileage} {res.LocationCity} {res.Model} {res.Status}");
-            }
+            //    //Console.WriteLine($"Id: {res.Id} {res.BrandName} {res.ColorName} {res.Year} {res.DailyPrice} {res.Description} {res.Mileage} {res.LocationCity} {res.Model} {res.Status}");
+            //}
         }
 
 

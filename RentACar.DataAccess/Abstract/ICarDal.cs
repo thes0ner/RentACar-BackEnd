@@ -4,6 +4,7 @@ using RentACar.Core.Entities.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,18 +13,29 @@ namespace RentACar.DataAccess.Abstract
     public interface ICarDal : IEntityRepository<Car>
     {
 
+        //Gets the single car by ID.
         Task<CarDetailDto> GetCarDetailsByIdAsync(int id);
-        Task<List<CarDetailDto>> GetCarsDetailsAsync();
-        Task<List<CarDetailDto>> GetCarsByBrandAsync(string brandName);
-        //Task<List<CarDetailDto>> GetCarsByBrandsAsync();
-        Task<List<CarDetailDto>> GetCarsByColorAsync(string colorName);
-        Task<List<CarDetailDto>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
-        Task<List<CarDetailDto>> GetCarsByAvailabilityAsync(CarStatus status);
-        Task<List<CarDetailDto>> GetCarsByModelYearAsync(int year);
-        Task<List<CarDetailDto>> GetCarsByFuelTypeAsync(string fuelType);
-        Task<List<CarDetailDto>> GetCarsByTransmissionTypeAsync(string transmissionType);
-        Task<List<CarDetailDto>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
-        Task<List<CarDetailDto>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
+
+        //Gets all cars.
+        Task<IEnumerable<CarDetailDto>> GetCarsDetailsAsync();
+
+        // Filtering Methods
+        Task<IEnumerable<CarDetailDto>> GetCarsByBrandAsync(string brandName);
+        Task<IEnumerable<CarDetailDto>> GetCarsByColorAsync(string colorName);
+        Task<IEnumerable<CarDetailDto>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
+        Task<IEnumerable<CarDetailDto>> GetCarsByAvailabilityAsync(CarStatus status);
+        Task<IEnumerable<CarDetailDto>> GetCarsByModelYearAsync(int year);
+        Task<IEnumerable<CarDetailDto>> GetCarsByFuelTypeAsync(string fuelType);
+        Task<IEnumerable<CarDetailDto>> GetCarsByTransmissionTypeAsync(string transmissionType);
+        Task<IEnumerable<CarDetailDto>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
+        Task<IEnumerable<CarDetailDto>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
+
+        // Dinamically grouping.
+        Task<Dictionary<object, IEnumerable<CarDetailDto>>> GetCarsGroupedAsync(Func<CarDetailDto, object> groupBy, Expression<Func<CarDetailDto, bool>> filter = null);
+
+
+
+
 
     }
 }

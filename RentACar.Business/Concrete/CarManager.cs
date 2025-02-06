@@ -199,5 +199,32 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
+        public async Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByBrandAsync(string brandName)
+        {
+            var result = await _carDal.GetCarsGroupedAsync(
+                groupBy: c => c.BrandName,
+                filter: c => c.BrandName == brandName
+            );
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
+        }
+
+        public async Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByColorAsync(string colorName)
+        {
+            var result = await _carDal.GetCarsGroupedAsync(groupBy: c => c.ColorName, filter: c => c.ColorName == colorName);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
+
+        }
     }
 }
