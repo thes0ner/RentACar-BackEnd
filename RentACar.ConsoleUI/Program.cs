@@ -3,6 +3,7 @@ using RentACar.DataAccess.Concrete.EntityFramework;
 using RentACar.DataAccess.Concrete.InMemory;
 using RentACar.Core.Entities.Concrete;
 using RentACar.Core.Entities.DTO_s;
+using Microsoft.VisualBasic.FileIO;
 
 namespace RentACar.ConsoleUI
 {
@@ -25,13 +26,32 @@ namespace RentACar.ConsoleUI
 
             var result = carManager.GetCarsAsync();
             //var result = carManager.GetSingleAsync(1);
+            //var result = carManager.GetCarDetailsByIdAsync(1);
+            //var result = carManager.GetCarsDetailsAsync();
 
-            //Console.WriteLine($"{result.Result.Data.DailyPrice}");
+
+            //var result = carManager.GetCarsByBrandAsync("Yugo");
+
+
+            //var result = carManager.GetCarsByColorAsync("Black");
+            //var result = carManager.GetCarsByPriceRangeAsync();
+            //var result = carManager.GetCarsByAvailabilityAsync();
+            //var result = carManager.GetCarsByModelYearAsync();
+            //var result = carManager.GetCarsByFuelTypeAsync();
+            //var result = carManager.GetCarsByTransmissionTypeAsync();
+            //var result = carManager.GetCarsByModelYearRangeAsync();
+            //var result = carManager.GetCarsByMileageRangeAsync();
+
+
+
+            //Console.WriteLine($"{result.Result.Data.BrandName}");
 
 
             foreach (var res in result.Result.Data)
             {
-                Console.WriteLine($"Id:{res.Id} {res.Description}");
+                Console.WriteLine($"{res.Id}");
+
+                //Console.WriteLine($"Id: {res.Id} {res.BrandName} {res.ColorName} {res.Year} {res.DailyPrice} {res.Description} {res.Mileage} {res.LocationCity} {res.Model} {res.Status}");
             }
         }
 

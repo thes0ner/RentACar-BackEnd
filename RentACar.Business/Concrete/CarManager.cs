@@ -64,62 +64,140 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
-
-        public async Task<List<CarDetailDto>> GetCarsDetailsAsync()
+        public async Task<IDataResult<CarDetailDto>> GetCarDetailsByIdAsync(int id)
         {
-            return await _carDal.GetCarsDetailsAsync();
+            var result = await _carDal.GetCarDetailsByIdAsync(id);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<CarDetailDto>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<CarDetailDto>(result, Messages.CarsListed);
+
         }
 
-        public async Task<CarDetailDto> GetCarDetailsByIdAsync(int id)
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsDetailsAsync()
         {
-            return await _carDal.GetCarDetailsByIdAsync(id);
+            var result = await _carDal.GetCarsDetailsAsync();
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
 
-        public async Task<List<CarDetailDto>> GetCarsByBrandAsync(string brandName)
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByBrandAsync(string brandName)
         {
-            return await _carDal.GetCarsByBrandAsync(brandName);
+            var result = await _carDal.GetCarsByBrandAsync(brandName);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<List<CarDetailDto>> GetCarsByColorAsync(string colorName)
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByColorAsync(string colorName)
         {
-            return await _carDal.GetCarsByColorAsync(colorName);
+            var result = await _carDal.GetCarsByColorAsync(colorName);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<List<CarDetailDto>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice)
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice)
         {
-            return await _carDal.GetCarsByPriceRangeAsync(minPrice, maxPrice);
-        }
-        public async Task<List<CarDetailDto>> GetCarsByAvailabilityAsync(CarStatus status)
-        {
-            return await _carDal.GetCarsByAvailabilityAsync(status);
+            var result = await _carDal.GetCarsByPriceRangeAsync(minPrice, maxPrice);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<List<CarDetailDto>> GetCarsByModelYearAsync(int year)
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByAvailabilityAsync(CarStatus status)
         {
-            return await _carDal.GetCarsByModelYearAsync(year);
+            var result = await _carDal.GetCarsByAvailabilityAsync(status);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<List<CarDetailDto>> GetCarsByFuelTypeAsync(string fuelType)
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearAsync(int year)
         {
-            return await _carDal.GetCarsByFuelTypeAsync(fuelType);
+            var result = await _carDal.GetCarsByModelYearAsync(year);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<List<CarDetailDto>> GetCarsByTransmissionTypeAsync(string transmissionType)
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByFuelTypeAsync(string fuelType)
         {
-            return await _carDal.GetCarsByTransmissionTypeAsync(transmissionType);
+            var result = await _carDal.GetCarsByFuelTypeAsync(fuelType);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<List<CarDetailDto>> GetCarsByModelYearRangeAsync(int minYear, int maxYear)
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByTransmissionTypeAsync(string transmissionType)
         {
-            return await _carDal.GetCarsByModelYearRangeAsync(minYear, maxYear);
+            var result = await _carDal.GetCarsByTransmissionTypeAsync(transmissionType);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+
         }
 
-        public async Task<List<CarDetailDto>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage)
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearRangeAsync(int minYear, int maxYear)
         {
-            return await _carDal.GetCarsByMileageRangeAsync(minMileage, maxMileage);
+            var result = await _carDal.GetCarsByModelYearRangeAsync(minYear, maxYear);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
+        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage)
+        {
+            var result = await _carDal.GetCarsByMileageRangeAsync(minMileage, maxMileage);
+
+            if (result == null)
+            {
+                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+        }
 
     }
 }

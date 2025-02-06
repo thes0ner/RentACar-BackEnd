@@ -13,20 +13,23 @@ namespace RentACar.Business.Abstract
     {
 
         // DTO's methods
-        Task<CarDetailDto> GetCarDetailsByIdAsync(int id);
-        Task<List<CarDetailDto>> GetCarsDetailsAsync();
-        Task<List<CarDetailDto>> GetCarsByBrandAsync(string brandName);
-        Task<List<CarDetailDto>> GetCarsByColorAsync(string colorName);
-        Task<List<CarDetailDto>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
-        Task<List<CarDetailDto>> GetCarsByAvailabilityAsync(CarStatus status);
-        Task<List<CarDetailDto>> GetCarsByModelYearAsync(int year);
-        Task<List<CarDetailDto>> GetCarsByFuelTypeAsync(string fuelType);
-        Task<List<CarDetailDto>> GetCarsByTransmissionTypeAsync(string transmissionType);
-        Task<List<CarDetailDto>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
-        Task<List<CarDetailDto>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
+        Task<IDataResult<CarDetailDto>> GetCarDetailsByIdAsync(int id);
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsDetailsAsync();
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByBrandAsync(string brandName);
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByColorAsync(string colorName);
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByAvailabilityAsync(CarStatus status);
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearAsync(int year);
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByFuelTypeAsync(string fuelType);
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByTransmissionTypeAsync(string transmissionType);
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
+        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
 
 
         Task<IDataResult<IEnumerable<Car>>> GetCarsAsync();
+
+        //Task<IDataResult<IEnumerable<Car>>> GetCarsBrandsAsync();
+
         Task<IDataResult<Car>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Car car);
         Task<IResult> UpdateAsync(Car car);

@@ -417,8 +417,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
                 return result;
             }
         }
-    
-    
+
+
     }
 }
 

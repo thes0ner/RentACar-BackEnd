@@ -12,9 +12,10 @@ namespace RentACar.DataAccess.Abstract
     public interface ICarDal : IEntityRepository<Car>
     {
 
-        Task<List<CarDetailDto>> GetCarsDetailsAsync();
         Task<CarDetailDto> GetCarDetailsByIdAsync(int id);
+        Task<List<CarDetailDto>> GetCarsDetailsAsync();
         Task<List<CarDetailDto>> GetCarsByBrandAsync(string brandName);
+        //Task<List<CarDetailDto>> GetCarsByBrandsAsync();
         Task<List<CarDetailDto>> GetCarsByColorAsync(string colorName);
         Task<List<CarDetailDto>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
         Task<List<CarDetailDto>> GetCarsByAvailabilityAsync(CarStatus status);
