@@ -13,10 +13,12 @@ namespace RentACar.DataAccess.Abstract
     public interface ICarDal : IEntityRepository<Car>
     {
 
-        //Gets the single car by ID.
-        Task<CarDetailDto> GetCarDetailsByIdAsync(int id);
+        //Task<int> GetTotalCarsAsync();
+        //Task<int> GetTotalCarsByStatusAsync(CarStatus status);
+        //Task<decimal> GetAverageDailyPriceAsync();
+        //Task<Dictionary<int, int>> GetMostRentedCarsAsync(int topRented);
 
-        //Gets all cars.
+        Task<CarDetailDto> GetCarDetailsByIdAsync(int id);
         Task<IEnumerable<CarDetailDto>> GetCarsDetailsAsync();
 
         // Filtering Methods

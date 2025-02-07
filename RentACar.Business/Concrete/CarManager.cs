@@ -226,5 +226,91 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
 
         }
+
+        public async Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByFuleTypeAsync(string fuelType)
+        {
+            var result = await _carDal.GetCarsGroupedAsync(groupBy: c => c.FuelType, filter: c => c.FuelType == fuelType);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
+        }
+
+        public async Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByTransmissionTypeAsync(string transmissionType)
+        {
+            var result = await _carDal.GetCarsGroupedAsync(groupBy: c => c.TransmissionType, filter: c => c.TransmissionType == transmissionType);
+
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
+        }
+
+        public async Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByVehicleTypeAsync(string vehicleType)
+        {
+            var result = await _carDal.GetCarsGroupedAsync(groupBy: c => c.VehicleType, filter: c => c.VehicleType == vehicleType);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
+
+        }
+
+        public async Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByDailyPriceAsync(decimal dailyPrice)
+        {
+            var result = await _carDal.GetCarsGroupedAsync(groupBy: c => c.DailyPrice, filter: c => c.DailyPrice == dailyPrice);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
+        }
+
+        public async Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByModelAsync(string model)
+        {
+            var result = await _carDal.GetCarsGroupedAsync(groupBy: c => c.Model, filter: c => c.Model == model);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
+        }
+
+        public async Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByYearAsync(int year)
+        {
+            var result = await _carDal.GetCarsGroupedAsync(groupBy: c => c.Year, filter: c => c.Year == year);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
+        }
+
+        public async Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByAvailabilityAsync(CarStatus status)
+        {
+            var result = await _carDal.GetCarsGroupedAsync(groupBy: c => c.Status, filter: c => c.Status == status);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(Messages.CarNotFound);
+            }
+
+            return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
+        }
     }
 }

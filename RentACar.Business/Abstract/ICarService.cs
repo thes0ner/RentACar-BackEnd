@@ -16,9 +16,15 @@ namespace RentACar.Business.Abstract
 
         Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByBrandAsync(string brandName);
         Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByColorAsync(string colorName);
+        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByFuleTypeAsync(string fuelType);
+        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByTransmissionTypeAsync(string transmissionType);
+        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByVehicleTypeAsync(string vehicleType);
+        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByDailyPriceAsync(decimal dailyPrice);
+        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByModelAsync(string model);
+        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByYearAsync(int year);
+        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByAvailabilityAsync(CarStatus status);
 
 
-        // DTO's methods
         Task<IDataResult<CarDetailDto>> GetCarDetailsByIdAsync(int id);
         Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsDetailsAsync();
         Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByBrandAsync(string brandName);
@@ -30,6 +36,8 @@ namespace RentACar.Business.Abstract
         Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByTransmissionTypeAsync(string transmissionType);
         Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
         Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
+
+
         Task<IDataResult<IEnumerable<Car>>> GetCarsAsync();
         Task<IDataResult<Car>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Car car);

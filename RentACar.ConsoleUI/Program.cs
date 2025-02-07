@@ -11,20 +11,54 @@ namespace RentACar.ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManagerTest();
+            CarManagerGroupByXTest();
             //BrandManagerTest();
             //ColorManagerTest();
             //CreditCardManagerTest();
         }
 
 
-
-
-        public static void CarManagerTest()
+        public static void CarManagerGroupByXTest()
         {
             var carManager = new CarManager(new EfCarDal());
 
-            var result =  carManager.GetCarsGroupByBrandAsync("BMW");
+            var result = carManager.GetCarsGroupByAvailabilityAsync(0);
+
+            if (result.Result.Success)
+            {
+                Console.WriteLine("\n----- Car List -----");
+                foreach (var group in result.Result.Data)
+                {
+                    Console.WriteLine($"Car by transmission type: {group.Key}\n");
+
+                    foreach (var car in group.Value)
+                    {
+                        Console.WriteLine($"Brand: {car.BrandName}");
+                        Console.WriteLine($"Model: {car.Model}");
+                        Console.WriteLine($"Year: {car.Year}");
+                        Console.WriteLine($"Color : {car.ColorName}");
+                        Console.WriteLine($"Daily Price: {car.DailyPrice} $");
+                        Console.WriteLine($"Fuel Type: {car.FuelType}");
+                        Console.WriteLine($"Transmission Type: {car.TransmissionType}");
+                        Console.WriteLine($"Mielage: {car.Mileage}");
+
+                        Console.WriteLine("-------------------------");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Result.Message); // Hata mesajını göster
+            }
+
+            Console.ReadLine();
+        }
+
+        public static void CarManagerGroupByBrandTest()
+        {
+            var carManager = new CarManager(new EfCarDal());
+
+            var result = carManager.GetCarsGroupByBrandAsync("BMW");
 
             if (result.Result.Success)
             {
