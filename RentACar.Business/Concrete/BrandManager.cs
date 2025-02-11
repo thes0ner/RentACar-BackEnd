@@ -48,17 +48,6 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public async Task<IDataResult<IEnumerable<Brand>>> GetBrandsAsync()
-        {
-            var result = await _brandDal.GetAllAsync();
-
-            if (result is null)
-            {
-                return new ErrorDataResult<IEnumerable<Brand>>(Messages.BrandNotFound);
-            }
-
-            return new SuccessDataResult<IEnumerable<Brand>>(result, Messages.BrandsListed);
-        }
 
         public async Task<IDataResult<Brand>> GetSingleAsync(int id)
         {
@@ -71,5 +60,43 @@ namespace RentACar.Business.Concrete
 
             return new SuccessDataResult<Brand>(result, Messages.BrandsListed);
         }
+
+        public IDataResult<IQueryable<Brand>> GetAllBrands()
+        {
+            var result = _brandDal.GetAll();
+
+            if (result is null)
+            {
+                return new ErrorDataResult<IQueryable<Brand>>(Messages.BrandNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<Brand>>(result, Messages.BrandsListed);
+        }
+
+
+        public IDataResult<IQueryable<Brand>> GetFilteredBrandsById(int id)
+        {
+            var result = _brandDal.GetFiltered(p => p.Id == id);
+
+            if (result is null)
+            {
+                return new ErrorDataResult<IQueryable<Brand>>(Messages.BrandNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<Brand>>(result, Messages.BrandsListed);
+        }
+
+        public IDataResult<IQueryable<Brand>> GetFilteredBrandsByName(string name)
+        {
+            var result = _brandDal.GetFiltered(p => p.Name == name);
+
+            if (result is null)
+            {
+                return new ErrorDataResult<IQueryable<Brand>>(Messages.BrandNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<Brand>>(result, Messages.BrandsListed);
+        }
+
     }
 }

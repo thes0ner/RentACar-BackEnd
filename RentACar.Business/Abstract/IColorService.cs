@@ -10,7 +10,11 @@ namespace RentACar.Business.Abstract
 {
     public interface IColorService
     {
-        Task<IDataResult<IEnumerable<Color>>> GetColorsAsync();
+
+
+        IDataResult<IQueryable<Brand>> GetAllColors();
+        IDataResult<IQueryable<Brand>> GetFilteredBrandsById(int id);
+        IDataResult<IQueryable<Brand>> GetFilteredBrandsByName(string name);
         Task<IDataResult<Color>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Color color);
         Task<IResult> UpdateAsync(Color color);

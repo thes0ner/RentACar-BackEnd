@@ -10,20 +10,11 @@ namespace RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstra
 {
     public interface IEntityRepository<T> where T : class, IEntity, new()
     {
+        IQueryable<T> GetAll(bool tracking = true);
 
-        /// <summary>
-        /// Retrieves all entities that match the specified filter.
-        /// </summary>
-        /// <param name="filter">The filter expression to apply. If null, retrieves all entities.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains a IEnumerable collection of entities that match the filter.</returns>
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null);
-     
-        /// <summary>
-        /// Retrieves a single entity that matches the specified filter.
-        /// </summary>
-        /// <param name="filter">The filter expression to apply.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains the entity that matches the filter.</returns>
-        Task<T> GetSingleAsync(Expression<Func<T, bool>> filter);
+        IQueryable<T> GetFiltered(Expression<Func<T, bool>> filter, bool tracking = true);
+
+        Task<T> GetSingleAsync(Expression<Func<T, bool>> filter, bool tracking = true);
 
         /// <summary>
         /// Adds a new entity to the repository.

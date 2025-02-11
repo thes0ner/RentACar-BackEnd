@@ -12,6 +12,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfCreditCardDal : EfEntityRepositoryBase<CreditCard, RentACarDbContext>, ICreditCardDal
     {
-
+        protected EfCreditCardDal(RentACarDbContext context) : base(context)
+        {
+        }
     }
 }

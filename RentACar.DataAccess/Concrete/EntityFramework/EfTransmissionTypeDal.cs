@@ -12,5 +12,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfTransmissionTypeDal : EfEntityRepositoryBase<TransmissionType, RentACarDbContext>, ITransmissionTypeDal
     {
+        protected EfTransmissionTypeDal(RentACarDbContext context) : base(context)
+        {
+        }
     }
 }

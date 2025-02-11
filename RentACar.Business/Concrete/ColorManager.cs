@@ -43,17 +43,6 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.ColorUpdated);
         }
 
-        public async Task<IDataResult<IEnumerable<Color>>> GetColorsAsync()
-        {
-            var result = await _colorDal.GetAllAsync();
-
-            if (result == null)
-            {
-                return new ErrorDataResult<IEnumerable<Color>>(Messages.ColorNotFound);
-            }
-
-            return new SuccessDataResult<IEnumerable<Color>>(result, Messages.ColorsListed);
-        }
 
         public async Task<IDataResult<Color>> GetSingleAsync(int id)
         {
@@ -67,6 +56,19 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<Color>(result, Messages.ColorsListed);
         }
 
+        public IDataResult<IQueryable<Brand>> GetAllColors()
+        {
+            throw new NotImplementedException();
+        }
 
+        public IDataResult<IQueryable<Brand>> GetFilteredBrandsById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDataResult<IQueryable<Brand>> GetFilteredBrandsByName(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

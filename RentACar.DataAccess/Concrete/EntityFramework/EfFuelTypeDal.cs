@@ -12,6 +12,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfFuelTypeDal : EfEntityRepositoryBase<FuelType, RentACarDbContext>, IFuelTypeDal
     {
-
+        protected EfFuelTypeDal(RentACarDbContext context) : base(context)
+        {
+        }
     }
 }

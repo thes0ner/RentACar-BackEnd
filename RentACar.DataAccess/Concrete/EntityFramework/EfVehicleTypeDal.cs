@@ -12,5 +12,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfVehicleTypeDal : EfEntityRepositoryBase<VehicleType, RentACarDbContext>, IVehicleTypeDal
     {
+        protected EfVehicleTypeDal(RentACarDbContext context) : base(context)
+        {
+        }
     }
 }

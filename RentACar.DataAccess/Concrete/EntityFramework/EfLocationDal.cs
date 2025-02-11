@@ -12,6 +12,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfLocationDal : EfEntityRepositoryBase<Location, RentACarDbContext>, ILocationDal
     {
-
+        protected EfLocationDal(RentACarDbContext context) : base(context)
+        {
+        }
     }
 }

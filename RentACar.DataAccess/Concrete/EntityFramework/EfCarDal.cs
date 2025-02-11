@@ -16,6 +16,10 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, RentACarDbContext>, ICarDal
     {
+        protected EfCarDal(RentACarDbContext context) : base(context)
+        {
+
+        }
 
         public async Task<CarDetailDto> GetCarDetailsByIdAsync(int id)
         {

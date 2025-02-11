@@ -12,7 +12,9 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfBrandDal : EfEntityRepositoryBase<Brand, RentACarDbContext>, IBrandDal
     {
-        //Specific operations/methods for Brand entity...
+        public EfBrandDal(RentACarDbContext context) : base(context)
+        {
+        }
 
     }
 }

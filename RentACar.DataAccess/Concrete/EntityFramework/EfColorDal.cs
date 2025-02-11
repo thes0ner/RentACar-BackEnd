@@ -12,6 +12,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfColorDal : EfEntityRepositoryBase<Color, RentACarDbContext>, IColorDal
     {
-
+        protected EfColorDal(RentACarDbContext context) : base(context)
+        {
+        }
     }
 }
