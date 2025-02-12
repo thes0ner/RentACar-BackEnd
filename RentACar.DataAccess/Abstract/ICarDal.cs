@@ -20,8 +20,6 @@ namespace RentACar.DataAccess.Abstract
 
         Task<CarDetailDto> GetCarDetailsByIdAsync(int id);
         Task<IEnumerable<CarDetailDto>> GetCarsDetailsAsync();
-
-        // Filtering Methods
         Task<IEnumerable<CarDetailDto>> GetCarsByBrandAsync(string brandName);
         Task<IEnumerable<CarDetailDto>> GetCarsByColorAsync(string colorName);
         Task<IEnumerable<CarDetailDto>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
@@ -31,9 +29,7 @@ namespace RentACar.DataAccess.Abstract
         Task<IEnumerable<CarDetailDto>> GetCarsByTransmissionTypeAsync(string transmissionType);
         Task<IEnumerable<CarDetailDto>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
         Task<IEnumerable<CarDetailDto>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
-
-        // Dinamically grouping.
-        Task<Dictionary<object, IEnumerable<CarDetailDto>>> GetCarsGroupedAsync(Func<CarDetailDto, object> groupBy, Expression<Func<CarDetailDto, bool>> filter = null);
+        Dictionary<object, IQueryable<CarDetailDto>> GetGroupedCars(Func<CarDetailDto, object> groupBy, Expression<Func<CarDetailDto, bool>> filter = null);
 
 
 

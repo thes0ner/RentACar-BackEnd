@@ -10,10 +10,28 @@ namespace RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstra
 {
     public interface IEntityRepository<T> where T : class, IEntity, new()
     {
+
+        /// <summary>
+        /// Retrieves all entities as an IQueryable.
+        /// </summary>
+        /// <param name="tracking">If true, enables change tracking (default). If false, disables it for read-only operations.</param>
+        /// <returns>An IQueryable of all entities.</returns>
         IQueryable<T> GetAll(bool tracking = true);
 
+        /// <summary>
+        /// Retrieves entities filtered by a condition as an IQueryable.
+        /// </summary>
+        /// <param name="filter">A lambda expression to filter the entities.</param>
+        /// <param name="tracking">If true, enables change tracking (default). If false, disables it for read-only operations.</param>
+        /// <returns>An IQueryable of filtered entities.</returns>
         IQueryable<T> GetFiltered(Expression<Func<T, bool>> filter, bool tracking = true);
 
+        /// <summary>
+        /// Retrieves a single entity asynchronously based on a filter condition.
+        /// </summary>
+        /// <param name="filter">A lambda expression to filter the entity.</param>
+        /// <param name="tracking">If true, enables change tracking (default). If false, disables it for read-only operations.</param>
+        /// <returns>A Task<T> representing the asynchronous operation, containing the matched entity or null if not found.</returns>
         Task<T> GetSingleAsync(Expression<Func<T, bool>> filter, bool tracking = true);
 
         /// <summary>
@@ -36,5 +54,6 @@ namespace RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstra
         /// <param name="entity">The entity to delete.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         Task DeleteAsync(T entity);
+
     }
 }

@@ -24,20 +24,20 @@ namespace RentACar.Business.Concrete
         public async Task<IResult> AddAsync(Transmission transmission)
         {
             await _transmissionDal.AddAsync(transmission);
-            return new SuccessResult(Messages.TransmissionTypeAdded);
+            return new SuccessResult(Messages.TransmissionAdded);
 
         }
 
         public async Task<IResult> DeleteAsync(Transmission transmission)
         {
             await _transmissionDal.DeleteAsync(transmission);
-            return new SuccessResult(Messages.TransmissionTypeDeleted);
+            return new SuccessResult(Messages.TransmissionDeleted);
         }
 
         public async Task<IResult> UpdateAsync(Transmission transmission)
         {
             await _transmissionDal.UpdateAsync(transmission);
-            return new SuccessResult(Messages.TransmissionTypeUpdated);
+            return new SuccessResult(Messages.TransmissionUpdated);
 
         }
 
@@ -47,10 +47,10 @@ namespace RentACar.Business.Concrete
 
             if (result == null)
             {
-                return new ErrorDataResult<Transmission>(Messages.TransmissionTypeNotFound);
+                return new ErrorDataResult<Transmission>(Messages.TransmissionNotFound);
             }
 
-            return new SuccessDataResult<Transmission>(result, Messages.TransmissionTypesListed);
+            return new SuccessDataResult<Transmission>(result, Messages.TransmissionsListed);
         }
 
         public IDataResult<IQueryable<Transmission>> GetAllTransmissions()
@@ -59,10 +59,10 @@ namespace RentACar.Business.Concrete
 
             if (result == null)
             {
-                return new ErrorDataResult<IQueryable<Transmission>>(Messages.TransmissionTypeNotFound);
+                return new ErrorDataResult<IQueryable<Transmission>>(Messages.TransmissionNotFound);
             }
 
-            return new SuccessDataResult<IQueryable<Transmission>>(result, Messages.TransmissionTypesListed);
+            return new SuccessDataResult<IQueryable<Transmission>>(result, Messages.TransmissionsListed);
         }
 
 

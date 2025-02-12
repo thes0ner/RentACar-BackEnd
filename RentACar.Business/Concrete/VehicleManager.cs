@@ -24,20 +24,20 @@ namespace RentACar.Business.Concrete
         public async Task<IResult> AddAsync(Vehicle vehicle)
         {
             await _vehicleDal.AddAsync(vehicle);
-            return new SuccessResult(Messages.VehicleTypeAdded);
+            return new SuccessResult(Messages.VehicleAdded);
         }
 
         public async Task<IResult> DeleteAsync(Vehicle vehicle)
         {
             await _vehicleDal.DeleteAsync(vehicle);
-            return new SuccessResult(Messages.VehicleTypeAdded);
+            return new SuccessResult(Messages.VehicleAdded);
 
         }
 
         public async Task<IResult> UpdateAsync(Vehicle vehicleType)
         {
             await _vehicleDal.UpdateAsync(vehicleType);
-            return new SuccessResult(Messages.VehicleTypeUpdated);
+            return new SuccessResult(Messages.VehicleUpdated);
         }
 
         public async Task<IDataResult<Vehicle>> GetSingleAsync(int id)
@@ -46,10 +46,10 @@ namespace RentACar.Business.Concrete
 
             if (result == null)
             {
-                return new ErrorDataResult<Vehicle>(Messages.VehicleTypeNotFound);
+                return new ErrorDataResult<Vehicle>(Messages.VehicleNotFound);
             }
 
-            return new SuccessDataResult<Vehicle>(result, Messages.VehicleTypesListed);
+            return new SuccessDataResult<Vehicle>(result, Messages.VehiclesListed);
         }
 
         public IDataResult<IQueryable<Vehicle>> GetAllVehicles()
@@ -58,10 +58,10 @@ namespace RentACar.Business.Concrete
 
             if (result == null || !result.Any())
             {
-                return new ErrorDataResult<IQueryable<Vehicle>>(Messages.VehicleTypeNotFound);
+                return new ErrorDataResult<IQueryable<Vehicle>>(Messages.VehicleNotFound);
             }
 
-            return new SuccessDataResult<IQueryable<Vehicle>>(result, Messages.VehicleTypesListed);
+            return new SuccessDataResult<IQueryable<Vehicle>>(result, Messages.VehiclesListed);
         }
 
 

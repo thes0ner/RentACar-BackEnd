@@ -55,13 +55,13 @@ namespace RentACar.Business.Constants
         public static string CustomerNotFound = "Customer(s) not found.";
 
         // FuelType Messages
-        public static string FuelTypeAdded = "Fuel type added successfully.";
-        public static string FuelTypeDeleted = "Fuel type deleted successfully.";
-        public static string FuelTypeUpdated = "Fuel type updated successfully.";
-        public static string FuelTypesListed = "Fuel types listed successfully.";
-        public static string FuelTypeInvalid = "Fuel type is invalid.";
-        public static string FuelTypeAlreadyExists = "Fuel type already exists.";
-        public static string FuelTypeNotFound = "Fuel type(s) not found.";
+        public static string FuelAdded = "Fuel added successfully.";
+        public static string FuelDeleted = "Fuel deleted successfully.";
+        public static string FuelUpdated = "Fuel updated successfully.";
+        public static string FuelsListed = "Fuel listed successfully.";
+        public static string FuelInvalid = "Fuel is invalid.";
+        public static string FuelAlreadyExists = "Fuel already exists.";
+        public static string FuelNotFound = "Fuel(s) not found.";
 
         // Invoice Messages
         public static string InvoiceAdded = "Invoice added successfully.";
@@ -91,22 +91,22 @@ namespace RentACar.Business.Constants
         public static string RentalNotFound = "Rental(s) not found.";
 
         // TransmissionType Messages
-        public static string TransmissionTypeAdded = "Transmission type added successfully.";
-        public static string TransmissionTypeDeleted = "Transmission type deleted successfully.";
-        public static string TransmissionTypeUpdated = "Transmission type updated successfully.";
-        public static string TransmissionTypesListed = "Transmission types listed successfully.";
-        public static string TransmissionTypeInvalid = "Transmission type is invalid.";
-        public static string TransmissionTypeAlreadyExists = "Transmission type already exists.";
-        public static string TransmissionTypeNotFound = "Transmission type(s) not found.";
+        public static string TransmissionAdded = "Transmission added successfully.";
+        public static string TransmissionDeleted = "Transmission deleted successfully.";
+        public static string TransmissionUpdated = "Transmission updated successfully.";
+        public static string TransmissionsListed = "Transmission listed successfully.";
+        public static string TransmissionInvalid = "Transmission is invalid.";
+        public static string TransmissionAlreadyExists = "Transmission already exists.";
+        public static string TransmissionNotFound = "Transmission(s) not found.";
 
         // VehicleType Messages
-        public static string VehicleTypeAdded = "Vehicle type added successfully.";
-        public static string VehicleTypeDeleted = "Vehicle type deleted successfully.";
-        public static string VehicleTypeUpdated = "Vehicle type updated successfully.";
-        public static string VehicleTypesListed = "Vehicle types listed successfully.";
-        public static string VehicleTypeInvalid = "Vehicle type is invalid.";
-        public static string VehicleTypeAlreadyExists = "Vehicle type already exists.";
-        public static string VehicleTypeNotFound = "Vehicle type(s) not found.";
+        public static string VehicleAdded = "Vehicle added successfully.";
+        public static string VehicleDeleted = "Vehicle deleted successfully.";
+        public static string VehicleUpdated = "Vehicle updated successfully.";
+        public static string VehiclesListed = "Vehicles listed successfully.";
+        public static string VehicleInvalid = "Vehicle is invalid.";
+        public static string VehicleAlreadyExists = "Vehicle already exists.";
+        public static string VehicleNotFound = "Vehicle(s) not found.";
 
     }
 }

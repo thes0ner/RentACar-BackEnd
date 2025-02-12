@@ -19,28 +19,29 @@ namespace RentACar.Business.Abstract
 
         // Queries
         IDataResult<IQueryable<Car>> GetAllCars();
-
         Task<IDataResult<Car>> GetSingleAsync(int id);
-        Task<IDataResult<CarDetailDto>> GetCarDetailsByIdAsync(int id);
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsDetailsAsync();
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByBrandAsync(string brandName);
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByColorAsync(string colorName);
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByAvailabilityAsync(CarStatus status);
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearAsync(int year);
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByFuelTypeAsync(string fuelType);
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByTransmissionTypeAsync(string transmissionType);
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearRangeAsync(int minYear, int maxYear);
-        Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage);
-        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByBrandAsync(string brandName);
-        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByColorAsync(string colorName);
-        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByFuleTypeAsync(string fuelType);
-        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByTransmissionTypeAsync(string transmissionType);
-        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByVehicleTypeAsync(string vehicleType);
-        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByDailyPriceAsync(decimal dailyPrice);
-        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByModelAsync(string model);
-        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByYearAsync(int year);
-        Task<IDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>> GetCarsGroupByAvailabilityAsync(CarStatus status);
+        Task<IDataResult<CarDetailDto>> GetCarDetailsById(int id);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsDetails();
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByBrands(string brandName);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByColors(string colorName);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByPriceRanges(decimal minPrice, decimal maxPrice);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByAvailabilities(CarStatus status);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByModelYears(int year);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByFuels(string fuelType);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByTransmissions(string transmissionType);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByModelYearRange(int minYear, int maxYear);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByMileageRange(int minMileage, int maxMileage);
+
+        // Grouped queries
+        IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByBrand(string brandName);
+        IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByColor(string colorName);
+        IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByFuel(string fuel);
+        IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByTransmission(string transmission);
+        IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByVehicle(string vehicle);
+        IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByDailyPrice(decimal dailyPrice);
+        IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByModel(string model);
+        IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByYear(int year);
+        IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByAvailability(CarStatus status);
 
 
 

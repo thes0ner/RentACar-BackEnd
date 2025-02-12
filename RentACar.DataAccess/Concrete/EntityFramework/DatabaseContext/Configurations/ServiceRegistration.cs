@@ -7,17 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
+namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configurations
 {
     public static class ServiceRegistration
     {
 
+        // Extension method to register persistence-related services.
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
         {
-            //services.AddDbContext<RentACarDbContext>(option => option.UseSqlServer(@"Server=DESKTOP-1Q8O3E1\SQLEXPRESS;Database=RentACarDb;Trusted_Connection=true;MultipleActiveResultSets=false;TrustServerCertificate=Yes"));
 
+            // Register RentACarDbContext with SQL server using the connection string from Configuration.
             services.AddDbContext<RentACarDbContext>(option => option.UseSqlServer(Configuration.ConnectionString));
 
+
+            // Register data access layers (DAL) with their corresponding implementations
             services.AddScoped<IBrandDal, EfBrandDal>();
             services.AddScoped<ICarDal, EfCarDal>();
             services.AddScoped<IColorDal, EfColorDal>();
@@ -30,6 +33,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
             services.AddScoped<ITransmissionDal, EfTransmissionDal>();
             services.AddScoped<IVehicleDal, EfVehicleDal>();
 
+            // Return the configured IServiceCollection for method chaining
             return services;
         }
     }

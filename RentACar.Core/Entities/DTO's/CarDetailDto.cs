@@ -13,9 +13,9 @@ namespace RentACar.Core.Entities.DTO_s
 
         public string BrandName { get; set; }
         public string ColorName { get; set; }
-        public string FuelType { get; set; }
-        public string TransmissionType { get; set; }
-        public string VehicleType { get; set; }
+        public string Fuel { get; set; }
+        public string Transmission { get; set; }
+        public string Vehicle { get; set; }
         public string LocationCountry { get; set; }
         public string LocationCity { get; set; }
         public string LocationAddress { get; set; }

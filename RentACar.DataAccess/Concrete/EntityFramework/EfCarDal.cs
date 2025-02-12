@@ -405,7 +405,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 
         }
 
-        public async Task<Dictionary<object, IEnumerable<CarDetailDto>>> GetCarsGroupedAsync(Func<CarDetailDto, object> groupBy, Expression<Func<CarDetailDto, bool>> filter = null)
+        public Dictionary<object, IQueryable<CarDetailDto>> GetGroupedCars(Func<CarDetailDto, object> groupBy, Expression<Func<CarDetailDto, bool>> filter = null)
         {
 
             var query = _context.Cars
@@ -434,16 +434,14 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
                 query = query.Where(filter);
             }
 
-            var cars = await query.ToListAsync();
+            var cars = query.ToList();
 
-            if (cars == null || !cars.Any())
-            {
-                return new Dictionary<object, IEnumerable<CarDetailDto>>();
-            }
-
-            return cars
+            // Execute the query and group the results
+            var groupedCars = query
                 .GroupBy(groupBy)
-                    .ToDictionary(g => g.Key, g => g.AsEnumerable());
+                .ToDictionary(g => g.Key, g => g.AsQueryable());
+
+            return groupedCars;
         }
 
     }

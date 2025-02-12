@@ -24,15 +24,6 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
         }
 
 
-        // OnConfiguring method is used to configure the database provider and connection string.
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer(@"Server=DESKTOP-1Q8O3E1\SQLEXPRESS;Database=RentACarDb;Trusted_Connection=true;MultipleActiveResultSets=false;TrustServerCertificate=Yes");
-        //    }
-        //}
-
         /// <summary>
         /// Configures the entity mappings and relationships.
         /// </summary>

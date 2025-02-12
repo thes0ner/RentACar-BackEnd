@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACar.Core.Entities.Abstract;
+using RentACar.Core.Entities.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,25 +76,40 @@ namespace RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstra
 
         public async Task AddAsync(TEntity entity)
         {
+            // Track the entity to be added
             var addedEntity = _context.Entry(entity);
+
+            // Set the entity state to 'Added' for insertion
             addedEntity.State = EntityState.Added;
+
+            // Save changes to the database asynchronously
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(TEntity entity)
         {
+
+            // Track the entity to be deleted
             var deletedEntity = _context.Entry(entity);
+
+            // Set the entity state to 'Deleted' for removal
             deletedEntity.State = EntityState.Deleted;
+
+            // Save changes to the database asynchronously
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(TEntity entity)
         {
+            // Track the entity to be updated
             var updatedEntity = _context.Entry(entity);
+
+            // Set the entity state to 'Modified' for updates
             updatedEntity.State = EntityState.Modified;
+
+            // Save changes to the database asynchronously
             await _context.SaveChangesAsync();
         }
-
 
     }
 }

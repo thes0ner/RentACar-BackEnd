@@ -25,21 +25,21 @@ namespace RentACar.Business.Concrete
         {
             await _fuelDal.AddAsync(fuel);
 
-            return new SuccessResult(Messages.FuelTypeAdded);
+            return new SuccessResult(Messages.FuelAdded);
         }
 
         public async Task<IResult> DeleteAsync(Fuel fuel)
         {
             await _fuelDal.DeleteAsync(fuel);
 
-            return new SuccessResult(Messages.FuelTypeDeleted);
+            return new SuccessResult(Messages.FuelDeleted);
         }
 
         public async Task<IResult> UpdateAsync(Fuel fuel)
         {
             await _fuelDal.UpdateAsync(fuel);
 
-            return new SuccessResult(Messages.FuelTypeUpdated);
+            return new SuccessResult(Messages.FuelUpdated);
         }
 
         public IDataResult<IQueryable<Fuel>> GetAllFuels()
@@ -48,10 +48,10 @@ namespace RentACar.Business.Concrete
 
             if (result == null || !result.Any())
             {
-                return new ErrorDataResult<IQueryable<Fuel>>(Messages.FuelTypeNotFound);
+                return new ErrorDataResult<IQueryable<Fuel>>(Messages.FuelNotFound);
             }
 
-            return new SuccessDataResult<IQueryable<Fuel>>(result, Messages.FuelTypesListed);
+            return new SuccessDataResult<IQueryable<Fuel>>(result, Messages.FuelsListed);
         }
 
         public async Task<IDataResult<Fuel>> GetSingleAsync(int id)
@@ -60,10 +60,10 @@ namespace RentACar.Business.Concrete
 
             if (result == null)
             {
-                return new ErrorDataResult<Fuel>(Messages.FuelTypeNotFound);
+                return new ErrorDataResult<Fuel>(Messages.FuelNotFound);
             }
 
-            return new SuccessDataResult<Fuel>(result, Messages.FuelTypesListed);
+            return new SuccessDataResult<Fuel>(result, Messages.FuelsListed);
         }
 
 
