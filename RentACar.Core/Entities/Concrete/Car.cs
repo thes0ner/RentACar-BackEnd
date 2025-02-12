@@ -26,10 +26,10 @@ namespace RentACar.Core.Entities.Concrete
         //Navigation properties
         public Brand Brand { get; set; }
         public Color Color { get; set; }
-        public FuelType FuelType { get; set; }
+        public Fuel Fuel { get; set; }
         public Location Location { get; set; }
-        public TransmissionType TransmissionType { get; set; }
-        public VehicleType VehicleType { get; set; }
+        public Transmission Transmission { get; set; }
+        public Vehicle Vehicle { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
         public ICollection<Rental> Rentals { get; set; }
         public ICollection<CarImage> CarImages { get; set; }

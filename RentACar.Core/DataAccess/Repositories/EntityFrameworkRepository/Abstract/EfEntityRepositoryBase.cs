@@ -15,7 +15,7 @@ namespace RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstra
     {
         protected readonly TContext _context;
 
-        protected EfEntityRepositoryBase(TContext context)
+        public EfEntityRepositoryBase(TContext context)
         {
             _context = context;
         }

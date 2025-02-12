@@ -25,13 +25,13 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
 
         // OnConfiguring method is used to configure the database provider and connection string.
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(@"Server=DESKTOP-1Q8O3E1\SQLEXPRESS;Database=RentACarDb;Trusted_Connection=true;MultipleActiveResultSets=false;TrustServerCertificate=Yes");
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer(@"Server=DESKTOP-1Q8O3E1\SQLEXPRESS;Database=RentACarDb;Trusted_Connection=true;MultipleActiveResultSets=false;TrustServerCertificate=Yes");
+        //    }
+        //}
 
         /// <summary>
         /// Configures the entity mappings and relationships.
@@ -69,17 +69,17 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                       .HasForeignKey(e => e.ColorId)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(e => e.FuelType) // One-to-many relationship with FuelType
+                entity.HasOne(e => e.Fuel) // One-to-many relationship with FuelType
                       .WithMany()
                       .HasForeignKey(e => e.FuelId)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(e => e.TransmissionType) // One-to-many relationship with TransmissionType
+                entity.HasOne(e => e.Transmission) // One-to-many relationship with TransmissionType
                       .WithMany()
                       .HasForeignKey(e => e.TransmissionId)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(e => e.VehicleType) // One-to-many relationship with VehicleType
+                entity.HasOne(e => e.Vehicle) // One-to-many relationship with VehicleType
                       .WithMany()
                       .HasForeignKey(e => e.VehicleId)
                       .OnDelete(DeleteBehavior.Restrict);
@@ -334,10 +334,10 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
             });
 
 
-            modelBuilder.Entity<FuelType>(entity =>
+            modelBuilder.Entity<Fuel>(entity =>
             {
                 //Table name
-                entity.ToTable("FuelTypes");
+                entity.ToTable("Fuels");
 
                 // Primary key
                 entity.HasKey(e => e.Id);
@@ -347,15 +347,15 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 //Relationships
                 entity.HasMany(e => e.Cars) // One-to-many relationship with Car
-                      .WithOne(c => c.FuelType)
+                      .WithOne(c => c.Fuel)
                       .HasForeignKey(c => c.FuelId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<TransmissionType>(entity =>
+            modelBuilder.Entity<Transmission>(entity =>
             {
                 //Table name
-                entity.ToTable("TransmissionTypes");
+                entity.ToTable("Transmissions");
 
                 // Primary key
                 entity.HasKey(e => e.Id);
@@ -365,16 +365,16 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 //Relationships
                 entity.HasMany(e => e.Cars) // One-to-many relationship with Car
-                    .WithOne(c => c.TransmissionType)
+                    .WithOne(c => c.Transmission)
                     .HasForeignKey(c => c.TransmissionId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
 
-            modelBuilder.Entity<VehicleType>(entity =>
+            modelBuilder.Entity<Vehicle>(entity =>
             {
                 //Table name
-                entity.ToTable("VehicleTypes");
+                entity.ToTable("Vehicles");
 
                 // Primary key
                 entity.HasKey(e => e.Id);
@@ -384,7 +384,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 //Relationships
                 entity.HasMany(e => e.Cars) // One-to-many relationship with Car
-                    .WithOne(c => c.VehicleType)
+                    .WithOne(c => c.Vehicle)
                     .HasForeignKey(c => c.VehicleId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
@@ -443,13 +443,13 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
         public DbSet<User> Users { get; set; }
         public DbSet<CarImage> CarImages { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
-        public DbSet<FuelType> FuelTypes { get; set; }
+        public DbSet<Fuel> Fuels { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<TransmissionType> TransmissionTypes { get; set; }
-        public DbSet<VehicleType> VehicleTypes { get; set; }
+        public DbSet<Transmission> Transmissions { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
     }
 
 }

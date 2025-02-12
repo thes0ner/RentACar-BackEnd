@@ -10,7 +10,7 @@ namespace RentACar.Business.Abstract
 {
     public interface ILocationService
     {
-        Task<IDataResult<IEnumerable<Location>>> GetLocationsAsync();
+        IDataResult<IQueryable<Location>> GetAllLocations();
         Task<IDataResult<Location>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Location location);
         Task<IResult> UpdateAsync(Location location);

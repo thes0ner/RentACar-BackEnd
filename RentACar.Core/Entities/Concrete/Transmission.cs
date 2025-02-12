@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.Core.Entities.Concrete
 {
-    public class TransmissionType : BaseEntity
+    public class Transmission : BaseEntity
     {
         public string Type { get; set; }
         

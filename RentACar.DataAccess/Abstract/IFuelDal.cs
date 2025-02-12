@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Abstract
 {
-    public interface IFuelTypeDal : IEntityRepository<FuelType>
+    public interface IFuelDal : IEntityRepository<Fuel>
     {
 
     }

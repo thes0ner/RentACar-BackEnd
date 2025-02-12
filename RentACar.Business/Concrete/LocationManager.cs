@@ -39,16 +39,16 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.LocationUpdated);
         }
 
-        public async Task<IDataResult<IEnumerable<Location>>> GetLocationsAsync()
+        public IDataResult<IQueryable<Location>> GetAllLocations()
         {
-            var result = await _locationDal.GetAllAsync();
+            var result = _locationDal.GetAll();
 
-            if (result == null)
+            if (result == null || !result.Any())
             {
-                return new ErrorDataResult<IEnumerable<Location>>(Messages.LocationNotFound);
+                return new ErrorDataResult<IQueryable<Location>>(Messages.LocationNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<Location>>(result, Messages.LocationsListed);
+            return new SuccessDataResult<IQueryable<Location>>(result, Messages.LocationsListed);
         }
 
         public async Task<IDataResult<Location>> GetSingleAsync(int id)

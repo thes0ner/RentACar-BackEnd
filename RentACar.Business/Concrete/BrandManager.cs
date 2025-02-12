@@ -53,7 +53,7 @@ namespace RentACar.Business.Concrete
         {
             var result = await _brandDal.GetSingleAsync(p => p.Id == id);
 
-            if (result == null)
+            if (result is null)
             {
                 return new ErrorDataResult<Brand>(Messages.BrandNotFound);
             }
@@ -65,7 +65,7 @@ namespace RentACar.Business.Concrete
         {
             var result = _brandDal.GetAll();
 
-            if (result is null)
+            if (result is null || !result.Any())
             {
                 return new ErrorDataResult<IQueryable<Brand>>(Messages.BrandNotFound);
             }
@@ -73,24 +73,12 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<IQueryable<Brand>>(result, Messages.BrandsListed);
         }
 
-
-        public IDataResult<IQueryable<Brand>> GetFilteredBrandsById(int id)
-        {
-            var result = _brandDal.GetFiltered(p => p.Id == id);
-
-            if (result is null)
-            {
-                return new ErrorDataResult<IQueryable<Brand>>(Messages.BrandNotFound);
-            }
-
-            return new SuccessDataResult<IQueryable<Brand>>(result, Messages.BrandsListed);
-        }
 
         public IDataResult<IQueryable<Brand>> GetFilteredBrandsByName(string name)
         {
             var result = _brandDal.GetFiltered(p => p.Name == name);
 
-            if (result is null)
+            if (result is null || !result.Any())
             {
                 return new ErrorDataResult<IQueryable<Brand>>(Messages.BrandNotFound);
             }

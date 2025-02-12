@@ -13,13 +13,13 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
         public RentACarDbContext CreateDbContext(string[] args)
         {
 
-            var context = new RentACarDbContext();
-            return context;
+            //var context = new RentACarDbContext();
+            //return context;
 
 
-            //DbContextOptionsBuilder<RentACarDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<RentACarDbContext>();
-            //dbContextOptionsBuilder.UseSqlServer(Configuration.ConnectingString);
-            //return new(dbContextOptionsBuilder.Options);
+            DbContextOptionsBuilder<RentACarDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<RentACarDbContext>();
+            dbContextOptionsBuilder.UseSqlServer(Configuration.ConnectionString);
+            return new(dbContextOptionsBuilder.Options);
         }
     }
 }

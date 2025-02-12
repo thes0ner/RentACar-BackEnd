@@ -10,7 +10,8 @@ namespace RentACar.Business.Abstract
 {
     public interface ICreditCardService
     {
-        Task<IDataResult<IEnumerable<CreditCard>>> GetCreditCardsAsync();
+        IDataResult<IQueryable<CreditCard>> GetAllCreditCards();
+        IDataResult<IQueryable<CreditCard>> GetFilteredCreditCardsByName(string fullName);
         Task<IDataResult<CreditCard>> GetSingleAsync(int id);
         Task<IResult> AddAsync(CreditCard creditCard);
         Task<IResult> UpdateAsync(CreditCard creditCard);

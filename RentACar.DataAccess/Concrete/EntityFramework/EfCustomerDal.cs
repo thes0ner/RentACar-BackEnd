@@ -12,7 +12,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfCustomerDal : EfEntityRepositoryBase<Customer, RentACarDbContext>, ICustomerDal
     {
-        protected EfCustomerDal(RentACarDbContext context) : base(context)
+        public EfCustomerDal(RentACarDbContext context) : base(context)
         {
         }
     }

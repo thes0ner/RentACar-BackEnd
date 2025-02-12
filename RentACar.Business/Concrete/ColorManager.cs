@@ -56,19 +56,28 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<Color>(result, Messages.ColorsListed);
         }
 
-        public IDataResult<IQueryable<Brand>> GetAllColors()
+        public IDataResult<IQueryable<Color>> GetAllColors()
         {
-            throw new NotImplementedException();
+            var result = _colorDal.GetAll();
+
+            if (result == null || result.Any())
+            {
+                return new ErrorDataResult<IQueryable<Color>>(Messages.ColorNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<Color>>(result, Messages.ColorsListed);
         }
 
-        public IDataResult<IQueryable<Brand>> GetFilteredBrandsById(int id)
+        public IDataResult<IQueryable<Color>> GetFilteredBrandsByName(string name)
         {
-            throw new NotImplementedException();
-        }
+            var result = _colorDal.GetFiltered(p => p.Name == name);
 
-        public IDataResult<IQueryable<Brand>> GetFilteredBrandsByName(string name)
-        {
-            throw new NotImplementedException();
+            if (result == null || result.Any())
+            {
+                return new ErrorDataResult<IQueryable<Color>>(Messages.ColorNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<Color>>(result, Messages.ColorsListed);
         }
     }
 }

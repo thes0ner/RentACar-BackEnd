@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework
 {
-    public class EfTransmissionTypeDal : EfEntityRepositoryBase<TransmissionType, RentACarDbContext>, ITransmissionTypeDal
+    public class EfTransmissionDal : EfEntityRepositoryBase<Transmission, RentACarDbContext>, ITransmissionDal
     {
-        protected EfTransmissionTypeDal(RentACarDbContext context) : base(context)
+        public EfTransmissionDal(RentACarDbContext context) : base(context)
         {
         }
     }

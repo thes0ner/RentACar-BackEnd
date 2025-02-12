@@ -43,16 +43,28 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.CreditCardUpdated);
         }
 
-        public async Task<IDataResult<IEnumerable<CreditCard>>> GetCreditCardsAsync()
+        public IDataResult<IQueryable<CreditCard>> GetAllCreditCards()
         {
-            var result = await _creditCardDal.GetAllAsync();
+            var result = _creditCardDal.GetAll();
 
-            if (result == null)
+            if (result == null || !result.Any())
             {
-                return new ErrorDataResult<IEnumerable<CreditCard>>(Messages.CreditCardNotFound);
+                return new ErrorDataResult<IQueryable<CreditCard>>(Messages.CreditCardNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CreditCard>>(result, Messages.CreditCardsListed);
+            return new SuccessDataResult<IQueryable<CreditCard>>(result, Messages.CreditCardsListed);
+        }
+
+        public IDataResult<IQueryable<CreditCard>> GetFilteredCreditCardsByName(string fullName)
+        {
+            var result = _creditCardDal.GetFiltered(p => p.FullName == fullName);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<IQueryable<CreditCard>>(Messages.CreditCardNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<CreditCard>>(result, Messages.CreditCardsListed);
         }
 
         public async Task<IDataResult<CreditCard>> GetSingleAsync(int id)

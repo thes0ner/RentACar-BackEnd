@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Abstract
 {
-    public interface ITransmissionTypeDal : IEntityRepository<TransmissionType>
+    public interface ITransmissionDal : IEntityRepository<Transmission>
     {
     }
 }

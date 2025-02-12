@@ -42,16 +42,28 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.CustomerUpdated);
         }
 
-        public async Task<IDataResult<IEnumerable<Customer>>> GetCustomersAsync()
+        public IDataResult<IQueryable<Customer>> GetAllCustomers()
         {
-            var result = await _customerDal.GetAllAsync();
+            var result = _customerDal.GetAll();
 
-            if (result == null)
+            if (result == null || !result.Any())
             {
-                return new ErrorDataResult<IEnumerable<Customer>>(Messages.CustomerNotFound);
+                return new ErrorDataResult<IQueryable<Customer>>(Messages.CustomerNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<Customer>>(result, Messages.CustomersListed);
+            return new SuccessDataResult<IQueryable<Customer>>(result, Messages.CustomersListed);
+        }
+
+        public IDataResult<IQueryable<Customer>> GetFilteredCustomersByName(string firstName)
+        {
+            var result = _customerDal.GetFiltered(p => p.FirstName == firstName);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<IQueryable<Customer>>(Messages.CustomerNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<Customer>>(result, Messages.CustomersListed);
         }
 
         public async Task<IDataResult<Customer>> GetSingleAsync(int id)

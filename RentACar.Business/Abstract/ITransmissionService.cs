@@ -10,10 +10,10 @@ namespace RentACar.Business.Abstract
 {
     public interface ITransmissionService
     {
-        Task<IDataResult<IEnumerable<TransmissionType>>> GetTransmissionsAsync();
-        Task<IDataResult<TransmissionType>> GetSingleAsync(int id);
-        Task<IResult> AddAsync(TransmissionType transmissionType);
-        Task<IResult> UpdateAsync(TransmissionType transmissionType);
-        Task<IResult> DeleteAsync(TransmissionType transmissionType);
+        IDataResult<IQueryable<Transmission>> GetAllTransmissions();
+        Task<IDataResult<Transmission>> GetSingleAsync(int id);
+        Task<IResult> AddAsync(Transmission transmission);
+        Task<IResult> UpdateAsync(Transmission transmission);
+        Task<IResult> DeleteAsync(Transmission transmission);
     }
 }

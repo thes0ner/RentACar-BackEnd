@@ -39,16 +39,16 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.InvoiceUpdated);
         }
 
-        public async Task<IDataResult<IEnumerable<Invoice>>> GetInvoicesAsync()
+        public IDataResult<IQueryable<Invoice>> GetAllInvoices()
         {
-            var result = await _invoiceDal.GetAllAsync();
+            var result = _invoiceDal.GetAll();
 
-            if (result == null)
+            if (result == null || !result.Any())
             {
-                return new ErrorDataResult<IEnumerable<Invoice>>(Messages.InvoiceNotFound);
+                return new ErrorDataResult<IQueryable<Invoice>>(Messages.InvoiceNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<Invoice>>(result, Messages.InvoicesListed);
+            return new SuccessDataResult<IQueryable<Invoice>>(result, Messages.InvoicesListed);
         }
 
         public async Task<IDataResult<Invoice>> GetSingleAsync(int id)

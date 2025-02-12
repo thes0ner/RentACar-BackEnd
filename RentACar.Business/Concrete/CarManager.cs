@@ -22,16 +22,17 @@ namespace RentACar.Business.Concrete
             _carDal = carDal;
         }
 
-        public async Task<IDataResult<IEnumerable<Car>>> GetCarsAsync()
-        {
-            var result = await _carDal.GetAllAsync();
 
-            if (result == null)
+        public IDataResult<IQueryable<Car>> GetAllCars()
+        {
+            var result = _carDal.GetAll();
+
+            if (result == null || !result.Any())
             {
-                return new ErrorDataResult<IEnumerable<Car>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<Car>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<Car>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<Car>>(result, Messages.CarsListed);
         }
 
         public async Task<IDataResult<Car>> GetSingleAsync(int id)
@@ -312,5 +313,6 @@ namespace RentACar.Business.Concrete
 
             return new SuccessDataResult<Dictionary<object, IEnumerable<CarDetailDto>>>(result, Messages.CarsListed);
         }
+
     }
 }

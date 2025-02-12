@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework
 {
-    public class EfVehicleTypeDal : EfEntityRepositoryBase<VehicleType, RentACarDbContext>, IVehicleTypeDal
+    public class EfFuelDal : EfEntityRepositoryBase<Fuel, RentACarDbContext>, IFuelDal
     {
-        protected EfVehicleTypeDal(RentACarDbContext context) : base(context)
+        public EfFuelDal(RentACarDbContext context) : base(context)
         {
         }
     }

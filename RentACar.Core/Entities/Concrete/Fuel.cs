@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.Core.Entities.Concrete
 {
-    public class VehicleType : BaseEntity
+    public class Fuel : BaseEntity
     {
         public string Type { get; set; }
 

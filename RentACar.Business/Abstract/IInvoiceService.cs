@@ -10,7 +10,7 @@ namespace RentACar.Business.Abstract
 {
     public interface IInvoiceService
     {
-        Task<IDataResult<IEnumerable<Invoice>>> GetInvoicesAsync();
+        IDataResult<IQueryable<Invoice>> GetAllInvoices();
         Task<IDataResult<Invoice>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Invoice invoice);
         Task<IResult> UpdateAsync(Invoice invoice);

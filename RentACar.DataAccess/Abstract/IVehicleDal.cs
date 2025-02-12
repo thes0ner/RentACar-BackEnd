@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Abstract
 {
-    public interface IVehicleTypeDal : IEntityRepository<VehicleType>
+    public interface IVehicleDal : IEntityRepository<Vehicle>
     {
     }
 }
