@@ -10,6 +10,7 @@ using RentACar.Core.Entities.DTO_s;
 using RentACar.Core.Utilities.Results.Abstract;
 using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.Business.Constants;
+using RentACar.Core.Entities.Enums;
 
 namespace RentACar.Business.Concrete
 {
@@ -22,6 +23,23 @@ namespace RentACar.Business.Concrete
             _carDal = carDal;
         }
 
+        public async Task<IResult> AddAsync(Car car)
+        {
+            await _carDal.AddAsync(car);
+            return new SuccessResult(Messages.CarAdded);
+        }
+
+        public async Task<IResult> UpdateAsync(Car car)
+        {
+            await _carDal.UpdateAsync(car);
+            return new SuccessResult(Messages.CarUpdated);
+        }
+
+        public async Task<IResult> DeleteAsync(Car car)
+        {
+            await _carDal.DeleteAsync(car);
+            return new SuccessResult(Messages.CarDeleted);
+        }
 
         public IDataResult<IQueryable<Car>> GetAllCars()
         {
@@ -47,27 +65,11 @@ namespace RentACar.Business.Concrete
             return new ErrorDataResult<Car>(result, Messages.CarsListed);
         }
 
-        public async Task<IResult> AddAsync(Car car)
-        {
-            await _carDal.AddAsync(car);
-            return new SuccessResult(Messages.CarAdded);
-        }
 
-        public async Task<IResult> UpdateAsync(Car car)
-        {
-            await _carDal.UpdateAsync(car);
-            return new SuccessResult(Messages.CarUpdated);
-        }
 
-        public async Task<IResult> DeleteAsync(Car car)
+        public async Task<IDataResult<CarDetailDto>> GetCarDetailById(int id)
         {
-            await _carDal.DeleteAsync(car);
-            return new SuccessResult(Messages.CarDeleted);
-        }
-
-        public async Task<IDataResult<CarDetailDto>> GetCarDetailsByIdAsync(int id)
-        {
-            var result = await _carDal.GetCarDetailsByIdAsync(id);
+            var result = await _carDal.GetCarDetailById(id);
 
             if (result == null)
             {
@@ -78,128 +80,126 @@ namespace RentACar.Business.Concrete
 
         }
 
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsDetailsAsync()
+        public IDataResult<IQueryable<CarDetailDto>> GetCarDetails()
         {
-            var result = await _carDal.GetCarsDetailsAsync();
+            var result = _carDal.GetCarDetails();
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
 
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByBrandAsync(string brandName)
+        public IDataResult<IQueryable<CarDetailDto>> GetCarsByBrandName(string brandName)
         {
-            var result = await _carDal.GetCarsByBrandAsync(brandName);
+            var result = _carDal.GetCarsByBrandName(brandName);
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByColorAsync(string colorName)
+        public IDataResult<IQueryable<CarDetailDto>> GetCarsByColorName(string colorName)
         {
-            var result = await _carDal.GetCarsByColorAsync(colorName);
+            var result = _carDal.GetCarsByColorName(colorName);
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice)
+        public IDataResult<IQueryable<CarDetailDto>> GetCarsByPriceRange(decimal minPrice, decimal maxPrice)
         {
-            var result = await _carDal.GetCarsByPriceRangeAsync(minPrice, maxPrice);
+            var result = _carDal.GetCarsByPriceRange(minPrice, maxPrice);
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByAvailabilityAsync(CarStatus status)
+        public IDataResult<IQueryable<CarDetailDto>> GetCarsByAvailability(CarStatus status)
         {
-            var result = await _carDal.GetCarsByAvailabilityAsync(status);
+            var result = _carDal.GetCarsByAvailability(status);
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearAsync(int year)
+        public IDataResult<IQueryable<CarDetailDto>> GetCarsByModelYear(int year)
         {
-            var result = await _carDal.GetCarsByModelYearAsync(year);
+            var result = _carDal.GetCarsByModelYear(year);
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByFuelTypeAsync(string fuelType)
+        public IDataResult<IQueryable<CarDetailDto>> GetCarsByFuelType(string fuelType)
         {
-            var result = await _carDal.GetCarsByFuelTypeAsync(fuelType);
+            var result = _carDal.GetCarsByFuelType(fuelType);
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByTransmissionTypeAsync(string transmissionType)
+        public IDataResult<IQueryable<CarDetailDto>> GetCarsByTransmissionType(string transmissionType)
         {
-            var result = await _carDal.GetCarsByTransmissionTypeAsync(transmissionType);
+            var result = _carDal.GetCarsByTransmissionType(transmissionType);
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
 
         }
 
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByModelYearRangeAsync(int minYear, int maxYear)
+        public IDataResult<IQueryable<CarDetailDto>> GetCarsByModelYearRange(int minYear, int maxYear)
         {
-            var result = await _carDal.GetCarsByModelYearRangeAsync(minYear, maxYear);
+            var result = _carDal.GetCarsByModelYearRange(minYear, maxYear);
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
-
-        // burdan sonra ....
-        public async Task<IDataResult<IEnumerable<CarDetailDto>>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage)
+        public IDataResult<IQueryable<CarDetailDto>> GetCarsByMileageRange(int minMileage, int maxMileage)
         {
-            var result = await _carDal.GetCarsByMileageRangeAsync(minMileage, maxMileage);
+            var result = _carDal.GetCarsByMileageRange(minMileage, maxMileage);
 
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<CarDetailDto>>(Messages.CarNotFound);
+                return new ErrorDataResult<IQueryable<CarDetailDto>>(Messages.CarNotFound);
             }
 
-            return new SuccessDataResult<IEnumerable<CarDetailDto>>(result, Messages.CarsListed);
+            return new SuccessDataResult<IQueryable<CarDetailDto>>(result, Messages.CarsListed);
         }
 
         public IDataResult<Dictionary<object, IQueryable<CarDetailDto>>> GetCarsGroupByBrand(string brandName)

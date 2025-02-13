@@ -1,5 +1,6 @@
 ﻿using RentACar.Core.Entities.Concrete;
 using RentACar.Core.Entities.DTO_s;
+using RentACar.Core.Entities.Enums;
 using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
@@ -20,15 +21,15 @@ namespace RentACar.Business.Abstract
         // Queries
         IDataResult<IQueryable<Car>> GetAllCars();
         Task<IDataResult<Car>> GetSingleAsync(int id);
-        Task<IDataResult<CarDetailDto>> GetCarDetailsById(int id);
-        IDataResult<IQueryable<CarDetailDto>> GetCarsDetails();
-        IDataResult<IQueryable<CarDetailDto>> GetCarsByBrands(string brandName);
-        IDataResult<IQueryable<CarDetailDto>> GetCarsByColors(string colorName);
-        IDataResult<IQueryable<CarDetailDto>> GetCarsByPriceRanges(decimal minPrice, decimal maxPrice);
-        IDataResult<IQueryable<CarDetailDto>> GetCarsByAvailabilities(CarStatus status);
-        IDataResult<IQueryable<CarDetailDto>> GetCarsByModelYears(int year);
-        IDataResult<IQueryable<CarDetailDto>> GetCarsByFuels(string fuelType);
-        IDataResult<IQueryable<CarDetailDto>> GetCarsByTransmissions(string transmissionType);
+        Task<IDataResult<CarDetailDto>> GetCarDetailById(int id);
+        IDataResult<IQueryable<CarDetailDto>> GetCarDetails();
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByBrandName(string brandName);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByColorName(string colorName);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByModelYear(int year);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByFuelType(string fuelType);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByTransmissionType(string transmissionType);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByAvailability(CarStatus status);
+        IDataResult<IQueryable<CarDetailDto>> GetCarsByPriceRange(decimal minPrice, decimal maxPrice);
         IDataResult<IQueryable<CarDetailDto>> GetCarsByModelYearRange(int minYear, int maxYear);
         IDataResult<IQueryable<CarDetailDto>> GetCarsByMileageRange(int minMileage, int maxMileage);
 

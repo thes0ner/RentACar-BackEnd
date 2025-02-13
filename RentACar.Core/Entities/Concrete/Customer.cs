@@ -1,5 +1,6 @@
 ﻿using RentACar.Core.Entities.Abstract;
 using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace RentACar.Core.Entities.Concrete
         public string Address { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        public CustomerStatus CustomerStatus { get; set; }
 
 
         // Navigation properties

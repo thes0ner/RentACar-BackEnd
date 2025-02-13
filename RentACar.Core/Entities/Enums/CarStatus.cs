@@ -1,4 +1,4 @@
-﻿namespace RentACar.Core.Entities.Concrete
+﻿namespace RentACar.Core.Entities.Enums
 {
     public enum CarStatus
     {

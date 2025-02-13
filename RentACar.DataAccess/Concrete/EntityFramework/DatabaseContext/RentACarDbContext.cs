@@ -192,6 +192,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.Property(e => e.Address).HasMaxLength(200);
                 entity.Property(e => e.City).HasMaxLength(50);
                 entity.Property(e => e.Country).HasMaxLength(50);
+                entity.Property(e => e.CustomerStatus).IsRequired();
 
                 // Index on Email for faster searches
                 entity.HasIndex(e => e.Email).IsUnique();

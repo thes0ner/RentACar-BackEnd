@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using RentACar.Core.Entities.DTO_s;
 using Microsoft.VisualBasic.FileIO;
 using System.Linq.Expressions;
+using RentACar.Core.Entities.Enums;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework
 {
@@ -21,7 +22,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 
         }
 
-        public async Task<CarDetailDto> GetCarDetailsByIdAsync(int id)
+        public async Task<CarDetailDto> GetCarDetailById(int id)
         {
 
             var result = await (from car in _context.Cars
@@ -37,9 +38,9 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
                                     Id = car.Id,
                                     BrandName = brand.Name,
                                     ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
+                                    Fuel = fuel.Type,
+                                    Transmission = transmission.Type,
+                                    Vehicle = vehicle.Type,
                                     LocationCountry = location.Country,
                                     LocationCity = location.City,
                                     LocationAddress = location.Address,
@@ -54,352 +55,338 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 
         }
 
-        public async Task<IEnumerable<CarDetailDto>> GetCarsDetailsAsync()
+        public IQueryable<CarDetailDto> GetCarDetails()
         {
 
-            var result = await (from car in _context.Cars
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationCountry = location.Country,
-                                    LocationCity = location.City,
-                                    LocationAddress = location.Address,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status
+            var result = (from car in _context.Cars
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationCountry = location.Country,
+                              LocationCity = location.City,
+                              LocationAddress = location.Address,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status
 
-                                }).ToListAsync();
+                          }).AsQueryable();
 
-            return result.ToList();
+            return result;
 
 
         }
 
-        public async Task<IEnumerable<CarDetailDto>> GetCarsByBrandAsync(string brandName)
+        public IQueryable<CarDetailDto> GetCarsByBrandName(string brandName)
         {
-            var result = await (from car in _context.Cars
-                                where car.Brand.Name == brandName
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationCountry = location.Country,
-                                    LocationCity = location.City,
-                                    LocationAddress = location.Address,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status
-                                }).ToListAsync();
+            var result = (from car in _context.Cars
+                          where car.Brand.Name == brandName
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationCountry = location.Country,
+                              LocationCity = location.City,
+                              LocationAddress = location.Address,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status
+                          }).AsQueryable();
 
             return result;
 
         }
 
-        public async Task<IEnumerable<CarDetailDto>> GetCarsByColorAsync(string colorName)
+        public IQueryable<CarDetailDto> GetCarsByColorName(string colorName)
         {
 
-            var result = await (from car in _context.Cars
-                                where car.Color.Name == colorName
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationCountry = location.Country,
-                                    LocationCity = location.City,
-                                    LocationAddress = location.Address,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status
-                                }).ToListAsync();
-
-            return result;
-
-
-
-        }
-
-        public async Task<IEnumerable<CarDetailDto>> GetCarsByPriceRangeAsync(decimal minPrice, decimal maxPrice)
-        {
-
-            var result = await (from car in _context.Cars
-                                where car.DailyPrice >= minPrice && car.DailyPrice <= maxPrice
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationCountry = location.Country,
-                                    LocationCity = location.City,
-                                    LocationAddress = location.Address,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status
-                                }).ToListAsync();
+            var result = (from car in _context.Cars
+                          where car.Color.Name == colorName
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationCountry = location.Country,
+                              LocationCity = location.City,
+                              LocationAddress = location.Address,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status
+                          }).AsQueryable();
 
             return result;
 
         }
 
-        public async Task<IEnumerable<CarDetailDto>> GetCarsByAvailabilityAsync(CarStatus status)
+        public IQueryable<CarDetailDto> GetCarsByPriceRange(decimal minPrice, decimal maxPrice)
         {
 
-            var result = await (from car in _context.Cars
-                                where car.Status == status // Filter by CarStatus
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationAddress = location.Address,
-                                    LocationCity = location.City,
-                                    LocationCountry = location.Country,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status,
-                                    CreatedDate = car.CreatedDate,
-                                    UpdatedDate = car.UpdatedDate
-                                }).ToListAsync();
+            var result = (from car in _context.Cars
+                          where car.DailyPrice >= minPrice && car.DailyPrice <= maxPrice
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationCountry = location.Country,
+                              LocationCity = location.City,
+                              LocationAddress = location.Address,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status
+                          }).AsQueryable();
 
             return result;
 
         }
 
-        public async Task<IEnumerable<CarDetailDto>> GetCarsByModelYearAsync(int year)
+        public IQueryable<CarDetailDto> GetCarsByAvailability(CarStatus status)
         {
 
-            var result = await (from car in _context.Cars
-                                where car.Year == year
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationAddress = location.Address,
-                                    LocationCity = location.City,
-                                    LocationCountry = location.Country,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status,
-                                    CreatedDate = car.CreatedDate,
-                                    UpdatedDate = car.UpdatedDate
-                                }).ToListAsync();
+            var result = (from car in _context.Cars
+                          where car.Status == status
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationAddress = location.Address,
+                              LocationCity = location.City,
+                              LocationCountry = location.Country,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status,
+                          }).AsQueryable();
+
+            return result;
+
+        }
+
+        public IQueryable<CarDetailDto> GetCarsByModelYear(int year)
+        {
+
+            var result = (from car in _context.Cars
+                          where car.Year == year
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationAddress = location.Address,
+                              LocationCity = location.City,
+                              LocationCountry = location.Country,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status,
+                          }).AsQueryable();
 
             return result;
         }
 
-        public async Task<IEnumerable<CarDetailDto>> GetCarsByFuelTypeAsync(string fuelType)
+        public IQueryable<CarDetailDto> GetCarsByFuelType(string fuelType)
         {
 
-            var result = await (from car in _context.Cars
-                                where car.Fuel.Type == fuelType
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationAddress = location.Address,
-                                    LocationCity = location.City,
-                                    LocationCountry = location.Country,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status,
-                                    CreatedDate = car.CreatedDate,
-                                    UpdatedDate = car.UpdatedDate
-                                }).ToListAsync();
+            var result = (from car in _context.Cars
+                          where car.Fuel.Type == fuelType
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationAddress = location.Address,
+                              LocationCity = location.City,
+                              LocationCountry = location.Country,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status,
+                          }).AsQueryable();
 
             return result;
         }
 
-        public async Task<IEnumerable<CarDetailDto>> GetCarsByTransmissionTypeAsync(string transmissionType)
+        public IQueryable<CarDetailDto> GetCarsByTransmissionType(string transmissionType)
         {
 
-            var result = await (from car in _context.Cars
-                                where car.Transmission.Type == transmissionType
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationAddress = location.Address,
-                                    LocationCity = location.City,
-                                    LocationCountry = location.Country,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status,
-                                    CreatedDate = car.CreatedDate,
-                                    UpdatedDate = car.UpdatedDate
-                                }).ToListAsync();
+            var result = (from car in _context.Cars
+                          where car.Transmission.Type == transmissionType
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationAddress = location.Address,
+                              LocationCity = location.City,
+                              LocationCountry = location.Country,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status,
+                          }).AsQueryable();
 
             return result;
         }
 
 
-        public async Task<IEnumerable<CarDetailDto>> GetCarsByModelYearRangeAsync(int minYear, int maxYear)
+        public IQueryable<CarDetailDto> GetCarsByModelYearRange(int minYear, int maxYear)
         {
 
-            var result = await (from car in _context.Cars
-                                where car.Year >= minYear && car.Year <= maxYear
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationAddress = location.Address,
-                                    LocationCity = location.City,
-                                    LocationCountry = location.Country,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status,
-                                    CreatedDate = car.CreatedDate,
-                                    UpdatedDate = car.UpdatedDate
-                                }).ToListAsync();
+            var result = (from car in _context.Cars
+                          where car.Year >= minYear && car.Year <= maxYear
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationAddress = location.Address,
+                              LocationCity = location.City,
+                              LocationCountry = location.Country,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status,
+                          }).AsQueryable();
 
             return result;
         }
 
-        public async Task<IEnumerable<CarDetailDto>> GetCarsByMileageRangeAsync(int minMileage, int maxMileage)
+        public IQueryable<CarDetailDto> GetCarsByMileageRange(int minMileage, int maxMileage)
         {
 
-            var result = await (from car in _context.Cars
-                                where car.Mileage >= minMileage && car.Mileage <= maxMileage
-                                join brand in _context.Brands on car.BrandId equals brand.Id
-                                join color in _context.Colors on car.ColorId equals color.Id
-                                join fuel in _context.Fuels on car.FuelId equals fuel.Id
-                                join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
-                                join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
-                                join location in _context.Locations on car.LocationId equals location.Id
-                                select new CarDetailDto
-                                {
-                                    Id = car.Id,
-                                    BrandName = brand.Name,
-                                    ColorName = color.Name,
-                                    FuelType = fuel.Type,
-                                    TransmissionType = transmission.Type,
-                                    VehicleType = vehicle.Type,
-                                    LocationAddress = location.Address,
-                                    LocationCity = location.City,
-                                    LocationCountry = location.Country,
-                                    DailyPrice = car.DailyPrice,
-                                    Model = car.Model,
-                                    Year = car.Year,
-                                    Mileage = car.Mileage,
-                                    Description = car.Description,
-                                    Status = car.Status,
-                                    CreatedDate = car.CreatedDate,
-                                    UpdatedDate = car.UpdatedDate
-                                }).ToListAsync();
+            var result = (from car in _context.Cars
+                          where car.Mileage >= minMileage && car.Mileage <= maxMileage
+                          join brand in _context.Brands on car.BrandId equals brand.Id
+                          join color in _context.Colors on car.ColorId equals color.Id
+                          join fuel in _context.Fuels on car.FuelId equals fuel.Id
+                          join transmission in _context.Transmissions on car.TransmissionId equals transmission.Id
+                          join vehicle in _context.Vehicles on car.VehicleId equals vehicle.Id
+                          join location in _context.Locations on car.LocationId equals location.Id
+                          select new CarDetailDto
+                          {
+                              Id = car.Id,
+                              BrandName = brand.Name,
+                              ColorName = color.Name,
+                              Fuel = fuel.Type,
+                              Transmission = transmission.Type,
+                              Vehicle = vehicle.Type,
+                              LocationAddress = location.Address,
+                              LocationCity = location.City,
+                              LocationCountry = location.Country,
+                              DailyPrice = car.DailyPrice,
+                              Model = car.Model,
+                              Year = car.Year,
+                              Mileage = car.Mileage,
+                              Description = car.Description,
+                              Status = car.Status,
+                          }).AsQueryable();
 
             return result;
 
@@ -417,9 +404,9 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
                     Model = c.Model,
                     Year = c.Year,
                     DailyPrice = c.DailyPrice,
-                    FuelType = c.Fuel.Type,
-                    TransmissionType = c.Transmission.Type,
-                    VehicleType = c.Vehicle.Type,
+                    Fuel = c.Fuel.Type,
+                    Transmission = c.Transmission.Type,
+                    Vehicle = c.Vehicle.Type,
                     Description = c.Description,
                     LocationAddress = c.Location.Address,
                     LocationCity = c.Location.City,

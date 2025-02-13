@@ -12,8 +12,8 @@ using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext;
 namespace RentACar.DataAccess.Migrations
 {
     [DbContext(typeof(RentACarDbContext))]
-    [Migration("20250212074537_mig_1")]
-    partial class mig_1
+    [Migration("20250213055809_init_mig")]
+    partial class init_mig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,6 +254,9 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
