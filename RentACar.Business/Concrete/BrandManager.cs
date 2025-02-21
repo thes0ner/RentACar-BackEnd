@@ -25,11 +25,6 @@ namespace RentACar.Business.Concrete
         public async Task<IResult> AddAsync(Brand brand)
         {
 
-            if (brand.Name.Length < 5)
-            {
-                return new ErrorResult(Messages.BrandNameInvalid);
-            }
-
             await _brandDal.AddAsync(brand);
 
             return new SuccessResult(Messages.BrandAdded);
@@ -45,6 +40,7 @@ namespace RentACar.Business.Concrete
         public async Task<IResult> DeleteAsync(Brand brand)
         {
             await _brandDal.DeleteAsync(brand);
+
             return new SuccessResult(Messages.BrandDeleted);
         }
 
@@ -58,7 +54,7 @@ namespace RentACar.Business.Concrete
                 return new ErrorDataResult<Brand>(Messages.BrandNotFound);
             }
 
-            return new SuccessDataResult<Brand>(result, Messages.BrandsListed);
+            return new SuccessDataResult<Brand>(result);
         }
 
         public IDataResult<IQueryable<Brand>> GetAllBrands()
@@ -70,20 +66,7 @@ namespace RentACar.Business.Concrete
                 return new ErrorDataResult<IQueryable<Brand>>(Messages.BrandNotFound);
             }
 
-            return new SuccessDataResult<IQueryable<Brand>>(result, Messages.BrandsListed);
-        }
-
-
-        public IDataResult<IQueryable<Brand>> GetFilteredBrandsByName(string name)
-        {
-            var result = _brandDal.GetFiltered(p => p.Name == name);
-
-            if (result is null || !result.Any())
-            {
-                return new ErrorDataResult<IQueryable<Brand>>(Messages.BrandNotFound);
-            }
-
-            return new SuccessDataResult<IQueryable<Brand>>(result, Messages.BrandsListed);
+            return new SuccessDataResult<IQueryable<Brand>>(result);
         }
 
     }

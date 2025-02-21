@@ -12,6 +12,11 @@ namespace RentACar.Core.Entities.Concrete
         public string Name { get; set; }
 
         // Navigation properties
-        public ICollection<Car> Cars { get; set; }
+        public ICollection<Car>? Cars { get; set; }
+
+        public Color()
+        {
+            Cars = new List<Car>();
+        }
     }
 }

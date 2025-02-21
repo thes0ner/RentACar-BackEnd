@@ -7,34 +7,20 @@ namespace RentACar.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandsController : ControllerBase
+    public class ColorsController : ControllerBase
     {
-        readonly IBrandService _brandService;
+        readonly IColorService _colorService;
 
-        public BrandsController(IBrandService brandService)
+        public ColorsController(IColorService colorService)
         {
-            _brandService = brandService;
+            _colorService = colorService;
         }
+
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public IActionResult GetAllColors()
         {
-
-            var result = _brandService.GetAllBrands();
-
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
-
-            return Ok(result);
-
-        }
-
-        [HttpGet("getbybrandid")]
-        public async Task<IActionResult> GetByBrandId(int id)
-        {
-            var result = await _brandService.GetSingleAsync(id);
+            var result = _colorService.GetAllColors();
 
             if (!result.Success)
             {
@@ -42,15 +28,26 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
+        }
 
+        [HttpGet("getbycolorid")]
+        public async Task<IActionResult> GetByColorId(int id)
+        {
+            var result = await _colorService.GetSingleAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Success);
+            }
+
+            return Ok(result);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> AddBrand([FromBody] Brand brand)
+        public async Task<IActionResult> AddColor([FromBody] Color color)
         {
-
-            var result = await _brandService.AddAsync(brand);
+            var result = await _colorService.AddAsync(color);
 
             if (!result.Success)
             {
@@ -58,13 +55,14 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
+
         }
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateBrand([FromBody] Brand brand)
+        public async Task<IActionResult> UpdateColor([FromBody] Color color)
         {
-            var result = await _brandService.UpdateAsync(brand);
+            var result = await _colorService.UpdateAsync(color);
 
             if (!result.Success)
             {
@@ -72,15 +70,15 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
-
         }
+
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBrand([FromQuery] int id)
+        public async Task<IActionResult> DeleteColor([FromQuery] int id)
         {
-            var brand = await _brandService.GetSingleAsync(id);
+            var color = await _colorService.GetSingleAsync(id);
 
-            var result = await _brandService.DeleteAsync(brand.Data);
+            var result = await _colorService.DeleteAsync(color.Data);
 
             if (!result.Success)
             {
@@ -88,9 +86,7 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
-
         }
-
 
     }
 }

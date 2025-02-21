@@ -53,7 +53,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasOne(e => e.Brand) // One-to-many relationship with Brand
                       .WithMany(b => b.Cars)
                       .HasForeignKey(e => e.BrandId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(e => e.Color) // One-to-many relationship with Color
                       .WithMany()
@@ -78,7 +78,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasMany(e => e.CarImages) // One-to-many relationship with CarImage
                       .WithOne(ci => ci.Car)
                       .HasForeignKey(ci => ci.CarId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(e => e.Location) // One-to-many relationship with Location
                         .WithMany(l => l.Cars)
@@ -226,11 +226,12 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 // Primary key
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).UseIdentityColumn();
 
                 // Properties
                 entity.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.LastName).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Email).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.PasswordHash).IsRequired();
                 entity.Property(e => e.PasswordSalt).IsRequired();
                 entity.Property(e => e.Status).IsRequired();
@@ -238,7 +239,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 //Relationships
                 entity.HasOne(e => e.Customer) // One-to-one relationship with Customer
                       .WithOne(c => c.User)
-                      .HasForeignKey<User>(e => e.Id)
+                      .HasForeignKey<Customer>(c => c.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
@@ -416,6 +417,9 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
             foreach (var data in datas)
             {
+                if (data.State == EntityState.Deleted)
+                    continue;
+
                 _ = data.State switch
                 {
                     EntityState.Added => data.Entity.CreatedDate = DateTime.Now,

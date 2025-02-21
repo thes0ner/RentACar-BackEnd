@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RentACar.Business\RentACar.Business.csproj" />
+    <ProjectReference Include="..\RentACar.Core\RentACar.Core.csproj" />
     <ProjectReference Include="..\RentACar.DataAccess\RentACar.DataAccess.csproj" />
   </ItemGroup>
 

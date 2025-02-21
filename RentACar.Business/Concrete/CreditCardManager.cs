@@ -55,7 +55,7 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<IQueryable<CreditCard>>(result, Messages.CreditCardsListed);
         }
 
-        public IDataResult<IQueryable<CreditCard>> GetFilteredCreditCardsByName(string fullName)
+        public IDataResult<IQueryable<CreditCard>> GetCreditCardsByName(string fullName)
         {
             var result = _creditCardDal.GetFiltered(p => p.FullName == fullName);
 

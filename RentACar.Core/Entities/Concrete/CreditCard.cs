@@ -16,7 +16,9 @@ namespace RentACar.Core.Entities.Concrete
         public int Months { get; set; }
         public int Year { get; set; }
 
-        //Navigation properties
+
+        //Navigation property
+        // non-nullable since a credit card must be associated with a customer.
         public Customer Customer { get; set; }
     }
 }

@@ -13,7 +13,6 @@ namespace RentACar.Business.Abstract
 
 
         IDataResult<IQueryable<Color>> GetAllColors();
-        IDataResult<IQueryable<Color>> GetFilteredBrandsByName(string name);
         Task<IDataResult<Color>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Color color);
         Task<IResult> UpdateAsync(Color color);

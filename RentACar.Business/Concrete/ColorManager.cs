@@ -60,7 +60,7 @@ namespace RentACar.Business.Concrete
         {
             var result = _colorDal.GetAll();
 
-            if (result == null || result.Any())
+            if (result == null || !result.Any())
             {
                 return new ErrorDataResult<IQueryable<Color>>(Messages.ColorNotFound);
             }
@@ -68,16 +68,5 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<IQueryable<Color>>(result, Messages.ColorsListed);
         }
 
-        public IDataResult<IQueryable<Color>> GetFilteredBrandsByName(string name)
-        {
-            var result = _colorDal.GetFiltered(p => p.Name == name);
-
-            if (result == null || result.Any())
-            {
-                return new ErrorDataResult<IQueryable<Color>>(Messages.ColorNotFound);
-            }
-
-            return new SuccessDataResult<IQueryable<Color>>(result, Messages.ColorsListed);
-        }
     }
 }

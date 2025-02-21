@@ -15,5 +15,11 @@ namespace RentACar.Core.Entities.Concrete
 
         // Navigation properties
         public ICollection<Car> Cars { get; set; }
+
+
+        public Location()
+        {
+            Cars = new List<Car>();
+        }
     }
 }

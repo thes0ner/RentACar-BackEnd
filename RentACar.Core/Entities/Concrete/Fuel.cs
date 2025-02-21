@@ -9,9 +9,15 @@ namespace RentACar.Core.Entities.Concrete
 {
     public class Fuel : BaseEntity
     {
+
         public string Type { get; set; }
 
         // Navigation properties
         public ICollection<Car> Cars { get; set; }
+
+        public Fuel()
+        {
+            Cars = new List<Car>();
+        }
     }
 }

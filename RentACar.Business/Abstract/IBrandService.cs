@@ -12,7 +12,6 @@ namespace RentACar.Business.Abstract
     {
 
         IDataResult<IQueryable<Brand>> GetAllBrands();
-        IDataResult<IQueryable<Brand>> GetFilteredBrandsByName(string name);
         Task<IDataResult<Brand>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Brand brand);
         Task<IResult> UpdateAsync(Brand brand);

@@ -42,30 +42,6 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.CustomerUpdated);
         }
 
-        public IDataResult<IQueryable<Customer>> GetAllCustomers()
-        {
-            var result = _customerDal.GetAll();
-
-            if (result == null || !result.Any())
-            {
-                return new ErrorDataResult<IQueryable<Customer>>(Messages.CustomerNotFound);
-            }
-
-            return new SuccessDataResult<IQueryable<Customer>>(result, Messages.CustomersListed);
-        }
-
-        public IDataResult<IQueryable<Customer>> GetFilteredCustomersByName(string firstName)
-        {
-            var result = _customerDal.GetFiltered(p => p.FirstName == firstName);
-
-            if (result == null || !result.Any())
-            {
-                return new ErrorDataResult<IQueryable<Customer>>(Messages.CustomerNotFound);
-            }
-
-            return new SuccessDataResult<IQueryable<Customer>>(result, Messages.CustomersListed);
-        }
-
         public async Task<IDataResult<Customer>> GetSingleAsync(int id)
         {
             var result = await _customerDal.GetSingleAsync(p => p.Id == id);
@@ -78,6 +54,41 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<Customer>(result, Messages.CustomersListed);
         }
 
+        public IDataResult<IQueryable<Customer>> GetAllCustomers()
+        {
+            var result = _customerDal.GetAll();
 
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<IQueryable<Customer>>(Messages.CustomerNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<Customer>>(result, Messages.CustomersListed);
+        }
+
+        public IDataResult<IQueryable<Customer>> GetCustomersByName(string firstName)
+        {
+            var result = _customerDal.GetFiltered(p => p.FirstName == firstName);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<IQueryable<Customer>>(Messages.CustomerNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<Customer>>(result, Messages.CustomersListed);
+        }
+
+
+        public IDataResult<IQueryable<Customer>> GetCustomersByEmail(string email)
+        {
+            var result = _customerDal.GetFiltered(p => p.Email == email);
+
+            if (result == null || !result.Any())
+            {
+                return new ErrorDataResult<IQueryable<Customer>>(Messages.CustomerNotFound);
+            }
+
+            return new SuccessDataResult<IQueryable<Customer>>(result, Messages.CustomersListed);
+        }
     }
 }

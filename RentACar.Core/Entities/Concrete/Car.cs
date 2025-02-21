@@ -36,5 +36,13 @@ namespace RentACar.Core.Entities.Concrete
         public ICollection<CarImage> CarImages { get; set; }
 
 
+        public Car()
+        {
+            Reservations = new List<Reservation>();
+            Rentals = new List<Rental>();
+            CarImages = new List<CarImage>();
+        }
+
+
     }
 }

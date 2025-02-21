@@ -1,14 +1,14 @@
-﻿using RentACar.Core.Entities.Abstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACar.Core.Entities.Concrete
+namespace RentACar.Entities.Concrete
 {
-    public class User : BaseEntity
+    public class User
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -16,7 +16,8 @@ namespace RentACar.Core.Entities.Concrete
         public string PasswordSalt { get; set; }
         public bool Status { get; set; }
 
-        //Navigation property to Customer
+
+        // Navigation properties
         public Customer Customer { get; set; }
     }
 }

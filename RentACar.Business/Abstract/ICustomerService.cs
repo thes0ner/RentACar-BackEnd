@@ -11,7 +11,8 @@ namespace RentACar.Business.Abstract
     public interface ICustomerService
     {
         IDataResult<IQueryable<Customer>> GetAllCustomers();
-        IDataResult<IQueryable<Customer>> GetFilteredCustomersByName(string firstName);
+        IDataResult<IQueryable<Customer>> GetCustomersByName(string firstName);
+        IDataResult<IQueryable<Customer>> GetCustomersByEmail(string email);
         Task<IDataResult<Customer>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Customer customer);
         Task<IResult> UpdateAsync(Customer customer);
