@@ -11,7 +11,6 @@ namespace RentACar.Entities.Concrete
     public class Customer
     {
 
-        // customer properties
 
         public int Id { get; set; }
         public string FirstName { get; set; }
