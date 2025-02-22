@@ -12,7 +12,8 @@ namespace RentACar.Entities.Concrete
     {
         // Properties
         public decimal DailyPrice { get; set; }
-        public string? Model { get; set; }
+        public string Model { get; set; }
+        public string Plate { get; set; }
         public int Year { get; set; }
         public int Mileage { get; set; }
         public string? Description { get; set; }

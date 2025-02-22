@@ -19,6 +19,6 @@ namespace RentACar.Entities.Concrete
 
 
         // Navigation properties
-        public Customer Customer { get; set; }
+        public Customer? Customer { get; set; }
     }
 }

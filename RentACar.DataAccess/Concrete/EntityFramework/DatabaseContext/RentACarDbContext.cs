@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using RentACar.Core.Entities.Abstract;
 using RentACar.Entities.Concrete;
+using RentACar.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,12 +41,20 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasKey(e => e.Id);
 
                 // Properties
+                entity.Property(e => e.BrandId).IsRequired();
+                entity.Property(e => e.ColorId).IsRequired();
+                entity.Property(e => e.FuelId).IsRequired();
+                entity.Property(e => e.TransmissionId).IsRequired();
+                entity.Property(e => e.VehicleId).IsRequired();
+                entity.Property(e => e.LocationId).IsRequired();
                 entity.Property(e => e.Model).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.DailyPrice).HasColumnType("decimal(18,2)");
+                entity.HasIndex(e => e.Plate).IsUnique();
                 entity.Property(e => e.Description).HasMaxLength(500);
-                entity.Property(e => e.Mileage).IsRequired();
                 entity.Property(e => e.Year).IsRequired();
-                entity.Property(e => e.Status).IsRequired();
+                entity.Property(e => e.Status).IsRequired().HasConversion(v => v.ToString(), v => (CarStatus)Enum.Parse(typeof(CarStatus), v))
+                                        .IsRequired();
+                entity.Property(e => e.Mileage).IsRequired();
 
 
                 // Relationships
@@ -75,15 +84,15 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                       .HasForeignKey(e => e.VehicleId)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(e => e.CarImages) // One-to-many relationship with CarImage
-                      .WithOne(ci => ci.Car)
-                      .HasForeignKey(ci => ci.CarId)
-                      .OnDelete(DeleteBehavior.Restrict);
-
                 entity.HasOne(e => e.Location) // One-to-many relationship with Location
                         .WithMany(l => l.Cars)
                         .HasForeignKey(e => e.LocationId)
                         .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(e => e.CarImages) // One-to-many relationship with CarImage
+                      .WithOne(ci => ci.Car)
+                      .HasForeignKey(ci => ci.CarId)
+                      .OnDelete(DeleteBehavior.Cascade);
 
                 // Index on Model for faster searches
                 entity.HasIndex(e => e.Model);
@@ -99,7 +108,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasKey(e => e.Id);
 
                 // Properties
-                entity.Property(e => e.ImagePath).IsRequired();
+                entity.Property(e => e.Id).IsRequired();
+                entity.Property(e => e.ImagePath).HasMaxLength(255).IsRequired();
                 entity.Property(e => e.Date).IsRequired();
 
                 // Relationships
@@ -116,10 +126,15 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.ToTable("Brands");
 
                 // Primary key
-                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.Name).IsUnique().HasFilter("LOWER(Name)");
 
                 // Properties
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Id).IsRequired();
+                entity.Property(e => e.Name)
+                       .IsRequired()
+                       .HasMaxLength(50)
+                       .HasColumnType("VARCHAR")
+                       .HasConversion(name => name.Trim(), name => name.Trim());
 
                 // Index on Name for faster searches
                 entity.HasIndex(e => e.Name).IsUnique();
@@ -141,10 +156,15 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasKey(e => e.Id);
 
                 // Properties
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Id).IsRequired();
+                entity.Property(e => e.Name)
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR")
+                        .HasConversion(name => name.Trim(), name => name.Trim());
 
                 // Index on Name for faster searches
-                entity.HasIndex(e => e.Name).IsUnique();
+                entity.HasIndex(e => e.Name).IsUnique().HasFilter("LOWER(Name)");
 
                 // Relationships
                 entity.HasMany(e => e.Cars) // One-to-many relationship with Car
@@ -153,24 +173,29 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
+
+            // This two needs to be implemented.
             modelBuilder.Entity<CreditCard>(entity =>
             {
-                //Table name
-                entity.ToTable("CreditCards");
+                ////Table name
+                //entity.ToTable("CreditCards");
 
-                // Primary key
-                entity.HasKey(e => e.Id);
+                //// Primary key
+                //entity.HasKey(e => e.Id);
 
-                // Properties
+                //// Properties
 
-                entity.Property(e => e.FullName).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.CardNumber).IsRequired().HasMaxLength(16);
-                entity.Property(e => e.Month).IsRequired().HasMaxLength(2);
-                entity.Property(e => e.Year).IsRequired().HasMaxLength(4);
-                entity.Property(e => e.Cvv).IsRequired().HasMaxLength(3);
+                //entity.Property(e => e.FullName).IsRequired().HasMaxLength(100);
+                //entity.Property(e => e.CardNumber).IsRequired().HasMaxLength(16);
+                //entity.Property(e => e.Month).IsRequired().HasMaxLength(2);
+                //entity.Property(e => e.Year).IsRequired().HasMaxLength(4);
+                //entity.Property(e => e.Cvv).IsRequired().HasMaxLength(3);
 
             });
+            modelBuilder.Entity<Bank>(entity =>
+            {
 
+            });
 
             modelBuilder.Entity<Customer>(entity =>
             {
@@ -180,33 +205,41 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasKey(e => e.Id);
 
                 // Properties
+                entity.Property(e => e.Id).IsRequired();
                 entity.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.LastName).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.PhoneNumber).IsRequired().HasMaxLength(20);
-                entity.Property(e => e.Address).HasMaxLength(200);
+                entity.Property(e => e.PhoneNumber)
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("VARCHAR")
+                        .HasConversion(p => p.Trim(), p => p.Trim());
+
+                entity.Property(e => e.Address).HasMaxLength(100);
                 entity.Property(e => e.City).HasMaxLength(50);
                 entity.Property(e => e.Country).HasMaxLength(50);
-                entity.Property(e => e.CustomerStatus).IsRequired();
+                entity.Property(e => e.CustomerStatus)
+                                    .HasConversion(v => v.ToString(), v => (CustomerStatus)Enum.Parse(typeof(CustomerStatus), v))
+                                    .IsRequired();
 
                 // Index on Email for faster searches
-                entity.HasIndex(e => e.Email).IsUnique();
+                entity.HasIndex(e => e.Email).IsUnique().HasFilter("LOWER(Email)");
 
                 //Relationships
                 entity.HasOne(e => e.User) // One-to-one relationship with User
                       .WithOne(u => u.Customer)
                       .HasForeignKey<Customer>(e => e.UserId)
-                      .OnDelete(DeleteBehavior.Cascade); // Cascade delete User when Customer is deleted
+                      .OnDelete(DeleteBehavior.Cascade); // when customer is deleted, deletes the user as well.
 
                 entity.HasMany(e => e.Reservations)
                       .WithOne(r => r.Customer)
                       .HasForeignKey(r => r.CustomerId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict); // when customer is deleted, Reservations needs to stay.
 
                 entity.HasMany(e => e.Rentals)
                       .WithOne(r => r.Customer)
                       .HasForeignKey(r => r.CustomerId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict); // when customer is deleted, Rentals needs to stay.
 
             });
 
@@ -217,14 +250,18 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 // Primary key
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).UseIdentityColumn();
+                entity.Property(e => e.Id).UseIdentityColumn().IsRequired();
+
+
+                // Index on Email for faster searches
+                entity.HasIndex(e => e.Email).IsUnique().HasFilter("LOWER(Email)");
 
                 // Properties
                 entity.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.LastName).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.Email).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.PasswordHash).IsRequired();
-                entity.Property(e => e.PasswordSalt).IsRequired();
+                entity.Property(e => e.Email).IsRequired().HasMaxLength(80);
+                entity.Property(e => e.PasswordHash).HasMaxLength(256);
+                entity.Property(e => e.PasswordSalt).HasMaxLength(256);
                 entity.Property(e => e.Status).IsRequired();
 
                 //Relationships
