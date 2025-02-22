@@ -1,6 +1,6 @@
-﻿using RentACar.Core.Entities.Concrete;
+﻿using RentACar.Entities.Concrete;
 using RentACar.Core.Entities.DTO_s;
-using RentACar.Core.Entities.Enums;
+using RentACar.Entities.Enums;
 using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;

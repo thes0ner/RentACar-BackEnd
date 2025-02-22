@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using RentACar.Core.Entities.Abstract;
-using RentACar.Core.Entities.Concrete;
+using RentACar.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -165,15 +165,10 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 entity.Property(e => e.FullName).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.CardNumber).IsRequired().HasMaxLength(16);
-                entity.Property(e => e.Months).IsRequired().HasMaxLength(2);
+                entity.Property(e => e.Month).IsRequired().HasMaxLength(2);
                 entity.Property(e => e.Year).IsRequired().HasMaxLength(4);
-                entity.Property(e => e.CVV).IsRequired().HasMaxLength(3);
+                entity.Property(e => e.Cvv).IsRequired().HasMaxLength(3);
 
-                // Relationships
-                entity.HasOne(e => e.Customer) // One-to-many relationship with Customer
-                      .WithMany(c => c.CreditCards)
-                      .HasForeignKey(e => e.CustomerId)
-                      .OnDelete(DeleteBehavior.Cascade);
             });
 
 
@@ -213,10 +208,6 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                       .HasForeignKey(r => r.CustomerId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasMany(e => e.CreditCards)
-                        .WithOne(cc => cc.Customer)
-                        .HasForeignKey(cc => cc.CustomerId)
-                        .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -393,9 +384,11 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 // Properties
                 entity.Property(e => e.TotalAmount).HasColumnType("decimal(18,2)");
-                entity.Property(e => e.BillingAddress).IsRequired().HasMaxLength(200);
-                entity.Property(e => e.BillingCity).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.BillingCountry).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.PaidAmount).HasColumnType("decimal(18,2)");
+                entity.Property(e => e.Balance).HasColumnType("decimal(18,2)");
+                entity.Property(e => e.InvoiceDate).IsRequired();
+                entity.Property(e => e.DueDate).IsRequired();
+                entity.Property(e => e.InvoiceStatus).IsRequired();
 
 
                 // Relationships
@@ -439,6 +432,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
         public DbSet<User> Users { get; set; }
         public DbSet<CarImage> CarImages { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
+        public DbSet<Bank> Banks { get; set; }
         public DbSet<Fuel> Fuels { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Location> Locations { get; set; }

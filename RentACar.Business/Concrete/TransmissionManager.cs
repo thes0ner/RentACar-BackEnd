@@ -1,6 +1,6 @@
 ﻿using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
-using RentACar.Core.Entities.Concrete;
+using RentACar.Entities.Concrete;
 using RentACar.Core.Utilities.Results.Abstract;
 using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.DataAccess.Abstract;

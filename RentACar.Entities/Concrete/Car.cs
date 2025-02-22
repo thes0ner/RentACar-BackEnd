@@ -22,15 +22,21 @@ namespace RentACar.Entities.Concrete
         public int BrandId { get; set; }
         public int ColorId { get; set; }
         public int FuelId { get; set; }
+        public int TransmissionId { get; set; }
+        public int VehicleId { get; set; }
+        public int LocationId { get; set; }
 
 
         // Navigation properties
         public Brand Brand { get; set; }
         public Color Color { get; set; }
         public Fuel Fuel { get; set; }
+        public Transmission Transmission { get; set; }
+        public Vehicle Vehicle { get; set; }
+        public Location Location { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
         public ICollection<Rental> Rentals { get; set; }
 
-        //public ICollection<CarImage> CarImages { get; set; }
+        public ICollection<CarImage> CarImages { get; set; }
     }
 }

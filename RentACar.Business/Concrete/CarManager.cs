@@ -1,6 +1,6 @@
 ﻿using RentACar.Business.Abstract;
 using RentACar.DataAccess.Abstract;
-using RentACar.Core.Entities.Concrete;
+using RentACar.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using RentACar.Core.Entities.DTO_s;
 using RentACar.Core.Utilities.Results.Abstract;
 using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.Business.Constants;
-using RentACar.Core.Entities.Enums;
+using RentACar.Entities.Enums;
 
 namespace RentACar.Business.Concrete
 {

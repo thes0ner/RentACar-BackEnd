@@ -1,4 +1,4 @@
-﻿using RentACar.Core.Entities.Concrete;
+﻿using RentACar.Entities.Concrete;
 using RentACar.Core.Utilities.Results.Abstract;
 using System;
 using System.Collections.Generic;
