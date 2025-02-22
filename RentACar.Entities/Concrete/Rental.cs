@@ -13,7 +13,7 @@ namespace RentACar.Entities.Concrete
 
         // Properties
         public DateTime RentDate { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
         public decimal TotalPrice { get; set; }
         public bool IsReturned { get; set; }
 

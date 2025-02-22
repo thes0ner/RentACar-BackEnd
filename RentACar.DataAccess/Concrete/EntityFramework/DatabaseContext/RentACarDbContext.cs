@@ -203,6 +203,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 // Primary key
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).UseIdentityColumn().IsRequired();
+
 
                 // Properties
                 entity.Property(e => e.Id).IsRequired();
@@ -268,9 +270,9 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasOne(e => e.Customer) // One-to-one relationship with Customer
                       .WithOne(c => c.User)
                       .HasForeignKey<Customer>(c => c.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict) // if user is deleted, customer going to stay.
+                      .IsRequired(false);
             });
-
 
             modelBuilder.Entity<Rental>(entity =>
             {
@@ -279,10 +281,11 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 // Primary key
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).UseIdentityColumn().IsRequired();
 
                 // Properties
                 entity.Property(e => e.RentDate).IsRequired();
-                entity.Property(e => e.ReturnDate).IsRequired();
+                entity.Property(e => e.ReturnDate).IsRequired(false);
                 entity.Property(e => e.TotalPrice).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.IsReturned).IsRequired();
 
@@ -296,14 +299,18 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasOne(e => e.Customer) // One-to-many relationship with Customer
                       .WithMany(c => c.Rentals)
                       .HasForeignKey(e => e.CustomerId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(e => e.Invoice) // One-to-one relationship with Invoice
                         .WithOne(i => i.Rental)
                         .HasForeignKey<Invoice>(e => e.RentalId)
                         .OnDelete(DeleteBehavior.Cascade);
-            });
 
+                entity.HasMany(e => e.Payments) // One-to-many relationship with Payment
+                      .WithOne(p => p.Rental)
+                      .HasForeignKey(p => p.RentalId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
 
             modelBuilder.Entity<Reservation>(entity =>
             {
@@ -312,6 +319,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 // Primary key
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).UseIdentityColumn().IsRequired();
 
                 // Properties
                 entity.Property(e => e.ReservationDate).IsRequired();
@@ -328,7 +336,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
                 entity.HasOne(e => e.Customer) // One-to-many relationship with Customer
                       .WithMany(c => c.Reservations)
                       .HasForeignKey(e => e.CustomerId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.NoAction);
             });
 
 
@@ -340,6 +348,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
                 //Primary key
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).UseIdentityColumn().IsRequired();
 
                 //Properties
                 entity.Property(e => e.Address).IsRequired().HasMaxLength(100);
