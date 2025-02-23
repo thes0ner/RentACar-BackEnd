@@ -16,6 +16,7 @@ namespace RentACar.Entities.Concrete
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public bool Status { get; set; }
+        public bool IsDeleted { get; set; }
 
 
         // Navigation properties

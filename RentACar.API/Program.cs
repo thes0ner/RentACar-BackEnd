@@ -3,7 +3,7 @@ using RentACar.Business.Abstract;
 using RentACar.Business.Concrete;
 using RentACar.DataAccess.Abstract;
 using RentACar.DataAccess.Concrete.EntityFramework;
-using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configurations;
+using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext;
 
 var builder = WebApplication.CreateBuilder(args);
 

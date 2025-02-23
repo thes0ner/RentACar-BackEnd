@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
 
-namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configurations
+namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 {
 
     // Provides configuration settings for the application

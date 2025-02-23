@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configurations
+namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 {
     public static class ServiceRegistration
     {

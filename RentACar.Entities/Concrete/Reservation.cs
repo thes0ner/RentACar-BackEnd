@@ -15,6 +15,7 @@ namespace RentACar.Entities.Concrete
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsConfirmed { get; set; }
+        public bool IsCancelled { get; set; }
 
         // Navigation properties
         public int CustomerId { get; set; }

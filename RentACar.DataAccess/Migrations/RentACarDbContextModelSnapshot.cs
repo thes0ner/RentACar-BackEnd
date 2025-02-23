@@ -22,7 +22,7 @@ namespace RentACar.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Brand", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Brand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,21 +35,17 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Brands", (string)null);
+                    b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Car", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Car", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,8 +66,7 @@ namespace RentACar.DataAccess.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FuelId")
                         .HasColumnType("int");
@@ -84,8 +79,11 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<string>("Model")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Plate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -112,16 +110,14 @@ namespace RentACar.DataAccess.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.HasIndex("Model");
-
                     b.HasIndex("TransmissionId");
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Cars", (string)null);
+                    b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.CarImage", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.CarImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -149,10 +145,10 @@ namespace RentACar.DataAccess.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("CarImages", (string)null);
+                    b.ToTable("CarImages");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Color", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Color", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,68 +161,17 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Colors", (string)null);
+                    b.ToTable("Colors");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.CreditCard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CVV")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("CardNumber")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Months")
-                        .HasMaxLength(2)
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Year")
-                        .HasMaxLength(4)
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("CreditCards", (string)null);
-                });
-
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Customer", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,16 +180,13 @@ namespace RentACar.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -254,23 +196,22 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -280,16 +221,13 @@ namespace RentACar.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Fuel", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Fuel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -302,18 +240,17 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fuels", (string)null);
+                    b.ToTable("Fuels");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Invoice", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Invoice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -321,26 +258,30 @@ namespace RentACar.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BillingAddress")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("BillingCity")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("BillingCountry")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("InvoiceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InvoiceStatus")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("PaidAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RentalId")
                         .HasColumnType("int");
@@ -356,10 +297,10 @@ namespace RentACar.DataAccess.Migrations
                     b.HasIndex("RentalId")
                         .IsUnique();
 
-                    b.ToTable("Invoices", (string)null);
+                    b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Location", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -369,18 +310,15 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -390,10 +328,58 @@ namespace RentACar.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations", (string)null);
+                    b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Rental", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Payment")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RentalId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RentalId");
+
+                    b.ToTable("Payment");
+
+                    b.HasDiscriminator<string>("Payment").HasValue("Payment");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("RentACar.Entities.Concrete.Rental", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -410,13 +396,16 @@ namespace RentACar.DataAccess.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsReturned")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("RentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ReturnDate")
+                    b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("TotalPrice")
@@ -431,10 +420,10 @@ namespace RentACar.DataAccess.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Rentals", (string)null);
+                    b.ToTable("Rentals");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Reservation", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Reservation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -454,6 +443,9 @@ namespace RentACar.DataAccess.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("bit");
 
@@ -472,10 +464,10 @@ namespace RentACar.DataAccess.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Reservations", (string)null);
+                    b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Transmission", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Transmission", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -488,18 +480,17 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Transmissions", (string)null);
+                    b.ToTable("Transmissions");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.User", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -512,18 +503,18 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -541,10 +532,10 @@ namespace RentACar.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Vehicle", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Vehicle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -557,50 +548,99 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vehicles", (string)null);
+                    b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Car", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.BankTransfer", b =>
                 {
-                    b.HasOne("RentACar.Core.Entities.Concrete.Brand", "Brand")
+                    b.HasBaseType("RentACar.Entities.Concrete.Payment");
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IBAN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("BankTransfer");
+                });
+
+            modelBuilder.Entity("RentACar.Entities.Concrete.CreditCard", b =>
+                {
+                    b.HasBaseType("RentACar.Entities.Concrete.Payment");
+
+                    b.Property<int>("CardLimit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Cvv")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("CreditCard");
+                });
+
+            modelBuilder.Entity("RentACar.Entities.Concrete.Car", b =>
+                {
+                    b.HasOne("RentACar.Entities.Concrete.Brand", "Brand")
                         .WithMany("Cars")
                         .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RentACar.Core.Entities.Concrete.Color", "Color")
+                    b.HasOne("RentACar.Entities.Concrete.Color", "Color")
                         .WithMany("Cars")
                         .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RentACar.Core.Entities.Concrete.Fuel", "Fuel")
+                    b.HasOne("RentACar.Entities.Concrete.Fuel", "Fuel")
                         .WithMany("Cars")
                         .HasForeignKey("FuelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RentACar.Core.Entities.Concrete.Location", "Location")
+                    b.HasOne("RentACar.Entities.Concrete.Location", "Location")
                         .WithMany("Cars")
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RentACar.Core.Entities.Concrete.Transmission", "Transmission")
+                    b.HasOne("RentACar.Entities.Concrete.Transmission", "Transmission")
                         .WithMany("Cars")
                         .HasForeignKey("TransmissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RentACar.Core.Entities.Concrete.Vehicle", "Vehicle")
+                    b.HasOne("RentACar.Entities.Concrete.Vehicle", "Vehicle")
                         .WithMany("Cars")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -619,9 +659,9 @@ namespace RentACar.DataAccess.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.CarImage", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.CarImage", b =>
                 {
-                    b.HasOne("RentACar.Core.Entities.Concrete.Car", "Car")
+                    b.HasOne("RentACar.Entities.Concrete.Car", "Car")
                         .WithMany("CarImages")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -630,48 +670,48 @@ namespace RentACar.DataAccess.Migrations
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.CreditCard", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Customer", b =>
                 {
-                    b.HasOne("RentACar.Core.Entities.Concrete.Customer", "Customer")
-                        .WithMany("CreditCards")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Customer", b =>
-                {
-                    b.HasOne("RentACar.Core.Entities.Concrete.User", "User")
+                    b.HasOne("RentACar.Entities.Concrete.User", "User")
                         .WithOne("Customer")
-                        .HasForeignKey("RentACar.Core.Entities.Concrete.Customer", "UserId")
+                        .HasForeignKey("RentACar.Entities.Concrete.Customer", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Invoice", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Invoice", b =>
                 {
-                    b.HasOne("RentACar.Core.Entities.Concrete.Rental", "Rental")
+                    b.HasOne("RentACar.Entities.Concrete.Rental", "Rental")
                         .WithOne("Invoice")
-                        .HasForeignKey("RentACar.Core.Entities.Concrete.Invoice", "RentalId")
+                        .HasForeignKey("RentACar.Entities.Concrete.Invoice", "RentalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Rental");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Rental", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Payment", b =>
                 {
-                    b.HasOne("RentACar.Core.Entities.Concrete.Car", "Car")
+                    b.HasOne("RentACar.Entities.Concrete.Rental", "Rental")
+                        .WithMany("Payments")
+                        .HasForeignKey("RentalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rental");
+                });
+
+            modelBuilder.Entity("RentACar.Entities.Concrete.Rental", b =>
+                {
+                    b.HasOne("RentACar.Entities.Concrete.Car", "Car")
                         .WithMany("Rentals")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RentACar.Core.Entities.Concrete.Customer", "Customer")
+                    b.HasOne("RentACar.Entities.Concrete.Customer", "Customer")
                         .WithMany("Rentals")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -682,15 +722,15 @@ namespace RentACar.DataAccess.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Reservation", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Reservation", b =>
                 {
-                    b.HasOne("RentACar.Core.Entities.Concrete.Car", "Car")
+                    b.HasOne("RentACar.Entities.Concrete.Car", "Car")
                         .WithMany("Reservations")
                         .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RentACar.Core.Entities.Concrete.Customer", "Customer")
+                    b.HasOne("RentACar.Entities.Concrete.Customer", "Customer")
                         .WithMany("Reservations")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -701,12 +741,12 @@ namespace RentACar.DataAccess.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Brand", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Brand", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Car", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Car", b =>
                 {
                     b.Navigation("CarImages");
 
@@ -715,48 +755,47 @@ namespace RentACar.DataAccess.Migrations
                     b.Navigation("Reservations");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Color", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Color", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Customer", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Customer", b =>
                 {
-                    b.Navigation("CreditCards");
-
                     b.Navigation("Rentals");
 
                     b.Navigation("Reservations");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Fuel", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Fuel", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Location", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Location", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Rental", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Rental", b =>
                 {
                     b.Navigation("Invoice")
                         .IsRequired();
+
+                    b.Navigation("Payments");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Transmission", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Transmission", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.User", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.User", b =>
                 {
-                    b.Navigation("Customer")
-                        .IsRequired();
+                    b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("RentACar.Core.Entities.Concrete.Vehicle", b =>
+            modelBuilder.Entity("RentACar.Entities.Concrete.Vehicle", b =>
                 {
                     b.Navigation("Cars");
                 });

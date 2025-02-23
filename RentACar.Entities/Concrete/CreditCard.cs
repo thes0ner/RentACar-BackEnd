@@ -17,5 +17,6 @@ namespace RentACar.Entities.Concrete
         public int Month { get; set; }
         public int Year { get; set; }
         public int Cvv { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

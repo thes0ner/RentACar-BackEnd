@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework
 {
-    public class EfBankDal : EfEntityRepositoryBase<Bank, RentACarDbContext>, IBankDal
+    public class EfBankTransferDal : EfEntityRepositoryBase<BankTransfer, RentACarDbContext>, IBankTransferDal
     {
-        public EfBankDal(RentACarDbContext context) : base(context)
+        public EfBankTransferDal(RentACarDbContext context) : base(context)
         {
 
         }

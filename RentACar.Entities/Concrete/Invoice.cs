@@ -16,8 +16,10 @@ namespace RentACar.Entities.Concrete
         public decimal TotalAmount { get; set; }
         public decimal PaidAmount { get; set; }
         public decimal Balance { get; set; }
+        public string InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
         public DateTime DueDate { get; set; }
+        public bool IsDeleted { get; set; }
         public InvoiceStatus InvoiceStatus { get; set; }
 
 

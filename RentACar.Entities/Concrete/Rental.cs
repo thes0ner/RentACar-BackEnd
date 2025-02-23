@@ -16,6 +16,7 @@ namespace RentACar.Entities.Concrete
         public DateTime? ReturnDate { get; set; }
         public decimal TotalPrice { get; set; }
         public bool IsReturned { get; set; }
+        public bool  IsDeleted { get; set; }
 
 
         // Foreign Keys

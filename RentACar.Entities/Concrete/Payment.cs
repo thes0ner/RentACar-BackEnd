@@ -16,6 +16,7 @@ namespace RentACar.Entities.Concrete
         public DateTime PaymentDate { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
         public PaymentType PaymentType { get; set; }
+        public bool IsDeleted { get; set; }
 
         // Navigation properties
         public int RentalId { get; set; }

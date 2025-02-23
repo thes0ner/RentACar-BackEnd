@@ -14,13 +14,13 @@ namespace RentACar.Business.Concrete
 {
     public class PaymentManager : IPaymentService
     {
-        readonly ICreditCardDal _creditCardPaymentDal;
-        readonly IBankPaymentDal _bankPaymentDal;
+        readonly ICreditCardDal _creditCardDal;
+        readonly IBankTransferDal _bankTransferDal;
 
-        public PaymentManager(ICreditCardDal creditCardPaymentDal, IBankPaymentDal bankPaymentDal)
+        public PaymentManager(ICreditCardDal creditCardDal, IBankTransferDal bankTransferDal)
         {
-            _creditCardPaymentDal = creditCardPaymentDal;
-            _bankPaymentDal = bankPaymentDal;
+            _creditCardDal = creditCardDal;
+            _bankTransferDal = bankTransferDal;
         }
 
         public Task<IResult> AddAsync(Payment payment)

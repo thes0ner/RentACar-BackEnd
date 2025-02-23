@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Abstract
 {
-    public interface IBankDal : IEntityRepository<Bank>
+    public interface IBankTransferDal : IEntityRepository<BankTransfer>
     {
 
     }
