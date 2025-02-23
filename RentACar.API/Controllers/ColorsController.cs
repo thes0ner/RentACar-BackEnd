@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RentACar.Business.Abstract;
-using RentACar.Core.Entities.Concrete;
+using RentACar.Entities.Concrete;
 
 namespace RentACar.WebAPI.Controllers
 {

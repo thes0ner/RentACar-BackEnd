@@ -24,7 +24,6 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configura
             services.AddScoped<IBrandDal, EfBrandDal>();
             services.AddScoped<ICarDal, EfCarDal>();
             services.AddScoped<IColorDal, EfColorDal>();
-            services.AddScoped<ICreditCardDal, EfCreditCardDal>();
             services.AddScoped<ICustomerDal, EfCustomerDal>();
             services.AddScoped<IFuelDal, EfFuelDal>();
             services.AddScoped<IInvoiceDal, EfInvoiceDal>();

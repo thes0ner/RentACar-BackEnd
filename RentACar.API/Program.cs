@@ -11,7 +11,6 @@ builder.Services.AddPersistenceServices();
 builder.Services.AddScoped<IBrandService, BrandManager>();
 builder.Services.AddScoped<ICarService, CarManager>();
 builder.Services.AddScoped<IColorService, ColorManager>();
-builder.Services.AddScoped<ICreditCardService, CreditCardManager>();
 builder.Services.AddScoped<ICustomerService, CustomerManager>();
 builder.Services.AddScoped<IFuelService, FuelManager>();
 builder.Services.AddScoped<IInvoiceService, InvoiceManager>();

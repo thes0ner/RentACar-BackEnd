@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACar.Core.Entities.Abstract;
-using RentACar.Core.Entities.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;

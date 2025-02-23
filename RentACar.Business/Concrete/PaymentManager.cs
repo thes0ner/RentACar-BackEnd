@@ -14,10 +14,10 @@ namespace RentACar.Business.Concrete
 {
     public class PaymentManager : IPaymentService
     {
-        readonly ICreditCardPaymentDal _creditCardPaymentDal;
+        readonly ICreditCardDal _creditCardPaymentDal;
         readonly IBankPaymentDal _bankPaymentDal;
 
-        public PaymentManager(ICreditCardPaymentDal creditCardPaymentDal, IBankPaymentDal bankPaymentDal)
+        public PaymentManager(ICreditCardDal creditCardPaymentDal, IBankPaymentDal bankPaymentDal)
         {
             _creditCardPaymentDal = creditCardPaymentDal;
             _bankPaymentDal = bankPaymentDal;

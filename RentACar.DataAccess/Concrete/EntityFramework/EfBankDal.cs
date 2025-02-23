@@ -10,12 +10,11 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework
 {
-    public class EfCreditCardPaymentDal : EfEntityRepositoryBase<CreditCard, RentACarDbContext>, ICreditCardPaymentDal
+    public class EfBankDal : EfEntityRepositoryBase<Bank, RentACarDbContext>, IBankDal
     {
-        public EfCreditCardPaymentDal(RentACarDbContext context) : base(context)
+        public EfBankDal(RentACarDbContext context) : base(context)
         {
 
         }
     }
-
 }
