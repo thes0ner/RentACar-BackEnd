@@ -5,15 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACar.Core.Entities.Concrete
+namespace RentACar.Entities.Concrete
 {
     public class CarImage : BaseEntity
     {
-        public int CarId { get; set; }
+
+        // Properties
         public string ImagePath { get; set; }
         public DateTime Date { get; set; }
 
-        //navigation properties
+        // Foreign Key
+        public int CarId { get; set; }
+
+        // Navigation properties
         public Car Car { get; set; }
     }
 }

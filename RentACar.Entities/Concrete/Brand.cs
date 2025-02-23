@@ -5,19 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACar.Core.Entities.Concrete
+namespace RentACar.Entities.Concrete
 {
     public class Brand : BaseEntity
     {
+        // Properties
         public string Name { get; set; }
 
         // Navigation properties
         public ICollection<Car>? Cars { get; set; }
-
-
-        public Brand()
-        {
-            Cars = new List<Car>();
-        }
     }
 }

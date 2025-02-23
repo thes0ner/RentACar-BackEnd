@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Abstract
 {
-    public interface IBrandDal : IEntityRepository<Brand>
+    public interface ICreditCardPaymentDal : IEntityRepository<CreditCard>
     {
-
     }
 }

@@ -1,5 +1,5 @@
 ﻿using RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstract;
-using RentACar.Core.Entities.Concrete;
+using RentACar.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Abstract
 {
-    public interface ICreditCardDal : IEntityRepository<CreditCard>
+    public interface IBankPaymentDal : IEntityRepository<Bank>
     {
     }
 }

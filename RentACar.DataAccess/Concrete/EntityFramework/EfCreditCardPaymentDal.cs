@@ -1,7 +1,7 @@
 ﻿using RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstract;
-using RentACar.Core.Entities.Concrete;
 using RentACar.DataAccess.Abstract;
 using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext;
+using RentACar.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework
 {
-    public class EfCreditCardDal : EfEntityRepositoryBase<CreditCard, RentACarDbContext>, ICreditCardDal
+    public class EfCreditCardPaymentDal : EfEntityRepositoryBase<CreditCard, RentACarDbContext>, ICreditCardPaymentDal
     {
-        public EfCreditCardDal(RentACarDbContext context) : base(context)
+        public EfCreditCardPaymentDal(RentACarDbContext context) : base(context)
         {
+
         }
     }
+
 }

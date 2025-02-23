@@ -1,7 +1,7 @@
 ﻿using RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstract;
 using RentACar.DataAccess.Abstract;
 using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext;
-using RentACar.Core.Entities.Concrete;
+using RentACar.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using RentACar.Core.Entities.DTO_s;
 using Microsoft.VisualBasic.FileIO;
 using System.Linq.Expressions;
-using RentACar.Core.Entities.Enums;
+using RentACar.Entities.Enums;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework
 {
