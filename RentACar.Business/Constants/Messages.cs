@@ -45,6 +45,25 @@ namespace RentACar.Business.Constants
         public static string CreditCardAlreadyExists = "Credit card already exists.";
         public static string CreditCardNotFound = "Credit card(s) not found.";
 
+        // BankTransfer Messages
+        public static string BankTransferAdded = "Bank transfer added successfully.";
+        public static string BankTransferDeleted = "Bank transfer deleted successfully.";
+        public static string BankTransferUpdated = "Bank transfer updated successfully.";
+        public static string BankTransfersListed = "Bank transfers listed successfully.";
+        public static string BankTransferInvalid = "Bank transfer is invalid.";
+        public static string BankTransferAlreadyExists = "Bank transfer already exists.";
+        public static string BankTransferNotFound = "Bank transfer(s) not found.";
+      
+        // Payment Messages
+        public static string PaymentProcessed = "Payment processed successfully.";
+        public static string PaymentFailed = "Payment processing failed.";
+        public static string PaymentNotFound = "Payment not found.";
+        public static string PaymentAdded = "Payment added successfully.";
+        public static string PaymentDeleted = "Payment deleted successfully.";
+        public static string PaymentUpdated = "Payment updated successfully.";
+        public static string PaymentsListed = "Payments listed successfully.";
+        public static string PaymentTypeInvalid = "Payment type is invalid.";
+
         // Customer Messages
         public static string CustomerAdded = "Customer added successfully.";
         public static string CustomerDeleted = "Customer deleted successfully.";
