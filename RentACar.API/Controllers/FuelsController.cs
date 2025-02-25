@@ -7,34 +7,20 @@ namespace RentACar.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandsController : ControllerBase
+    public class FuelsController : ControllerBase
     {
-        readonly IBrandService _brandService;
+        readonly IFuelService _fuelService;
 
-        public BrandsController(IBrandService brandService)
+        public FuelsController(IFuelService fuelService)
         {
-            _brandService = brandService;
+            _fuelService = fuelService;
         }
+
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-
-            var result = _brandService.GetAllBrands();
-
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
-
-            return Ok(result);
-
-        }
-
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var result = await _brandService.GetSingleAsync(id);
+            var result = _fuelService.GetAllFuels();
 
             if (!result.Success)
             {
@@ -42,15 +28,26 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
+        }
 
+        [HttpGet("getbyid")]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var result = await _fuelService.GetSingleAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Success);
+            }
+
+            return Ok(result);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] Brand brand)
+        public async Task<IActionResult> AddAsync([FromBody] Fuel fuel)
         {
-
-            var result = await _brandService.AddAsync(brand);
+            var result = await _fuelService.AddAsync(fuel);
 
             if (!result.Success)
             {
@@ -58,13 +55,14 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
+
         }
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] Brand brand)
+        public async Task<IActionResult> UpdateAsync([FromBody] Fuel fuel)
         {
-            var result = await _brandService.UpdateAsync(brand);
+            var result = await _fuelService.UpdateAsync(fuel);
 
             if (!result.Success)
             {
@@ -72,15 +70,15 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
-
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
-            var brandToDelete = await _brandService.GetSingleAsync(id);
+            var fuelToDelete = await _fuelService.GetSingleAsync(id);
 
-            var result = await _brandService.DeleteAsync(brandToDelete.Data);
+            var result = await _fuelService.DeleteAsync(fuelToDelete.Data);
 
             if (!result.Success)
             {
@@ -88,9 +86,6 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
-
         }
-
-
     }
 }

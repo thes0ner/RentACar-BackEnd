@@ -18,7 +18,7 @@ namespace RentACar.WebAPI.Controllers
 
 
         [HttpGet("getall")]
-        public IActionResult GetAllColors()
+        public IActionResult GetAll()
         {
             var result = _colorService.GetAllColors();
 
@@ -30,8 +30,8 @@ namespace RentACar.WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getbycolorid")]
-        public async Task<IActionResult> GetByColorId(int id)
+        [HttpGet("getbyid")]
+        public async Task<IActionResult> GetById(int id)
         {
             var result = await _colorService.GetSingleAsync(id);
 
@@ -45,7 +45,7 @@ namespace RentACar.WebAPI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddColor([FromBody] Color color)
+        public async Task<IActionResult> AddAsync([FromBody] Color color)
         {
             var result = await _colorService.AddAsync(color);
 
@@ -60,7 +60,7 @@ namespace RentACar.WebAPI.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateColor([FromBody] Color color)
+        public async Task<IActionResult> UpdateAsync([FromBody] Color color)
         {
             var result = await _colorService.UpdateAsync(color);
 
@@ -74,11 +74,11 @@ namespace RentACar.WebAPI.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteColor([FromQuery] int id)
+        public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
-            var color = await _colorService.GetSingleAsync(id);
+            var colorToDelete = await _colorService.GetSingleAsync(id);
 
-            var result = await _colorService.DeleteAsync(color.Data);
+            var result = await _colorService.DeleteAsync(colorToDelete.Data);
 
             if (!result.Success)
             {

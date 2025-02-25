@@ -7,20 +7,21 @@ namespace RentACar.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandsController : ControllerBase
+    public class LocationsController : ControllerBase
     {
-        readonly IBrandService _brandService;
 
-        public BrandsController(IBrandService brandService)
+        readonly ILocationService _locationService;
+
+        public LocationsController(ILocationService locationService)
         {
-            _brandService = brandService;
+            _locationService = locationService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
 
-            var result = _brandService.GetAllBrands();
+            var result = _locationService.GetAllLocations();
 
             if (!result.Success)
             {
@@ -34,7 +35,7 @@ namespace RentACar.WebAPI.Controllers
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _brandService.GetSingleAsync(id);
+            var result = await _locationService.GetSingleAsync(id);
 
             if (!result.Success)
             {
@@ -47,10 +48,10 @@ namespace RentACar.WebAPI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] Brand brand)
+        public async Task<IActionResult> AddAsync([FromBody] Location location)
         {
 
-            var result = await _brandService.AddAsync(brand);
+            var result = await _locationService.AddAsync(location);
 
             if (!result.Success)
             {
@@ -62,9 +63,9 @@ namespace RentACar.WebAPI.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] Brand brand)
+        public async Task<IActionResult> UpdateAsync([FromBody] Location location)
         {
-            var result = await _brandService.UpdateAsync(brand);
+            var result = await _locationService.UpdateAsync(location);
 
             if (!result.Success)
             {
@@ -78,9 +79,9 @@ namespace RentACar.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
-            var brandToDelete = await _brandService.GetSingleAsync(id);
+            var locationToDelete = await _locationService.GetSingleAsync(id);
 
-            var result = await _brandService.DeleteAsync(brandToDelete.Data);
+            var result = await _locationService.DeleteAsync(locationToDelete.Data);
 
             if (!result.Success)
             {
@@ -90,7 +91,5 @@ namespace RentACar.WebAPI.Controllers
             return Ok(result);
 
         }
-
-
     }
 }

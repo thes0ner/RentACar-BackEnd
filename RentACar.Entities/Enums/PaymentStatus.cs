@@ -10,6 +10,7 @@ namespace RentACar.Entities.Enums
     {
         Pending,
         Completed,
-        Failed
+        Canceled,
+        Refunded,
     }
 }

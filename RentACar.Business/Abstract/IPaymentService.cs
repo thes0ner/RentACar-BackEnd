@@ -10,18 +10,18 @@ namespace RentACar.Business.Abstract
 {
     public interface IPaymentService
     {
-        //Task<IDataResult<Payment>> GetSingleAsync(int id);
-        Task<IDataResult<Payment>> GetSingleCreditCardAsync(int id);
-        Task<IDataResult<Payment>> GetSingleBankTransferAsync(int id);
         IDataResult<IQueryable<Payment>> GetAllPayments();
+        Task<IDataResult<Payment>> GetSingleAsync(int id);
         Task<IResult> AddAsync(Payment payment);
         Task<IResult> UpdateAsync(Payment payment);
         Task<IResult> DeleteAsync(Payment payment);
-       
-        
+
+
         //Task<IResult> ProcessPaymentAsync(Payment payment);
-        //Task<IDataResult<Payment>> ProcessCreditCardPaymentAsync(CreditCardPayment payment);
-        //Task<IDataResult<Payment>> ProcessBankTransferPaymentAsync(BankTransferPayment payment);
-        //Task<IDataResult<Payment>> ProcessCashPaymentAsync(Payment payment);
+        //Task<IResult> CancelPaymentAsync(int paymentId);
+        //Task<IResult> RefundPaymentAsync(int paymentId, decimal refundAmount);
+        //Task<IResult> UpdatePaymentStatusAsync(int paymentId, string status);
+        //Task<IResult> ApprovePaymentAsync(int paymentId);
+        //Task<IDataResult<IEnumerable<Payment>>> GetPaymentHistoryAsync(string userId);
     }
 }

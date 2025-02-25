@@ -7,34 +7,20 @@ namespace RentACar.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandsController : ControllerBase
+    public class PaymentsController : ControllerBase
     {
-        readonly IBrandService _brandService;
 
-        public BrandsController(IBrandService brandService)
+        readonly IPaymentService _paymentService;
+
+        public PaymentsController(IPaymentService paymentService)
         {
-            _brandService = brandService;
+            _paymentService = paymentService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-
-            var result = _brandService.GetAllBrands();
-
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
-
-            return Ok(result);
-
-        }
-
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var result = await _brandService.GetSingleAsync(id);
+            var result = _paymentService.GetAllPayments();
 
             if (!result.Success)
             {
@@ -42,15 +28,26 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
+        }
 
+        [HttpGet("getbyid")]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var result = await _paymentService.GetSingleAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Success);
+            }
+
+            return Ok(result);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] Brand brand)
+        public async Task<IActionResult> AddAsync([FromBody] Payment payment)
         {
-
-            var result = await _brandService.AddAsync(brand);
+            var result = await _paymentService.AddAsync(payment);
 
             if (!result.Success)
             {
@@ -58,13 +55,14 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
+
         }
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] Brand brand)
+        public async Task<IActionResult> UpdateAsync([FromBody] Payment payment)
         {
-            var result = await _brandService.UpdateAsync(brand);
+            var result = await _paymentService.UpdateAsync(payment);
 
             if (!result.Success)
             {
@@ -72,15 +70,15 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
-
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
-            var brandToDelete = await _brandService.GetSingleAsync(id);
+            var paymentToDelete = await _paymentService.GetSingleAsync(id);
 
-            var result = await _brandService.DeleteAsync(brandToDelete.Data);
+            var result = await _paymentService.DeleteAsync(paymentToDelete.Data);
 
             if (!result.Success)
             {
@@ -88,7 +86,6 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
-
         }
 
 

@@ -7,34 +7,21 @@ namespace RentACar.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandsController : ControllerBase
+    public class CarImagesController : ControllerBase
     {
-        readonly IBrandService _brandService;
 
-        public BrandsController(IBrandService brandService)
+        readonly ICarImageService _carImageService;
+
+        public CarImagesController(ICarImageService carImageService)
         {
-            _brandService = brandService;
+            _carImageService = carImageService;
         }
+
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-
-            var result = _brandService.GetAllBrands();
-
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
-
-            return Ok(result);
-
-        }
-
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var result = await _brandService.GetSingleAsync(id);
+            var result = _carImageService.GetAllCarImages();
 
             if (!result.Success)
             {
@@ -42,15 +29,26 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
+        }
 
+        [HttpGet("getbyid")]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var result = await _carImageService.GetSingleAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Success);
+            }
+
+            return Ok(result);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] Brand brand)
+        public async Task<IActionResult> AddAsync([FromBody] CarImage carImage)
         {
-
-            var result = await _brandService.AddAsync(brand);
+            var result = await _carImageService.AddAsync(carImage);
 
             if (!result.Success)
             {
@@ -58,13 +56,14 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
+
         }
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] Brand brand)
+        public async Task<IActionResult> UpdateAsync([FromBody] CarImage carImage)
         {
-            var result = await _brandService.UpdateAsync(brand);
+            var result = await _carImageService.UpdateAsync(carImage);
 
             if (!result.Success)
             {
@@ -72,15 +71,15 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
-
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
-            var brandToDelete = await _brandService.GetSingleAsync(id);
+            var carImageToDelete = await _carImageService.GetSingleAsync(id);
 
-            var result = await _brandService.DeleteAsync(brandToDelete.Data);
+            var result = await _carImageService.DeleteAsync(carImageToDelete.Data);
 
             if (!result.Success)
             {
@@ -88,9 +87,6 @@ namespace RentACar.WebAPI.Controllers
             }
 
             return Ok(result);
-
         }
-
-
     }
 }

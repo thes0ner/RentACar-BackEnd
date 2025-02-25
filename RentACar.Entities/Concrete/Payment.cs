@@ -17,6 +17,7 @@ namespace RentACar.Entities.Concrete
         public PaymentStatus PaymentStatus { get; set; }
         public PaymentType PaymentType { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsApproved { get; set; }
 
         // Navigation properties
         public int RentalId { get; set; }

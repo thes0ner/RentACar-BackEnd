@@ -18,6 +18,10 @@ builder.Services.AddScoped<ILocationService, LocationManager>();
 builder.Services.AddScoped<IRentalService, RentalManager>();
 builder.Services.AddScoped<ITransmissionService, TransmissionManager>();
 builder.Services.AddScoped<IVehicleService, VehicleManager>();
+builder.Services.AddScoped<IPaymentService, PaymentManager>();
+builder.Services.AddScoped<ICarImageService, CarImageManager>();
+
+
 //builder.Services.AddScoped<IBrandDal, EfBrandDal>();
 //builder.Services.AddScoped<ICarDal, EfCarDal>();
 //builder.Services.AddScoped<IColorDal, EfColorDal>();

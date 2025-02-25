@@ -85,35 +85,24 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<IQueryable<Payment>>(payments, Messages.PaymentsListed);
         }
 
-        public async Task<IDataResult<Payment>> GetSingleCreditCardAsync(int id)
+        public async Task<IDataResult<Payment>> GetSingleAsync(int id)
         {
-            var creditCard = await _creditCardDal.GetSingleAsync(c => c.Id == id);
 
-            if (creditCard == null)
+            Payment bankTransfer = await _bankTransferDal.GetSingleAsync(c => c.Id == id);
+            Payment creditCard = await _creditCardDal.GetSingleAsync(c => c.Id == id);
+
+            Payment? payment = creditCard ?? bankTransfer;
+
+
+            if (payment == null)
             {
-                return new ErrorDataResult<Payment>(Messages.CreditCardNotFound);
+                return new ErrorDataResult<Payment>(Messages.PaymentNotFound);
             }
 
-            return new SuccessDataResult<Payment>(creditCard, Messages.CreditCardsListed);
+            payment.PaymentType = payment is BankTransfer ? PaymentType.BankTransfer : PaymentType.CreditCard;
+
+            return new SuccessDataResult<Payment>(payment);
+
         }
-
-        public async Task<IDataResult<Payment>> GetSingleBankTransferAsync(int id)
-        {
-            var bankTransfer = await _bankTransferDal.GetSingleAsync(b => b.Id == id);
-
-            if (bankTransfer == null)
-            {
-                return new ErrorDataResult<Payment>(Messages.BankTransferNotFound);
-            }
-
-            return new SuccessDataResult<Payment>(bankTransfer, Messages.BankTransfersListed);
-        }
-
-        //public async Task<IResult> ProcessPaymentAsync(Payment payment)
-        //{
-        //    return null;
-        //}
-
-
     }
 }

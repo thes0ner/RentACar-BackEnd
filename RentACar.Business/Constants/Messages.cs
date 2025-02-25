@@ -27,6 +27,16 @@ namespace RentACar.Business.Constants
         public static string CarAlreadyExists = "Car already exists.";
         public static string CarNotFound = "Car(s) not found.";
 
+        // Car Image Messages
+        public static string CarImageAdded = "Car image added successfully.";
+        public static string CarImageDeleted = "Car image deleted successfully.";
+        public static string CarImageUpdated = "Car image updated successfully.";
+        public static string CarImagesListed = "Car images listed successfully.";
+        public static string CarImageInvalid = "Car image is invalid.";
+        public static string CarImageAlreadyExists = "Car image already exists.";
+        public static string CarImageNotFound = "Car image(s) not found.";
+
+
         // Color Messages
         public static string ColorAdded = "Color added successfully.";
         public static string ColorDeleted = "Color deleted successfully.";

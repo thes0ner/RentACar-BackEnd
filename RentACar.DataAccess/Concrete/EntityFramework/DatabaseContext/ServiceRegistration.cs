@@ -31,6 +31,9 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
             services.AddScoped<IRentalDal, EfRentalDal>();
             services.AddScoped<ITransmissionDal, EfTransmissionDal>();
             services.AddScoped<IVehicleDal, EfVehicleDal>();
+            services.AddScoped<ICreditCardDal, EfCreditCardDal>();
+            services.AddScoped<IBankTransferDal, EfBankTransferDal>();
+            services.AddScoped<ICarImageDal, EfCarImageDal>();
 
             // Return the configured IServiceCollection for method chaining
             return services;
