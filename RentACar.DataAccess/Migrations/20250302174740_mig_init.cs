@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RentACar.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class init_mig : Migration
+    public partial class mig_init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -346,6 +346,7 @@ namespace RentACar.DataAccess.Migrations
                     PaymentStatus = table.Column<int>(type: "int", nullable: false),
                     PaymentType = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     RentalId = table.Column<int>(type: "int", nullable: false),
                     Payment = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     BankName = table.Column<string>(type: "nvarchar(max)", nullable: true),

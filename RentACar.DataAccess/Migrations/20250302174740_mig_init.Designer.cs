@@ -12,8 +12,8 @@ using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext;
 namespace RentACar.DataAccess.Migrations
 {
     [DbContext(typeof(RentACarDbContext))]
-    [Migration("20250223163128_init_mig")]
-    partial class init_mig
+    [Migration("20250302174740_mig_init")]
+    partial class mig_init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -347,6 +347,9 @@ namespace RentACar.DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
