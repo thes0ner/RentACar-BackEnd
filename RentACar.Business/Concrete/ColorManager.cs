@@ -24,6 +24,13 @@ namespace RentACar.Business.Concrete
 
         public async Task<IResult> AddAsync(Color color)
         {
+
+            var result = await CheckIfColorNameExist(color.Name);
+            if (result != null)
+            {
+                return new ErrorResult(Messages.ColorNameAlreadyExists);
+            }
+
             await _colorDal.AddAsync(color);
 
             return new SuccessResult(Messages.ColorAdded);
@@ -68,5 +75,24 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<IQueryable<Color>>(result, Messages.ColorsListed);
         }
 
+
+        private async Task<IResult> CheckIfColorNameExist(string colorName)
+        {
+            var trimmedName = colorName.Trim().ToLower();
+
+            if (string.IsNullOrWhiteSpace(trimmedName))
+            {
+                return new ErrorResult(Messages.ColorNameInvalid);
+            }
+
+            var existingBrand = await _colorDal.GetSingleAsync(p => p.Name.Trim().ToLower() == trimmedName);
+
+            if (existingBrand != null)
+            {
+                return new ErrorResult(Messages.ColorNameAlreadyExists);
+            }
+
+            return null;
+        }
     }
 }

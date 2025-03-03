@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RentACar.Business.Abstract;
+using RentACar.Business.Constants;
 using RentACar.Entities.Concrete;
 
 namespace RentACar.WebAPI.Controllers
@@ -22,9 +23,10 @@ namespace RentACar.WebAPI.Controllers
 
             var result = _brandService.GetAllBrands();
 
-            if (!result.Success)
+            if (!result.Success || result.Data == null || !result.Data.Any())
             {
-                return BadRequest(result.Message);
+                return NotFound(result.Message);
+
             }
 
             return Ok(result);
@@ -34,11 +36,16 @@ namespace RentACar.WebAPI.Controllers
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest("The provided ID must be a positive number.");
+            }
+
             var result = await _brandService.GetSingleAsync(id);
 
             if (!result.Success)
             {
-                return BadRequest(result);
+                return NotFound(result);
             }
 
             return Ok(result);
@@ -64,6 +71,7 @@ namespace RentACar.WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAsync([FromBody] Brand brand)
         {
+
             var result = await _brandService.UpdateAsync(brand);
 
             if (!result.Success)
@@ -78,13 +86,24 @@ namespace RentACar.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
+
+            if (id <= 0)
+            {
+                return BadRequest("The provided ID must be a positive number.");
+            }
+
             var brandToDelete = await _brandService.GetSingleAsync(id);
+
+            if (!brandToDelete.Success)
+            {
+                return NotFound(brandToDelete);
+            }
 
             var result = await _brandService.DeleteAsync(brandToDelete.Data);
 
             if (!result.Success)
             {
-                return BadRequest(result);
+                return NotFound(result);
             }
 
             return Ok(result);

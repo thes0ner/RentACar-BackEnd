@@ -12,8 +12,8 @@ using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext;
 namespace RentACar.DataAccess.Migrations
 {
     [DbContext(typeof(RentACarDbContext))]
-    [Migration("20250302174740_mig_init")]
-    partial class mig_init
+    [Migration("20250303134006_init_mig")]
+    partial class init_mig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

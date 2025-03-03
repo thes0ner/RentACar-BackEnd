@@ -18,9 +18,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configura
             entity.ToTable("Brands");
 
             // Primary key
+            entity.HasIndex(e => e).IsUnique(true);
             entity.HasKey(e => e.Id);
-
-            entity.HasIndex(e => e.Name).IsUnique();
 
             // Properties
             entity.Property(e => e.Id).UseIdentityColumn().IsRequired();
@@ -30,8 +29,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configura
                    .HasColumnType("VARCHAR")
                    .HasConversion(name => name.Trim(), name => name.Trim());
 
-            // Index on Name for faster searches
-            entity.HasIndex(e => e.Name).IsUnique();
+           
 
 
             // Relationships

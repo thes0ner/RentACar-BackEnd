@@ -24,9 +24,9 @@ namespace RentACar.WebAPI.Controllers
         {
             var result = _vehicleService.GetAllVehicles();
 
-            if (!result.Success)
+            if (!result.Success || result.Data == null || !result.Data.Any())
             {
-                return BadRequest(result);
+                return NotFound(result.Message);
             }
 
             return Ok(result);
@@ -35,11 +35,16 @@ namespace RentACar.WebAPI.Controllers
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest("The provided ID must be a positive number.");
+            }
+
             var result = await _vehicleService.GetSingleAsync(id);
 
             if (!result.Success)
             {
-                return BadRequest(result.Success);
+                return NotFound(result.Success);
             }
 
             return Ok(result);
@@ -78,13 +83,23 @@ namespace RentACar.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest("The provided ID must be a positive number.");
+            }
+
             var vehicleToDelete = await _vehicleService.GetSingleAsync(id);
+
+            if (!vehicleToDelete.Success)
+            {
+                return NotFound(vehicleToDelete.Success);
+            }
 
             var result = await _vehicleService.DeleteAsync(vehicleToDelete.Data);
 
             if (!result.Success)
             {
-                return BadRequest(result);
+                return NotFound(result);
             }
 
             return Ok(result);

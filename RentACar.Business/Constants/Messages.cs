@@ -16,6 +16,7 @@ namespace RentACar.Business.Constants
         public static string BrandsListed = "Brands listed successfully.";
         public static string BrandNameInvalid = "Brand name is invalid.";
         public static string BrandNameAlreadyExists = "Brand name already exists.";
+        //public static string BrandIdNegative = "The provided ID must be a positive number.";
         public static string BrandNotFound = "Brand(s) not found.";
 
         // Car Messages

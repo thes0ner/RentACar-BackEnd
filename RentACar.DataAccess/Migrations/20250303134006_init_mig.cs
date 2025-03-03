@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RentACar.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class mig_init : Migration
+    public partial class init_mig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

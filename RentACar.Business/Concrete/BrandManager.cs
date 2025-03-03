@@ -25,6 +25,13 @@ namespace RentACar.Business.Concrete
         public async Task<IResult> AddAsync(Brand brand)
         {
 
+            var result = await CheckIfBrandNameExist(brand.Name);
+            if (result != null)
+            {
+                return new ErrorResult(Messages.BrandNameAlreadyExists);
+            }
+
+
             await _brandDal.AddAsync(brand);
 
             return new SuccessResult(Messages.BrandAdded);
@@ -39,6 +46,8 @@ namespace RentACar.Business.Concrete
 
         public async Task<IResult> DeleteAsync(Brand brand)
         {
+           
+
             await _brandDal.DeleteAsync(brand);
 
             return new SuccessResult(Messages.BrandDeleted);
@@ -47,6 +56,7 @@ namespace RentACar.Business.Concrete
 
         public async Task<IDataResult<Brand>> GetSingleAsync(int id)
         {
+
             var result = await _brandDal.GetSingleAsync(p => p.Id == id);
 
             if (result is null)
@@ -69,5 +79,32 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<IQueryable<Brand>>(result);
         }
 
+
+
+
+        private async Task<IResult> CheckIfBrandNameExist(string brandName)
+        {
+            var trimmedName = brandName.Trim().ToLower();
+
+            if (string.IsNullOrWhiteSpace(trimmedName))
+            {
+                return new ErrorResult(Messages.BrandNameInvalid);
+            }
+
+            var existingBrand = await _brandDal.GetSingleAsync(p => p.Name.Trim().ToLower() == trimmedName);
+
+            if (existingBrand != null)
+            {
+                return new ErrorResult(Messages.BrandNameAlreadyExists);
+            }
+
+            return null;
+        }
+
+    
     }
+
+
+
+
 }
