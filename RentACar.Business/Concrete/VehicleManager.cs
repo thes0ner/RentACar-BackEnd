@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.DataAccess.Concrete.EntityFramework;
 
 namespace RentACar.Business.Concrete
 {
@@ -23,6 +24,13 @@ namespace RentACar.Business.Concrete
 
         public async Task<IResult> AddAsync(Vehicle vehicle)
         {
+            var result = await CheckIfVehicleTypeExist(vehicle.Type);
+            if (result != null)
+            {
+                return new ErrorResult(Messages.VehicleAlreadyExists);
+            }
+
+
             await _vehicleDal.AddAsync(vehicle);
             return new SuccessResult(Messages.VehicleAdded);
         }
@@ -62,6 +70,25 @@ namespace RentACar.Business.Concrete
             }
 
             return new SuccessDataResult<IQueryable<Vehicle>>(result, Messages.VehiclesListed);
+        }
+
+        private async Task<IResult> CheckIfVehicleTypeExist(string typeName)
+        {
+            var trimmedName = typeName.Trim().ToLower();
+
+            if (string.IsNullOrWhiteSpace(trimmedName))
+            {
+                return new ErrorResult(Messages.VehicleInvalid);
+            }
+
+            var existingTransmission = await _vehicleDal.GetSingleAsync(p => p.Type.Trim().ToLower() == trimmedName);
+
+            if (existingTransmission != null)
+            {
+                return new ErrorResult(Messages.VehicleAlreadyExists);
+            }
+
+            return null;
         }
 
 

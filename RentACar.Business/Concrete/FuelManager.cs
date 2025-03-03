@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.DataAccess.Concrete.EntityFramework;
 
 namespace RentACar.Business.Concrete
 {
@@ -23,6 +24,13 @@ namespace RentACar.Business.Concrete
 
         public async Task<IResult> AddAsync(Fuel fuel)
         {
+            var result = await CheckIfFuelTypeExist(fuel.Type);
+            if (result != null)
+            {
+                return new ErrorResult(Messages.FuelAlreadyExists);
+            }
+
+
             await _fuelDal.AddAsync(fuel);
 
             return new SuccessResult(Messages.FuelAdded);
@@ -64,6 +72,28 @@ namespace RentACar.Business.Concrete
             }
 
             return new SuccessDataResult<Fuel>(result, Messages.FuelsListed);
+        }
+
+
+
+
+        private async Task<IResult> CheckIfFuelTypeExist(string typeName)
+        {
+            var trimmedName = typeName.Trim().ToLower();
+
+            if (string.IsNullOrWhiteSpace(trimmedName))
+            {
+                return new ErrorResult(Messages.FuelInvalid);
+            }
+
+            var existingFuel = await _fuelDal.GetSingleAsync(p => p.Type.Trim().ToLower() == trimmedName);
+
+            if (existingFuel != null)
+            {
+                return new ErrorResult(Messages.FuelAlreadyExists);
+            }
+
+            return null;
         }
 
 

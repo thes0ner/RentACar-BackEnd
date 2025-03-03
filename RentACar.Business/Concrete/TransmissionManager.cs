@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.DataAccess.Concrete.EntityFramework;
 
 namespace RentACar.Business.Concrete
 {
@@ -23,6 +24,12 @@ namespace RentACar.Business.Concrete
 
         public async Task<IResult> AddAsync(Transmission transmission)
         {
+            var result = await CheckIfTransmissionTypeExist(transmission.Type);
+            if (result != null)
+            {
+                return new ErrorResult(Messages.TransmissionAlreadyExists);
+            }
+
             await _transmissionDal.AddAsync(transmission);
             return new SuccessResult(Messages.TransmissionAdded);
 
@@ -65,6 +72,23 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<IQueryable<Transmission>>(result, Messages.TransmissionsListed);
         }
 
+        private async Task<IResult> CheckIfTransmissionTypeExist(string typeName)
+        {
+            var trimmedName = typeName.Trim().ToLower();
 
+            if (string.IsNullOrWhiteSpace(trimmedName))
+            {
+                return new ErrorResult(Messages.TransmissionInvalid);
+            }
+
+            var existingTransmission = await _transmissionDal.GetSingleAsync(p => p.Type.Trim().ToLower() == trimmedName);
+
+            if (existingTransmission != null)
+            {
+                return new ErrorResult(Messages.TransmissionAlreadyExists);
+            }
+
+            return null;
+        }
     }
 }
