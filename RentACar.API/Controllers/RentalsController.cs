@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RentACar.Business.Abstract;
 using RentACar.Entities.Concrete;
+using RentACar.Entities.DTO;
 
 namespace RentACar.WebAPI.Controllers
 {
@@ -43,7 +44,7 @@ namespace RentACar.WebAPI.Controllers
 
             if (!result.Success)
             {
-                return NotFound(result.Success);
+                return NotFound(result.Message);
             }
 
             return Ok(result);
@@ -51,13 +52,13 @@ namespace RentACar.WebAPI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] Rental rental)
+        public async Task<IActionResult> AddAsync([FromBody] RentalDto rentalDto)
         {
-            var result = await _rentalService.AddAsync(rental);
+            var result = await _rentalService.AddAsync(rentalDto);
 
             if (!result.Success)
             {
-                return BadRequest(result);
+                return BadRequest(result.Message);
             }
 
             return Ok(result);
@@ -65,17 +66,27 @@ namespace RentACar.WebAPI.Controllers
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] Rental rental)
+        [HttpPut()]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] RentalDto rentalDto)
         {
-            var result = await _rentalService.UpdateAsync(rental);
 
-            if (!result.Success)
+            if (id <= 0)
             {
-                return BadRequest(result);
+                return BadRequest("The provided ID must be a positive number.");
             }
 
-            return Ok(result);
+            if (id != rentalDto.Id)
+            {
+                return BadRequest("Rental ID does not match the ID in the body.");
+            }
+
+            var result = await _rentalService.UpdateAsync(rentalDto);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+
+            return Ok(result.Message);
         }
 
 

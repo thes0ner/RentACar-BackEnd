@@ -22,7 +22,6 @@ namespace RentACar.Entities.Concrete
         public bool IsDeleted { get; set; }
         public InvoiceStatus InvoiceStatus { get; set; }
 
-
         // Foreign Key
         public int RentalId { get; set; }
 

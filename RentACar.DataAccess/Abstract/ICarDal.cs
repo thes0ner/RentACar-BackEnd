@@ -1,5 +1,4 @@
 ﻿using RentACar.Core.DataAccess.Repositories.EntityFrameworkRepository.Abstract;
-using RentACar.Core.Entities.DTO_s;
 using RentACar.Entities.Enums;
 using RentACar.Entities.Concrete;
 using System;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.Entities.DTO;
 
 namespace RentACar.DataAccess.Abstract
 {

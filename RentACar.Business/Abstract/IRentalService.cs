@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.Entities.DTO;
 
 namespace RentACar.Business.Abstract
 {
@@ -12,8 +13,8 @@ namespace RentACar.Business.Abstract
     {
         IDataResult<IQueryable<Rental>> GetAllRentals();
         Task<IDataResult<Rental>> GetSingleAsync(int id);
-        Task<IResult> AddAsync(Rental rental);
-        Task<IResult> UpdateAsync(Rental rental);
+        Task<IResult> AddAsync(RentalDto rentalDto);
+        Task<IResult> UpdateAsync(RentalDto rentalDto);
         Task<IResult> DeleteAsync(Rental rental);
 
     }

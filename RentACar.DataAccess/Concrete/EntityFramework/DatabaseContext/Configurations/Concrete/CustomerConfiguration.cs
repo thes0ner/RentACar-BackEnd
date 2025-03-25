@@ -22,14 +22,16 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configura
 
             // Properties
             entity.Property(e => e.Id).UseIdentityColumn().IsRequired();
-            entity.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
-            entity.Property(e => e.LastName).IsRequired().HasMaxLength(50);
-            entity.Property(e => e.Email).IsRequired().HasMaxLength(50);
+            entity.Property(e => e.FirstName).HasMaxLength(50).IsRequired();
+            entity.Property(e => e.LastName).HasMaxLength(50).IsRequired();
+            entity.Property(e => e.Email).HasMaxLength(50);
+
             entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnType("VARCHAR")
-                    .HasConversion(p => p.Trim(), p => p.Trim());
+                        .HasMaxLength(20)
+                        .HasColumnType("VARCHAR")
+                        .HasConversion(p => string.IsNullOrWhiteSpace(p) ? null : p.Trim(),
+                            p => p.Trim());
+
 
             entity.Property(e => e.Address).HasMaxLength(100);
             entity.Property(e => e.City).HasMaxLength(50);
@@ -37,7 +39,13 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configura
             entity.Property(e => e.CustomerStatus).HasConversion(v => v.ToString(), v => (CustomerStatus)Enum.Parse(typeof(CustomerStatus), v)).IsRequired();
             entity.Property(e => e.IsDeleted).HasDefaultValue(false); // soft delete
 
-            entity.HasIndex(e => e.Email).IsUnique();
+            entity.HasIndex(e => e.Email)
+                    .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
+
+            entity.HasIndex(e => e.PhoneNumber)
+                    .IsUnique()
+                        .HasFilter("[PhoneNumber] IS NOT NULL AND [IsDeleted] = 0");
 
             //Relationships
             entity.HasOne(e => e.User) // One-to-one relationship with User

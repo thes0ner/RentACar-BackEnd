@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACar.Core.Entities.DTO_s
+namespace RentACar.Entities.DTO
 {
     public class CarDetailDto : BaseEntity
     {

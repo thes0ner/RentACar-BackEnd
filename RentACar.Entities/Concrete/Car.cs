@@ -37,7 +37,6 @@ namespace RentACar.Entities.Concrete
         public Location Location { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
         public ICollection<Rental> Rentals { get; set; }
-
         public ICollection<CarImage> CarImages { get; set; }
     }
 }

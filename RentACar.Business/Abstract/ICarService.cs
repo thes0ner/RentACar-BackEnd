@@ -1,5 +1,4 @@
 ﻿using RentACar.Entities.Concrete;
-using RentACar.Core.Entities.DTO_s;
 using RentACar.Entities.Enums;
 using RentACar.Core.Utilities.Results.Abstract;
 using System;
@@ -7,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.Entities.DTO;
 
 namespace RentACar.Business.Abstract
 {
@@ -14,8 +14,8 @@ namespace RentACar.Business.Abstract
     {
 
         // Commands
-        Task<IResult> AddAsync(Car car);
-        Task<IResult> UpdateAsync(Car car);
+        Task<IResult> AddAsync(CarDto carDto);
+        Task<IResult> UpdateAsync(CarDto carDto);
         Task<IResult> DeleteAsync(Car car);
 
         // Queries

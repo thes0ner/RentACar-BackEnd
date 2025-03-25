@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Builder;
 using RentACar.Business.Abstract;
 using RentACar.Business.Concrete;
-using RentACar.DataAccess.Abstract;
-using RentACar.DataAccess.Concrete.EntityFramework;
 using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext;
+using Microsoft.AspNetCore.JsonPatch;
+using RentACar.Business.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +19,8 @@ builder.Services.AddScoped<ITransmissionService, TransmissionManager>();
 builder.Services.AddScoped<IVehicleService, VehicleManager>();
 builder.Services.AddScoped<IPaymentService, PaymentManager>();
 builder.Services.AddScoped<ICarImageService, CarImageManager>();
-
+builder.Services.AddAutoMapper(typeof(CarProfile));
+builder.Services.AddAutoMapper(typeof(RentalProfile));
 
 //builder.Services.AddScoped<IBrandDal, EfBrandDal>();
 //builder.Services.AddScoped<ICarDal, EfCarDal>();
@@ -36,6 +36,9 @@ builder.Services.AddScoped<ICarImageService, CarImageManager>();
 
 
 builder.Services.AddControllers();
+
+builder.Services.AddControllers().AddNewtonsoftJson();
+
 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();

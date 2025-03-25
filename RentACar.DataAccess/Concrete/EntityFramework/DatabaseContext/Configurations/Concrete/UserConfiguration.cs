@@ -19,14 +19,14 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configura
             // Primary key
             entity.HasKey(e => e.Id);
 
-            // Index on Email for faster searches
-            entity.HasIndex(e => e.Email).IsUnique();
+           // Index on Email for faster searches
+           entity.HasIndex(e => e.Email).IsUnique();
 
             // Properties
             entity.Property(e => e.Id).UseIdentityColumn().IsRequired();
-            entity.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
-            entity.Property(e => e.LastName).IsRequired().HasMaxLength(50);
-            entity.Property(e => e.Email).IsRequired().HasMaxLength(80);
+            entity.Property(e => e.FirstName).HasMaxLength(50);
+            entity.Property(e => e.LastName).HasMaxLength(50);
+            entity.Property(e => e.Email).HasMaxLength(80);
             entity.Property(e => e.PasswordHash).HasMaxLength(256);
             entity.Property(e => e.PasswordSalt).HasMaxLength(256);
             entity.Property(e => e.Status).IsRequired();

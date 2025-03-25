@@ -12,10 +12,12 @@ namespace RentACar.WebAPI.Controllers
 
         readonly ICustomerService _customerService;
 
+
         public CustomersController(ICustomerService customerService)
         {
             _customerService = customerService;
         }
+
 
         [HttpGet("getall")]
         public IActionResult GetAll()
@@ -30,6 +32,8 @@ namespace RentACar.WebAPI.Controllers
             return Ok(result);
         }
 
+
+
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
@@ -42,7 +46,7 @@ namespace RentACar.WebAPI.Controllers
 
             if (!result.Success)
             {
-                return NotFound(result.Success);
+                return NotFound(result.Message);
             }
 
             return Ok(result);
@@ -52,6 +56,7 @@ namespace RentACar.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] Customer customer)
         {
+
             var result = await _customerService.AddAsync(customer);
 
             if (!result.Success)

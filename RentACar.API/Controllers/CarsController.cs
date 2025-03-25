@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RentACar.Business.Abstract;
 using RentACar.Entities.Concrete;
+using RentACar.Entities.DTO;
 
 namespace RentACar.WebAPI.Controllers
 {
@@ -41,7 +43,7 @@ namespace RentACar.WebAPI.Controllers
 
             if (!result.Success)
             {
-                return NotFound(result.Success);
+                return NotFound(result.Message);
             }
 
             return Ok(result);
@@ -49,9 +51,9 @@ namespace RentACar.WebAPI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] Car car)
+        public async Task<IActionResult> AddAsync([FromBody] CarDto carDto)
         {
-            var result = await _carService.AddAsync(car);
+            var result = await _carService.AddAsync(carDto);
 
             if (!result.Success)
             {
@@ -63,20 +65,30 @@ namespace RentACar.WebAPI.Controllers
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] Car car)
+        [HttpPut()]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] CarDto carDto)
         {
-            var result = await _carService.UpdateAsync(car);
 
-            if (!result.Success)
+            if (id <= 0)
             {
-                return BadRequest(result);
+                return BadRequest("The provided ID must be a positive number.");
             }
 
-            return Ok(result);
+            if (id != carDto.Id)
+            {
+                return BadRequest("Car ID does not match the ID in the body.");
+            }
+
+            var result = await _carService.UpdateAsync(carDto);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+
+            return Ok(result.Message);
         }
 
-
+       
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromQuery] int id)
         {
@@ -102,6 +114,38 @@ namespace RentACar.WebAPI.Controllers
 
             return Ok(result);
         }
+
+
+        //[HttpPatch("updatebyid")]
+        //public async Task<IActionResult> UpdateAsync(int id, [FromBody] JsonPatchDocument<CarDto> patchDoc)
+        //{
+        //    if (id <= 0)
+        //    {
+        //        return BadRequest("The provided ID must be a positive number.");
+        //    }
+
+        //    if (patchDoc == null)
+        //    {
+        //        return BadRequest("Invalid patch data.");
+        //    }
+
+        //    var existingCar = await _carService.GetSingleAsync(id);
+        //    if (existingCar == null || !existingCar.Success)
+        //    {
+        //        return NotFound("Car not found.");
+        //    }
+
+        //    var carToUpdate = existingCar.Data;
+
+        //    patchDoc.ApplyTo(carToUpdate);
+
+
+        //    // here has problem can not convert car to cardto
+        //    var result = await _carService.UpdateAsync(carToUpdate);
+
+        //    return Ok(result);
+        //}
+
 
     }
 }

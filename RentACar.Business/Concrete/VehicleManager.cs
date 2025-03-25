@@ -38,7 +38,7 @@ namespace RentACar.Business.Concrete
         public async Task<IResult> DeleteAsync(Vehicle vehicle)
         {
             await _vehicleDal.DeleteAsync(vehicle);
-            return new SuccessResult(Messages.VehicleAdded);
+            return new SuccessResult(Messages.VehicleDeleted);
 
         }
 

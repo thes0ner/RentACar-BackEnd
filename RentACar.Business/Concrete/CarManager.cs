@@ -6,40 +6,68 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RentACar.Core.Entities.DTO_s;
 using RentACar.Core.Utilities.Results.Abstract;
 using RentACar.Core.Utilities.Results.Concrete;
 using RentACar.Business.Constants;
 using RentACar.Entities.Enums;
+using RentACar.DataAccess.Concrete.EntityFramework;
+using AutoMapper;
+using RentACar.Entities.DTO;
 
 namespace RentACar.Business.Concrete
 {
     public class CarManager : ICarService
     {
         private readonly ICarDal _carDal;
+        private readonly IMapper _mapper;
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, IMapper mapper)
         {
             _carDal = carDal;
+            _mapper = mapper;
         }
 
-        public async Task<IResult> AddAsync(Car car)
+        public async Task<IResult> AddAsync(CarDto carDto)
         {
+
+            var plateCheck = await CheckIfPlateExist(carDto.Plate);
+
+            if (plateCheck != null)
+            {
+                return plateCheck;
+            }
+
+            var car = _mapper.Map<Car>(carDto);
+
             await _carDal.AddAsync(car);
+
             return new SuccessResult(Messages.CarAdded);
         }
 
-        public async Task<IResult> UpdateAsync(Car car)
+        public async Task<IResult> UpdateAsync(CarDto carDto)
         {
+
+            var car = await _carDal.GetSingleAsync(c => c.Id == carDto.Id);
+
+            if (car == null)
+                return new ErrorResult(Messages.CarNotFound);
+
+
+            _mapper.Map(carDto, car);
+
             await _carDal.UpdateAsync(car);
             return new SuccessResult(Messages.CarUpdated);
         }
+
 
         public async Task<IResult> DeleteAsync(Car car)
         {
             await _carDal.DeleteAsync(car);
             return new SuccessResult(Messages.CarDeleted);
         }
+
+
+        //Query methods
 
         public IDataResult<IQueryable<Car>> GetAllCars()
         {
@@ -62,7 +90,7 @@ namespace RentACar.Business.Concrete
                 return new ErrorDataResult<Car>(Messages.CarNotFound);
             }
 
-            return new ErrorDataResult<Car>(result, Messages.CarsListed);
+            return new SuccessDataResult<Car>(result, Messages.CarsListed);
         }
 
 
@@ -315,6 +343,27 @@ namespace RentACar.Business.Concrete
 
             return new SuccessDataResult<Dictionary<object, IQueryable<CarDetailDto>>>(result, Messages.CarsListed);
         }
+
+        //Check if plate exists
+        private async Task<IResult> CheckIfPlateExist(string plate)
+        {
+            var trimmedName = plate.Trim().ToLower();
+
+            if (string.IsNullOrWhiteSpace(trimmedName))
+            {
+                return new ErrorResult(Messages.CarInvalid);
+            }
+
+            var existingPlate = await _carDal.GetSingleAsync(p => p.Plate.Trim().ToLower() == trimmedName);
+
+            if (existingPlate != null)
+            {
+                return new ErrorResult(Messages.CarAlreadyExists);
+            }
+
+            return null;
+        }
+
 
     }
 }

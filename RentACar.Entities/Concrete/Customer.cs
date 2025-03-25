@@ -25,8 +25,8 @@ namespace RentACar.Entities.Concrete
 
         //Navigation properties
         public int UserId { get; set; }
-        public User User { get; set; }
-        public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
-        public ICollection<Rental> Rentals { get; set; } = new List<Rental>();
+        public User? User { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
+        public ICollection<Rental> Rentals { get; set; }
     }
 }

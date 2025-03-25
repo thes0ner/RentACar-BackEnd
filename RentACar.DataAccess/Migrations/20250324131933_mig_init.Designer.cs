@@ -12,8 +12,8 @@ using RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext;
 namespace RentACar.DataAccess.Migrations
 {
     [DbContext(typeof(RentACarDbContext))]
-    [Migration("20250303134006_init_mig")]
-    partial class init_mig
+    [Migration("20250324131933_mig_init")]
+    partial class mig_init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -798,7 +798,8 @@ namespace RentACar.DataAccess.Migrations
 
             modelBuilder.Entity("RentACar.Entities.Concrete.User", b =>
                 {
-                    b.Navigation("Customer");
+                    b.Navigation("Customer")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RentACar.Entities.Concrete.Vehicle", b =>

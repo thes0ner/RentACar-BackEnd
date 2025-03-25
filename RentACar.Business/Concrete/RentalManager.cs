@@ -9,34 +9,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.Entities.DTO;
+using AutoMapper;
 
 namespace RentACar.Business.Concrete
 {
     public class RentalManager : IRentalService
     {
-        private readonly IRentalDal _rentalDal;
+        readonly IRentalDal _rentalDal;
+        readonly IMapper _mapper;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, IMapper mapper)
         {
             _rentalDal = rentalDal;
+            _mapper = mapper;
         }
 
-        public async Task<IResult> AddAsync(Rental rental)
+        public async Task<IResult> AddAsync(RentalDto rentalDto)
         {
+
+            var rental = _mapper.Map<Rental>(rentalDto);
+
             await _rentalDal.AddAsync(rental);
+
             return new SuccessResult(Messages.RentalAdded);
+        }
+
+        public async Task<IResult> UpdateAsync(RentalDto rentalDto)
+        {
+            var rental = await _rentalDal.GetSingleAsync(p => p.Id == rentalDto.Id);
+
+            if (rental == null)
+            {
+                return new ErrorResult(Messages.RentalNotFound);
+            }
+
+            _mapper.Map(rentalDto, rental);
+
+            await _rentalDal.UpdateAsync(rental);
+            return new SuccessResult(Messages.RentalUpdated);
         }
 
         public async Task<IResult> DeleteAsync(Rental rental)
         {
             await _rentalDal.DeleteAsync(rental);
             return new SuccessResult(Messages.RentalDeleted);
-        }
-
-        public async Task<IResult> UpdateAsync(Rental rental)
-        {
-            await _rentalDal.UpdateAsync(rental);
-            return new SuccessResult(Messages.RentalUpdated);
         }
 
         public IDataResult<IQueryable<Rental>> GetAllRentals()

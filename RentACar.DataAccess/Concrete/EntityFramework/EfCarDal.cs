@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using RentACar.Core.Entities.DTO_s;
 using Microsoft.VisualBasic.FileIO;
 using System.Linq.Expressions;
 using RentACar.Entities.Enums;
+using RentACar.Entities.DTO;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework
 {
