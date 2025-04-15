@@ -48,7 +48,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext
 
             // TPH - Table Per Hierarchy(Derived classes, will use one table)
             modelBuilder.Entity<Payment>()
-                .HasDiscriminator<string>("Payment")
+                .HasDiscriminator<string>("Payments")
                 .HasValue<CreditCard>("CreditCard")
                 .HasValue<BankTransfer>("BankTransfer");
 

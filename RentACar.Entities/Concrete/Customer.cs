@@ -11,7 +11,6 @@ namespace RentACar.Entities.Concrete
     public class Customer : BaseEntity
     {
 
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -21,7 +20,6 @@ namespace RentACar.Entities.Concrete
         public string? Country { get; set; }
         public bool IsDeleted { get; set; }
         public CustomerStatus CustomerStatus { get; set; }
-
 
         //Navigation properties
         public int UserId { get; set; }

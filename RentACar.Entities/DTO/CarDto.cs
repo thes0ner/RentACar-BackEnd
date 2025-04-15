@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RentACar.Core.Entities.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace RentACar.Entities.DTO
 {
-    public class CarDto
+    public class CarDto : BaseEntity
     {
-        public int Id { get; set; }
         public int DailyPrice { get; set; }
         public string Model { get; set; }
         public string Plate { get; set; }

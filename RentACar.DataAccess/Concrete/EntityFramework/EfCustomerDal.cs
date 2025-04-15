@@ -15,5 +15,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
         public EfCustomerDal(RentACarDbContext context) : base(context)
         {
         }
+
+
     }
 }

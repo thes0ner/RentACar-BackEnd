@@ -13,30 +13,64 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.DatabaseContext.Configura
     {
         public void Configure(EntityTypeBuilder<Reservation> entity)
         {
-            //Table name
+
             entity.ToTable("Reservations");
 
-            // Primary key
-            entity.HasKey(e => e.Id);
+            // Primary Key
+            entity.HasKey(r => r.Id);
 
-            // Properties
-            entity.Property(e => e.Id).UseIdentityColumn().IsRequired();
-            entity.Property(e => e.ReservationDate).IsRequired();
-            entity.Property(e => e.StartDate).IsRequired();
-            entity.Property(e => e.EndDate).IsRequired();
-            entity.Property(e => e.IsConfirmed).IsRequired();
-            entity.Property(e => e.IsCancelled).HasDefaultValue(false);
+            entity.Property(r => r.Id)
+                   .UseIdentityColumn()
+                   .IsRequired();
+
+            // Property Configurations
+            entity.Property(r => r.PickUpDate)
+                   .IsRequired()
+                   .HasColumnType("datetime2");
+            entity.Property(r => r.DropOffDate)
+                   .IsRequired()
+                    .HasColumnType("datetime2");
+
+            entity.ToTable(t => t.HasCheckConstraint(
+                    name: "CK_Reservations_DropOffDate_After_PickUpDate",
+                        sql: "DropOffDate > PickUpDate"));
+
+            entity.Property(r => r.TotalPrice)
+                   .HasColumnType("decimal(18,2)")
+                   .IsRequired();
+
+            entity.Property(r => r.Notes)
+                   .HasMaxLength(500);
+
+            entity.Property(r => r.ReservationStatus)
+                   .IsRequired()
+                   .HasConversion<string>()  // Stores enum as string in DB
+                   .HasMaxLength(20);
 
 
-            entity.HasOne(e => e.Car) // One-to-many relationship with Car
-                  .WithMany(c => c.Reservations)
-                  .HasForeignKey(e => e.CarId)
-                  .OnDelete(DeleteBehavior.Restrict);
+            // Car (Many-to-One)
+            entity.HasOne(r => r.Car)
+                   .WithMany(c => c.Reservations)
+                   .HasForeignKey(r => r.CarId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
-            entity.HasOne(e => e.Customer) // One-to-many relationship with Customer
-                  .WithMany(c => c.Reservations)
-                  .HasForeignKey(e => e.CustomerId)
-                  .OnDelete(DeleteBehavior.NoAction);
+            // Customer (Many-to-One)
+            entity.HasOne(r => r.Customer)
+                   .WithMany(c => c.Reservations)
+                   .HasForeignKey(r => r.CustomerId)
+                   .OnDelete(DeleteBehavior.Restrict); 
+
+            // Payment (One-to-One)
+            entity.HasOne(r => r.Payment)
+                   .WithOne(p => p.Reservation)
+                   .HasForeignKey<Payment>(p => p.ReservationId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            // Indexes
+            entity.HasIndex(r => r.PickUpDate);
+            entity.HasIndex(r => r.DropOffDate);
+            entity.HasIndex(r => r.ReservationStatus);
+            entity.HasIndex(r => new { r.CustomerId, r.CarId });
         }
     }
 }

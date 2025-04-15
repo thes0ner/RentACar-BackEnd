@@ -21,7 +21,9 @@ namespace RentACar.Entities.Concrete
 
         // Navigation properties
         public int RentalId { get; set; }
+        public int ReservationId { get; set; }
         public Rental Rental { get; set; }
+        public Reservation Reservation { get; set; }
 
     }
 }

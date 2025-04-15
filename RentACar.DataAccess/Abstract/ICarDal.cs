@@ -13,9 +13,6 @@ namespace RentACar.DataAccess.Abstract
 {
     public interface ICarDal : IEntityRepository<Car>
     {
-
-
-
         Task<CarDetailDto> GetCarDetailById(int id);
         IQueryable<CarDetailDto> GetCarDetails();
         IQueryable<CarDetailDto> GetCarsByBrandName(string brandName);
@@ -28,9 +25,6 @@ namespace RentACar.DataAccess.Abstract
         IQueryable<CarDetailDto> GetCarsByModelYearRange(int minYear, int maxYear);
         IQueryable<CarDetailDto> GetCarsByMileageRange(int minMileage, int maxMileage);
         Dictionary<object, IQueryable<CarDetailDto>> GetGroupedCars(Func<CarDetailDto, object> groupBy, Expression<Func<CarDetailDto, bool>> filter = null);
-
-
-
 
 
     }

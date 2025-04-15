@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RentACar.Business.Abstract;
 using RentACar.Entities.Concrete;
+using RentACar.Entities.DTO;
 
 namespace RentACar.WebAPI.Controllers
 {
@@ -51,13 +52,13 @@ namespace RentACar.WebAPI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] Invoice invoice)
+        public async Task<IActionResult> AddAsync([FromBody] InvoiceDto invoiceDto)
         {
-            var result = await _invoiceService.AddAsync(invoice);
+            var result = await _invoiceService.AddAsync(invoiceDto);
 
             if (!result.Success)
             {
-                return BadRequest(result);
+                return BadRequest(result.Message);
             }
 
             return Ok(result);
@@ -65,17 +66,27 @@ namespace RentACar.WebAPI.Controllers
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] Invoice invoice)
+        [HttpPut()]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] InvoiceDto invoiceDto)
         {
-            var result = await _invoiceService.UpdateAsync(invoice);
 
-            if (!result.Success)
+            if (id <= 0)
             {
-                return BadRequest(result);
+                return BadRequest("The provided ID must be a positive number.");
             }
 
-            return Ok(result);
+            if (id != invoiceDto.Id)
+            {
+                return BadRequest("Invoice ID does not match the ID in the body.");
+            }
+
+            var result = await _invoiceService.UpdateAsync(invoiceDto);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+
+            return Ok(result.Message);
         }
 
 

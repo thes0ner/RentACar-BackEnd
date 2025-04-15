@@ -10,6 +10,6 @@ namespace RentACar.DataAccess.Abstract
 {
     public interface ICustomerDal : IEntityRepository<Customer>
     {
-
+        // Reservations method needs to be added and more....
     }
 }
